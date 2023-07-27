@@ -1,0 +1,150 @@
+[
+  {
+    "option": "Dashboard",
+    "state": false,
+    "icon": "AiFillAccountBook",
+    "subOption": []
+  },
+  {
+    "option": "Department",
+    "path": "/department",
+    "state": false,
+    "icon": "AiFillCodepenCircle",
+    "subOption": [
+      {
+        "title": "Add Department",
+        "path": "/department/0"
+      },
+      {
+        "title": "List Department",
+        "path": "/department/1"
+      }
+    ]
+  },
+  {
+    "option": "Doctor",
+    "state": false,
+    "icon": "AiFillMedicineBox",
+    "subOption": [
+      {
+        "title": "Add Doctor",
+        "path": "/doctor/0"
+      },
+      {
+        "title": "List Doctor",
+        "path": "/doctor/1"
+      }
+    ]
+  },
+  {
+    "option": "Patient",
+    "state": false,
+    "icon": "AiFillFrown",
+    "subOption": [
+      {
+        "title": "Add patient",
+        "path": "/patient/0"
+      },
+      {
+        "title": "List patient",
+        "path": "/patient/1"
+      },
+      {
+        "title": "Add document",
+        "path": "/patient/3"
+      },
+      {
+        "title": "List document",
+        "path": "/patient/4"
+      }
+    ]
+  },
+  {
+    "option": "Schedule",
+    "state": false,
+    "icon": "AiOutlineCalendar",
+    "subOption": [
+      "Add schedule",
+      "List schedule"
+    ]
+  },
+  {
+    "option": "Appoinment",
+    "state": false,
+    "icon": "AiOutlineCheckSquare",
+    "subOption": [
+      "Add appoinment",
+      "List appoinment"
+    ]
+  },
+  {
+    "option": "Prescripton",
+    "state": false,
+    "icon": "AiOutlineBook",
+    "subOption": [
+      "Add case",
+      "List case",
+      "Add prescription",
+      "List prescripton"
+    ]
+  },
+  {
+    "option": "Finance",
+    "state": false,
+    "icon": "FaMoneyBillWave",
+    "subOption": [
+      "Add invoice",
+      "List invoice",
+      "Add service",
+      "List service"
+    ]
+  },
+  {
+    "option": "Lab test",
+    "state": false,
+    "icon": "GiHypodermicTest",
+    "subOption": [
+      "Add Report",
+      "List Report"
+    ]
+  },
+  {
+    "option": "Humen resource",
+    "state": false,
+    "icon": "AiFillIdcard",
+    "subOption": [
+      "Add employ",
+      "List employ",
+      "payment"
+    ]
+  },
+  {
+    "option": "Medicine",
+    "state": false,
+    "icon": "GiMedicines",
+    "subOption": [
+      "Add medicine",
+      "List medicine"
+    ]
+  },
+  {
+    "option": "Bed manager",
+    "state": false,
+    "icon": "FaBed",
+    "subOption": [
+      "Add bed",
+      "List bed",
+      "Assign Bed",
+      "Assign Bed List"
+    ]
+  },
+  {
+    "option": "Mail",
+    "state": false,
+    "icon": "AiOutlineMail",
+    "subOption": [
+      "Send mail",
+      "All mail"
+    ]
+  }
+]

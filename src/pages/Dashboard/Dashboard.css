@@ -1,0 +1,50 @@
+.dashboard{
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+.dashboard_sidebar{
+    width: 250px;
+}
+.dashboard_containt{
+    width: 100%;
+}
+.contant_area{
+    margin: 1rem;
+    display: flex;
+    justify-content: space-around;
+}
+.contant_length_box{
+    width: 22%;
+    height: auto;
+    padding: 0px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.contant_length_box h3{
+    font-weight: 400;
+}
+.chart_area{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    
+}
+.income_expance{
+    background-color: white;
+    width: 60%;
+    align-items: center;
+    padding: 2rem;
+    
+}
+.comparison{
+    background-color: white;
+    width: 30%;
+    padding: 2rem;
+}
+.comparison p{
+    display: flex;
+    padding: 5px;
+}

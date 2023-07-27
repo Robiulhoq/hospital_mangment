@@ -1,0 +1,46 @@
+.doctor{
+    width: 100%;
+    display: flex;
+}
+.add_doctor_container{
+   display: flex;
+   justify-content: space-between;
+    margin: 2rem;
+    border: 1px solid lightgray;
+    background-color: white;
+    padding: 20px;
+}
+.add_doctor{
+    width: 80%;
+}
+.sex_checkbox{
+    display: flex;
+}
+.sex_checkbox div{
+    margin-left: 13rem;
+}
+.sex_checkbox p{
+    font-weight: 700;
+}
+
+.checkbox label{
+    align-items: center;
+    width: 1rem;
+    margin: 3px 10px;
+    
+}
+.checkbox input{
+    width: 1rem;
+    margin: 3px 10px;
+}
+.tinymac{
+    margin: 2rem 0rem;
+    display: flex;
+    justify-content: space-between;
+}
+.tinymac div{
+    margin-left: 2.5rem;
+}
+.tinymac p{
+    font-weight: 700;
+}
