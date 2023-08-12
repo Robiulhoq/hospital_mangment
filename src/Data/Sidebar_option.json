@@ -51,11 +51,11 @@
       },
       {
         "title": "Add document",
-        "path": "/patient/3"
+        "path": "/patient/2"
       },
       {
         "title": "List document",
-        "path": "/patient/4"
+        "path": "/patient/3"
       }
     ]
   },
@@ -64,8 +64,14 @@
     "state": false,
     "icon": "AiOutlineCalendar",
     "subOption": [
-      "Add schedule",
-      "List schedule"
+      {
+        "title":"Add Schedule",
+        "path": "/schedule/0"
+      },
+      {
+        "title":"List Schedule",
+        "path": "/schedule/1"
+      }
     ]
   },
   {
@@ -73,8 +79,14 @@
     "state": false,
     "icon": "AiOutlineCheckSquare",
     "subOption": [
-      "Add appoinment",
-      "List appoinment"
+      {
+        "title":"Add Appoinment",
+        "path": "/appoinment/0"
+      },
+      {
+        "title":"List Appoinment",
+        "path": "/appoinment/1"
+      }
     ]
   },
   {
@@ -82,10 +94,18 @@
     "state": false,
     "icon": "AiOutlineBook",
     "subOption": [
-      "Add case",
-      "List case",
-      "Add prescription",
-      "List prescripton"
+      {
+        "title":"Add Prescripton",
+        "path": "/prescripton/0"
+      },
+      {
+        "title":"List Prescripton",
+        "path": "/prescripton/1"
+      },
+      {
+        "title":"Print Prescripton",
+        "path": "/prescripton/2"
+      }
     ]
   },
   {
@@ -93,10 +113,30 @@
     "state": false,
     "icon": "FaMoneyBillWave",
     "subOption": [
-      "Add invoice",
-      "List invoice",
-      "Add service",
-      "List service"
+      {
+        "title":"Add invoice",
+        "path": "/finance/0"
+      },
+      {
+        "title":"List invoice",
+        "path": "/finance/1"
+      },
+      {
+        "title":"Add service",
+        "path": "/finance/2"
+      },
+      {
+        "title":"List service",
+        "path": "/finance/3"
+      },
+      {
+        "title":"Add Payment",
+        "path": "/finance/4"
+      },
+      {
+        "title":"Payment List",
+        "path": "/finance/5"
+      }
     ]
   },
   {
@@ -104,8 +144,14 @@
     "state": false,
     "icon": "GiHypodermicTest",
     "subOption": [
-      "Add Report",
-      "List Report"
+      {
+        "title":"Add Report",
+        "path": "/labtest/0"
+      },
+      {
+        "title":"List Report",
+        "path": "/labtest/1"
+      }
     ]
   },
   {
@@ -113,9 +159,18 @@
     "state": false,
     "icon": "AiFillIdcard",
     "subOption": [
-      "Add employ",
-      "List employ",
-      "payment"
+      {
+        "title":"Add employ",
+        "path": "/hr/0"
+      },
+      {
+        "title":"List employ",
+        "path": "/hr/1"
+      },
+      {
+        "title":"payment",
+        "path": "/hr/2"
+      }
     ]
   },
   {
@@ -123,8 +178,14 @@
     "state": false,
     "icon": "GiMedicines",
     "subOption": [
-      "Add medicine",
-      "List medicine"
+      {
+        "title":"Add medicine",
+        "path": "/medicine/0"
+      },
+      {
+        "title":"Medicine List",
+        "path": "/medicine/1"
+      }
     ]
   },
   {
@@ -132,10 +193,22 @@
     "state": false,
     "icon": "FaBed",
     "subOption": [
-      "Add bed",
-      "List bed",
-      "Assign Bed",
-      "Assign Bed List"
+      {
+        "title":"Add bed",
+        "path": "/bed/0"
+      },
+      {
+        "title":"Bed List",
+        "path": "/bed/1"
+      },
+      {
+        "title":"Assign bed",
+        "path": "/bed/2"
+      },
+      {
+        "title":"Assign Bed List",
+        "path": "/bed/3"
+      }
     ]
   },
   {
@@ -143,8 +216,14 @@
     "state": false,
     "icon": "AiOutlineMail",
     "subOption": [
-      "Send mail",
-      "All mail"
+      {
+        "title":"Send Mail",
+        "path": "/mail/1"
+      },
+      {
+        "title":"All Mail",
+        "path": "/mail/1"
+      }
     ]
   }
 ]

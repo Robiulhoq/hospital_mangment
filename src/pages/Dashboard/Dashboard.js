@@ -9,6 +9,7 @@ import {
 } from "react-icons/ai";
 import { Bar, Pie } from 'react-chartjs-2';
 import { Chart, ArcElement, CategoryScale, LinearScale, BarController, BarElement } from 'chart.js';
+import {Wrapper, SidebarContainer, Content} from '../../components/Common';
 
 Chart.register(ArcElement, CategoryScale, LinearScale, BarController, BarElement);
 export default function Dashboard() {
@@ -79,11 +80,11 @@ export default function Dashboard() {
     };
     
     return (
-        <div className='dashboard'>
-            <div className='dashboard_sidebar'>
+        <Wrapper>
+            <SidebarContainer>
                 <Sidebar />
-            </div>
-            <div className='dashboard_containt'>
+            </SidebarContainer>
+            <Content>
                 <TopBar title="Dashboard" />
                 <div className="contant_area">
                     <div className="contant_length_box">
@@ -150,7 +151,8 @@ export default function Dashboard() {
                     <p>Pation <div style={{width: '50px', height: 'auto', backgroundColor: '#2181FD'}}></div></p>
                     </div>
                 </div>
-            </div>
-        </div>
+            </Content>
+        
+        </Wrapper>
     )
 }

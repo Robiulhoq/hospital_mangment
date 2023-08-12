@@ -4,31 +4,28 @@ import Sidebar from '../../components/Sidebar';
 import TopBar from '../../components/TopBar';
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
+import { Wrapper, SidebarContainer, Content, Activity} from '../../components/Common';
+import {GreenButton } from '../../components/Buttons';
+import DataFiltter from '../../components/DataFiltter';
+import TextInput from '../../components/TextInput';
 function ListDepartment() {
     return (
-        <div className='list_department'>
-            <div style={{ width: '250px' }}>
+        <Wrapper>
+            <SidebarContainer>
                 <Sidebar />
-            </div>
-            <div style={{ width: '100%' }}>
+            </SidebarContainer>
+            <Content>
                 <TopBar title='List department' />
-                <div className="list_department_activity">
-                    <div className="shortcart_group">
-                        <button className='btn btn_department'>+ Add Depratment</button>
-                           <div>
-                           <label htmlFor="">Show</label>
-                        <select name="" id="">
-                            <option value="">10</option>
-                            <option value="">20</option>
-                            <option value="">30</option>
-                        </select>
-                        <label htmlFor="">Entrys</label>
-                           </div>
+                <Activity>
+                <DataFiltter>
+                        <GreenButton>+ Add Department</GreenButton>
                         <div>
-                        <label htmlFor="">Search</label>
-                        <input type="text" placeholder='search' />
+                            <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>
-                    </div>
+                        <div>
+                            <TextInput type='text' title='Search' />
+                        </div>
+                    </DataFiltter>
                     <table className='department_table'>
                         <tr>
                             <th>SL. NO</th>
@@ -108,9 +105,9 @@ function ListDepartment() {
                             <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
                         </tr>
                     </table>
-                </div>
-            </div>
-        </div>
+                </Activity>
+            </Content>
+        </Wrapper>
     )
 }
 

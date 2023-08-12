@@ -1,36 +1,27 @@
-import React, { useRef } from 'react'
-import './AddPatientDoc.css';
+import React, { useRef } from 'react';
 import Sidebar from '../../components/Sidebar';
 import TopBar from '../../components/TopBar';
-import Input from '../../components/Input';
-import { Editor } from '@tinymce/tinymce-react';
+import { Wrapper, SidebarContainer, Content, Activity } from '../../components/Common';
+import { BlueButton, GreenButton } from '../../components/Buttons';
+import TextInput from '../../components/TextInput';
 function AddPatientDoc() {
     const editorRef = useRef();
     return (
-        <div className='patient'>
-            <div style={{ width: '250px' }}>
+        <Wrapper>
+            <SidebarContainer>
                 <Sidebar />
-            </div>
-            <div style={{ width: '100%' }}>
+            </SidebarContainer>
+            <Content >
                 <TopBar title='Add Document' />
-                <div className="add_patient_container">
-                    <div className="add_patient">
-                        <Input name='name' title='Patient ID' placeholder='Patient ID' />
-                        <Input title='Attatch File' type='file' placeholder='Last name' />
-                        <Input name='email' title='Doctor Name' placeholder='Doctor Name' />
-                        <div className='tinymac'>
-                            <p>Description</p>
-                            <div>
-                                <Editor
-                                onInit={(evt, editor) => editorRef.current = editor}
-                                />
-                            </div>
-                        </div>
-                        <button className='btn btn_department'>Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <Activity>
+                    <TextInput type='text' name='name' title='Patient ID' placeholder='Patient ID' />
+                    <TextInput title='Attatch File' type='file' placeholder='Attatch File' />
+                    <TextInput type='radio' options={['abdul kalam', 'shakib']} title='Doctor Name' placeholder='Doctor Name' />
+                    <TextInput title='Description' type='textarea' placeholder='Description' />
+                    <GreenButton>Save</GreenButton>
+                </Activity>
+            </Content>
+        </Wrapper>
     )
 }
 

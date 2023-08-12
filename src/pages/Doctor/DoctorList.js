@@ -4,31 +4,28 @@ import Sidebar from '../../components/Sidebar';
 import TopBar from '../../components/TopBar';
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
+import { Wrapper, SidebarContainer, Content, Activity } from '../../components/Common';
+import { BlueButton, GreenButton } from '../../components/Buttons';
+import DataFiltter from '../../components/DataFiltter';
+import TextInput from '../../components/TextInput';
 function DoctorList() {
     return (
-        <div className='doctor_list'>
-            <div style={{ width: '250px' }}>
+        <Wrapper>
+            <SidebarContainer>
                 <Sidebar />
-            </div>
-            <div style={{ width: '100%' }}>
+            </SidebarContainer>
+            <Content>
                 <TopBar title='Doctor List' />
-                <div className="doctor_list_activity">
-                    <div className="shortcart_group">
-                        <button className='btn btn_department'>+ Add Doctor</button>
+                <Activity>
+                    <DataFiltter>
+                        <GreenButton>+ Add Doctor</GreenButton>
                         <div>
-                            <label htmlFor="">Show</label>
-                            <select name="" id="">
-                                <option value="">10</option>
-                                <option value="">20</option>
-                                <option value="">30</option>
-                            </select>
-                            <label htmlFor="">Entrys</label>
+                            <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>
                         <div>
-                            <label htmlFor="">Search</label>
-                            <input type="text" placeholder='search' />
+                            <TextInput type='text' title='Search' />
                         </div>
-                    </div>
+                    </DataFiltter>
                     <table className='department_table'>
                         <tr>
                             <th>SL. NO</th>
@@ -141,10 +138,10 @@ function DoctorList() {
                             <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
                         </tr>
                     </table>
-                </div>
+                </Activity>
 
-            </div>
-        </div>
+            </Content>
+        </Wrapper>
     )
 }
 
