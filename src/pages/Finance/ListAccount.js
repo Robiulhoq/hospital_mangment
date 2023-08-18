@@ -7,7 +7,7 @@ import TopBar from "../../components/TopBar";
 import DataFiltter from "../../components/DataFiltter";
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
-function AssignBedList(){
+function ListService(){
 
     return(
         <Wrapper>
@@ -15,10 +15,10 @@ function AssignBedList(){
                 <Sidebar />
             </SidebarContainer>
             <Content >
-                <TopBar title='Assaine Bed List' />
+                <TopBar title='List Payment' />
                 <Activity>
                 <DataFiltter>
-                        <GreenButton>+ Assaine Bed</GreenButton>
+                        <GreenButton>+ Add Payment</GreenButton>
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>
@@ -26,17 +26,15 @@ function AssignBedList(){
                             <TextInput type='text' title='Search' />
                         </div>
                     </DataFiltter>
+                    <h3 style={{margin: '1rem'}}>Debit</h3>
                     <table className='department_table'>
                         <tr>
                             <th>SL. NO</th>
-                            <th>Patient ID</th>
-                            <th>Bed Type</th>
+                            <th>Date</th>
+                            <th>Account Name</th>
+                            <th>Pay to</th>
                             <th>Description</th>
-                            <th>Day</th>
-                            <th>Charge</th>
-                            <th>Total</th>
-                            <th>Assaine Date</th>
-                            <th>Discharge Date</th>
+                            <th>Amount</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -49,17 +47,11 @@ function AssignBedList(){
                             <td>Austria</td>
                             <td>Austria</td>
                             <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
                             <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
                         </tr>
                         <tr>
                             <td>3</td>
                             <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
                             <td>Austria</td>
                             <td>Austria</td>
                             <td>Austria</td>
@@ -73,4 +65,4 @@ function AssignBedList(){
         </Wrapper>
     )
 }
-export default AssignBedList;
+export default ListService;

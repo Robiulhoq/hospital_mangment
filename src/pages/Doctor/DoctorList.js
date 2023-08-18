@@ -1,5 +1,4 @@
 import React from 'react'
-import './DoctorList.css';
 import Sidebar from '../../components/Sidebar';
 import TopBar from '../../components/TopBar';
 import { BiEdit } from 'react-icons/bi';

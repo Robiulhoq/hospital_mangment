@@ -25,8 +25,8 @@ import Finance from './pages/Finance/Finance';
 import ListInvoice from './pages/Finance/ListInvoice';
 import AddPayment from './pages/Finance/AddPayment';
 import ListPayment from './pages/Finance/ListPayment';
-import AddService from './pages/Finance/AddService';
-import ListService from './pages/Finance/LIstService';
+import AddAccount from './pages/Finance/AddAccount';
+import ListAccount from './pages/Finance/ListAccount';
 import LabTest from './pages/Labtest/Labtest';
 import TestReport from './pages/Labtest/TestReport';
 import Hr from './pages/Hr/Hr';
@@ -39,6 +39,8 @@ import BedManager from './pages/Bed_manager/Bed_manager';
 import BedList from './pages/Bed_manager/BedList';
 import Appoinment from './pages/Appoinment/Appoinment';
 import AppoinmentList from './pages/Appoinment/AppoinmentList';
+import AddPrescription from './pages/Prescription/AddPrescription';
+import DepartmentManagment from './pages/Department/DepartmentManagment';
 
 const router = createBrowserRouter([
   {
@@ -110,6 +112,10 @@ const router = createBrowserRouter([
     element: <PrintPrescription/>,
   },
   {
+    path: "prescripton/3",
+    element: <AddPrescription/>,
+  },
+  {
     path: "finance/0",
     element: <Finance/>,
   },
@@ -119,7 +125,7 @@ const router = createBrowserRouter([
   },
   {
     path: "finance/2",
-    element: <AddService/>,
+    element: <AddAccount/>,
   },
   {
     path: "finance/3",
@@ -131,7 +137,7 @@ const router = createBrowserRouter([
   },
   {
     path: "finance/5",
-    element: <ListService/>,
+    element: <ListAccount/>,
   },
   {
     path: "labtest/0",
@@ -154,24 +160,28 @@ const router = createBrowserRouter([
     element: <AddMedicine/>,
   },
   {
-    path: "medicine/0",
+    path: "medicine/1",
     element: <MedicineList/>,
   },
   {
     path: "bed/0",
-    element: <AssignBed/>,
+    element: <BedManager/>, 
   },
   {
     path: "bed/1",
-    element: <AssignBedList/>,
+    element: <BedList/>, 
   },
   {
     path: "bed/2",
-    element: <BedManager/>,
+    element: <AssignBed/>,
   },
   {
     path: "bed/3",
-    element: <BedList/>,
+    element: <AssignBedList/>,
+  },
+  {
+    path: "bed/8",
+    element: <DepartmentManagment/>,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -3,7 +3,12 @@
     "option": "Dashboard",
     "state": false,
     "icon": "AiFillAccountBook",
-    "subOption": []
+    "subOption": [
+      {
+        "title": "Back1",
+        "path": "/"
+      }
+    ]
   },
   {
     "option": "Department",
@@ -95,12 +100,16 @@
     "icon": "AiOutlineBook",
     "subOption": [
       {
-        "title":"Add Prescripton",
+        "title":"Add Case Study",
         "path": "/prescripton/0"
       },
       {
-        "title":"List Prescripton",
+        "title":"List Case Study",
         "path": "/prescripton/1"
+      },
+      {
+        "title":"Add Prescripton",
+        "path": "/prescripton/3"
       },
       {
         "title":"Print Prescripton",
@@ -122,11 +131,11 @@
         "path": "/finance/1"
       },
       {
-        "title":"Add service",
+        "title":"Add account",
         "path": "/finance/2"
       },
       {
-        "title":"List service",
+        "title":"List account",
         "path": "/finance/3"
       },
       {

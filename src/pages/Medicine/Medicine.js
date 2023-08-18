@@ -14,7 +14,12 @@ function AddMedicine(){
             <Content >
                 <TopBar title='Add Medicine' />
                 <Activity>
-
+                        <TextInput title='Medicine Name' type='text' placeholder='Medicine Name'/>
+                        <TextInput title='Description' type='textarea' placeholder='Description'/>
+                        <TextInput title='Price' type='text' placeholder='price'/>
+                        <TextInput title='Manufactured By' type='text' placeholder='Manufactured By'/>
+                        <TextInput title='status' type='radio' options={['Active', 'Deactive']}/>
+                        <GreenButton>Save</GreenButton>
                 </Activity>
             </Content>
         </Wrapper>

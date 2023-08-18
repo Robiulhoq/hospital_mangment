@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 import React from 'react';
 
-function Input({ title, placeholder, name, onChange, type, options }) {
+function Input({ title, placeholder, name, onChange, type, options, className}) {
   return (
-    <StyledInput>
-      <p>{title}*</p>
+    <StyledInput className={className}>
+      <p>{title}</p>
       {type === 'text' ? (
-        <input name={name} required onChange={onChange} type="text" placeholder={placeholder} />
+        <input name={name}  onChange={onChange} type="text" placeholder={placeholder} />
       ) : type === 'textarea' ? (
-        <textarea />
+        <textarea name={name} onChange={onChange} />
       ) : type === 'file'?(
-        <input name={name} required onChange={onChange} type="file" placeholder={placeholder} />
+        <input name={name}  onChange={onChange} type="file" placeholder={placeholder} />
       ) 
-      : type === 'radio' ? <select>
+      : type === 'radio' ? <select name={name} onChange={onChange}>
         <option>{options[0]}</option>
         <option>{options[1]}</option>
       </select> : null}
@@ -25,23 +25,39 @@ const StyledInput = styled.div`
   margin: 1.5rem 1rem;
   display: flex;
   justify-content: space-between;
-
   p {
     font-weight: 700;
   }
 
-  input{
+  input, textarea, select{
     height: 2.5rem;
     width: 35rem;
+    border: 1px solid lightgray;
+    padding: 0px 5px;
   }
-
+input:focus{
+  border: 2px solid lightgreen;
+  outline: none;
+}
+textarea:focus{
+  border: 2px solid lightgreen;
+  outline: none;
+}
+select:focus{
+  border: 2px solid lightgreen;
+  outline: none;
+}
   textarea {
     height: 7rem;
     width: 35rem;
   }
+  option{
+    height: 5rem;
+    background-color: lightgray;
+    font-size: 15px
+  }
   select{
-    height: 2.5rem;
-    width: 35rem;
+    
   }
 `;
 

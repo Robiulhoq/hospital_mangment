@@ -1,38 +1,3 @@
-.list_department {
-    width: 100%;
-    display: flex;
-}
-
-.list_department_activity {
-    margin: 2rem;
-    padding: 5px;
-    background-color: white;
-    border: 1px solid lightgray;
-}
-.shortcart_group{
-    background-color: rgb(238, 238, 238);
-    height: 4rem;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 5px 15px;
-    justify-content: space-around;
-}
-.btn{
-    border: none;
-    font-weight: 700;
-    padding: 12px;
-    color: rgb(255, 255, 255);
-}
-.btn_department{
-    background-color: #37A000;
-}
-.shortcart_group select, input{
-    width: 7rem;
-    height: 2rem;
-    border: 1px solid lightgray;
-    padding: 0px 5px;
-}
 .department_table {
     font-family: 'Alegreya Sans', sans-serif;
     border-collapse: collapse;

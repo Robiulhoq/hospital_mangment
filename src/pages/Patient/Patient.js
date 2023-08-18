@@ -1,5 +1,4 @@
 import React from 'react'
-import './Patient.css';
 import Sidebar from '../../components/Sidebar';
 import TopBar from '../../components/TopBar';
 import TextInput from '../../components/TextInput';

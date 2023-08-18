@@ -9,6 +9,7 @@ const createdDepartment = async (req, res, next) => {
         const savedDepartment = await newDepartment.save();
         res.status(200).json(savedDepartment);
     } catch (error){
+        console.log(error);
         next(error)
     }
 }

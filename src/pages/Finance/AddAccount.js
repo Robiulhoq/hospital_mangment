@@ -12,9 +12,13 @@ function AddService(){
                 <Sidebar />
             </SidebarContainer>
             <Content >
-                <TopBar title='Add Service' />
+                <TopBar title='Add Account' />
                 <Activity>
-
+                    <TextInput title='Account Name' type='text' placeholder='Account name' />
+                    <TextInput title='Account Type' type='radio' options={['Debit', 'credit']} />
+                    <TextInput title='Drescription' type='textarea' placeholder='Drescription' />
+                    <TextInput title='Status' type='radio' options={['Active', 'Deactive']}/>
+                    <GreenButton>Save</GreenButton>
                 </Activity>
             </Content>
         </Wrapper>

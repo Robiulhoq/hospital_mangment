@@ -7,6 +7,8 @@ import TopBar from "../../components/TopBar";
 import DataFiltter from "../../components/DataFiltter";
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
+import { GrView } from 'react-icons/gr';
+
 
 function ListPrescription(){
 
@@ -40,7 +42,7 @@ function ListPrescription(){
                             <td>Maria Anders</td>
                             <td>Germany</td>
                             <td>Germany</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
+                            <td><GrView size='1.5rem' color='darkblue' /></td>
                         </tr>
                         <tr>
                             <td>2</td>

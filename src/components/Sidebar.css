@@ -1,7 +1,7 @@
 .sidebar_container {
     width: 250px;
-    height: auto;
-    background-color: #333;
+    min-height: 67rem;
+    background-color: #042A4A;
     color: #fff;
     padding: 20px;
     box-sizing: border-box;
@@ -58,7 +58,7 @@
 .sub_title {
     margin-left: 1.5rem;
     padding: 7px 10px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 
 .sub_title:hover {

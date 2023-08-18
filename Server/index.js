@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const cors = require('cors')
 const app = express();
 
 const authRouter = require('./router/auth.js');
@@ -27,6 +28,7 @@ mongoose.connection.on('disconnected', () => {
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 app.use('/auth', authRouter);
 app.use('/department', departmentRouter);
