@@ -1,27 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Sidebar from '../../components/Sidebar';
 import TopBar from '../../components/TopBar';
 import TextInput from '../../components/TextInput';
 import { Wrapper, SidebarContainer, Content, Activity } from '../../components/Common';
 import { BlueButton, GreenButton } from '../../components/Buttons';
 import Message from '../../components/Message';
+import { DataContext } from '../../ContextApi/DataContext';
 
 
-const Department = ({ departmentList, editDepartmentId, setDepartmentList, setEditDepartmentId }) => {
+const Department = () => {
+    const { updateUI, departmentList, editDepartmentId } = useContext(DataContext);
     const [message, setMessage] = useState('');
-    const [editMode, setEditMode] = useState(false); 
+    const [editMode, setEditMode] = useState(false);
     const [department, setDepartment] = useState({
         departmentName: '',
         description: '',
         status: 'active'
     });
-    console.log(editDepartmentId);
+
     const hendleChange = (e) => {
         const updateDepartment = { ...department }
         updateDepartment[e.target.name] = e.target.value;
         setDepartment(updateDepartment);
     }
-    
+
     useEffect(() => {
         if (editDepartmentId) {
             // Find the department in departmentList based on editDepartmentId
@@ -52,19 +54,27 @@ const Department = ({ departmentList, editDepartmentId, setDepartmentList, setEd
                 body: JSON.stringify(department),
                 headers: { 'Content-Type': 'application/json' }
             });
-
-            response.message = editMode? 'Department edit successfull' : 'Department save successfull';
+          
+            updateUI(true);
+            response.message = editMode ? 'Department edit successfull' : 'Department save successfull';
             setMessage(response.message);
+
         } catch (error) {
             console.error('Error:', error);
         }
-    
+        setDepartment( preDevertment => ({
+            ...preDevertment,
+            departmentName: '',
+            description: '',
+            status: 'active'
+        }));
+
     };
 
     if (message) {
         setInterval(() => {
             setMessage('');
-
+            updateUI(false)
         }, 5000);
     }
     return (
@@ -77,9 +87,9 @@ const Department = ({ departmentList, editDepartmentId, setDepartmentList, setEd
                 <Message message={message} />
                 <Activity>
                     <BlueButton>Depratment List</BlueButton>
-                    <TextInput onChange={hendleChange} name='departmentName' title="Department Name" placeholder='Department Name' type='text' />
-                    <TextInput onChange={hendleChange} name='description' title="Description" placeholder='Description' type='textarea' />
-                    <TextInput onChange={hendleChange} name='status' title="status" type='radio' options={['active', 'deactive']} />
+                    <TextInput defaultValue={department.departmentName} onChange={hendleChange} name='departmentName' title="Department Name" placeholder='Department Name' type='text' />
+                    <TextInput defaultValue={department.description} onChange={hendleChange} name='description' title="Description" placeholder='Description' type='textarea' />
+                    <TextInput defaultValue={department.status} onChange={hendleChange} name='status' title="status" type='radio' options={['active', 'deactive']} />
                     <GreenButton onClick={hendleSaveDepartment}>Save</GreenButton>
 
                 </Activity>

@@ -5,23 +5,15 @@ const DoctorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    avabileDays:{
+    abailableDays:{
         type: String,
         required: true
     },
-    avavileTimeStart:{
+    availableTime:{
         type: String,
         required: true
     },
-    avavileTimeEnd:{
-        type: String,
-        required: true
-    },
-    perPatientTime:{
-        type: String,
-        required: true
-    },
-    serialVisibility:{
+    patientTime:{
         type: String,
         required: true
     },

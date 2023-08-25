@@ -2,7 +2,7 @@ import React from 'react'
 import './Auth.css';
 function Auth() {
     return (
-            <div class="login-container">
+            <div className="login-container">
                 <h2>Login</h2>
                 <form>
                     <input type="text" placeholder="Username" required />

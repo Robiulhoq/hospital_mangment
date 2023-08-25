@@ -48,5 +48,21 @@ const getAllDoctor = async (req, res, next) =>{
           })
       }
 }
+const pushDoctor = async (req, res, next) =>{
+    const doctorId = req.params.id;
+    try{
+        const updateSchedule = await Doctor.findOneAndUpdate({ _id: doctorId }, {
+            $push:{
+                schedule: req.body
+            }
+        },
+        { new: true })
+        res.status(200).json(updateSchedule)
+    } catch (error){
+        res.status(500).json({
+            error: error
+        })
+    }
 
-module.exports = {createdDoctor, putDoctor, deleteDoctor, getAllDoctor, Doctor};
+}
+module.exports = {createdDoctor, putDoctor, deleteDoctor, getAllDoctor,pushDoctor,  Doctor};

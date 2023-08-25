@@ -40,7 +40,7 @@ import BedList from './pages/Bed_manager/BedList';
 import Appoinment from './pages/Appoinment/Appoinment';
 import AppoinmentList from './pages/Appoinment/AppoinmentList';
 import AddPrescription from './pages/Prescription/AddPrescription';
-import DepartmentManagment from './pages/Department/DepartmentManagment';
+import DataProvider from './ContextApi/DataProvider';
 
 const router = createBrowserRouter([
   {
@@ -53,27 +53,27 @@ const router = createBrowserRouter([
   },
   {
     path: "department/0",
-    element: <Department/>,
+    element: <DataProvider><Department/></DataProvider>,
   },
   {
     path: "department/1",
-    element: <ListDepartment/>,
+    element:<DataProvider><ListDepartment/></DataProvider> ,
   },
   {
     path: "doctor/0",
-    element: <Doctor/>,
+    element: <DataProvider><Doctor/></DataProvider>  ,
   },
   {
     path: "doctor/1",
-    element: <DoctorList/>,
+    element:<DataProvider><DoctorList/></DataProvider>  ,
   },
   {
     path: "patient/0",
-    element: <Patient/>,
+    element:<DataProvider><Patient/></DataProvider> ,
   },
   {
     path: "patient/1",
-    element: <ListPatient/>,
+    element:<DataProvider><ListPatient/></DataProvider> ,
   },
   {
     path: "patient/2",
@@ -85,11 +85,11 @@ const router = createBrowserRouter([
   },
   {
     path: "schedule/0",
-    element: <Schedule/>,
+    element:<DataProvider><Schedule/></DataProvider> ,
   },
   {
     path: "schedule/1",
-    element: <ListSchedule/>,
+    element:<DataProvider><ListSchedule/></DataProvider> ,
   },
   {
     path: "appoinment/0",
@@ -178,17 +178,9 @@ const router = createBrowserRouter([
   {
     path: "bed/3",
     element: <AssignBedList/>,
-  },
-  {
-    path: "bed/8",
-    element: <DepartmentManagment/>,
-  },
+  }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
 );
-
-

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './ListDepartment.css';
 import Sidebar from '../../components/Sidebar';
 import TopBar from '../../components/TopBar';
@@ -10,26 +10,31 @@ import DataFiltter from '../../components/DataFiltter';
 import TextInput from '../../components/TextInput';
 import axios from 'axios';
 import Message from '../../components/Message';
+import { DataContext } from '../../ContextApi/DataContext';
+import { Link } from 'react-router-dom';
 
-const ListDepartment = ({departmentList}) => {
-      
-    
+const ListDepartment = () => {
+    const {updateUI, departmentList, handleEditDepartment  } = useContext(DataContext);
     const [deleteMessage, setDeleteMessage] = useState('');
 
-    // const deleteDepartment = async (id) =>{
-    //         try {
-    //             const response = await axios.delete(`http://localhost:5000/department/${id}`);
-    //             setDeleteMessage(response.data)
-    //         } catch (error) {
-    //             setDeleteMessage('Error deleting department');
-    //         }
-    // }
-    // if(deleteMessage){
-    //     setInterval(() => {
-    //             setDeleteMessage('');
+    const deleteDepartment = async (id) => {
+        try {
 
-    //     }, 5000);
-    // }
+            const response = await axios.delete(`http://localhost:5000/department/${id}`);
+            setDeleteMessage(response.data);
+            updateUI(true);
+
+        } catch (error) {
+            setDeleteMessage('Error deleting department');
+        }
+    }
+    if (deleteMessage) {
+        setInterval(() => {
+            setDeleteMessage('');
+            updateUI(false);
+
+        }, 5000);
+    }
 
     return (
         <Wrapper>
@@ -58,22 +63,19 @@ const ListDepartment = ({departmentList}) => {
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
-                        {
-                            
-                                departmentList.map((item, index) => (
-                                    <tr>
-                                        <td>{index + 1}</td>
-                                        <td>{item.departmentName}</td>
-                                        <td>{item.description}</td>
-                                        <td>{item.status}</td>
-                                        <td><BiEdit style={{ cursor: 'pointer' }} size='1.5rem' color='darkblue' /> <AiFillDelete style={{ cursor: 'pointer' }} color='red' size='1.5rem' /></td>
-                                    </tr>
-                                ))
-                             
-                            
+                        {departmentList.length ?
+                            departmentList.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{item.departmentName}</td>
+                                    <td>{item.description}</td>
+                                    <td>{item.status}</td>
+                                    <td><Link to='/department/0'>
+                                    <BiEdit onClick={() => handleEditDepartment(item._id)} style={{ cursor: 'pointer' }} size='1.5rem' color='darkblue' /></Link> 
+                                    <AiFillDelete onClick={() => deleteDepartment(item._id)} style={{ cursor: 'pointer' }} color='red' size='1.5rem' /></td>
+                                </tr>
+                            )) : <td>Loading...</td>
                         }
-
-
                     </table>
                 </Activity>
             </Content>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import Sidebar from '../../components/Sidebar';
 import TopBar from '../../components/TopBar';
 import { BiEdit } from 'react-icons/bi';
@@ -7,7 +7,36 @@ import { Wrapper, SidebarContainer, Content, Activity } from '../../components/C
 import { BlueButton, GreenButton } from '../../components/Buttons';
 import DataFiltter from '../../components/DataFiltter';
 import TextInput from '../../components/TextInput';
+import { DataContext } from '../../ContextApi/DataContext';
+import axios from 'axios';
+import Message from '../../components/Message';
+import { Link } from 'react-router-dom';
+
 function ListPatient() {
+    const { patientList, hendleEditPatient, hendlePatientUI } = useContext(DataContext);
+    const [deleteMessage, setDeleteMessage] = useState('');
+    const hendleDeletePatient = async (id) =>{
+        try {
+
+            const response = await axios.delete(`http://localhost:5000/patient/${id}`);
+            if(response.status == 200){
+                response.message = 'Pataient delete successfull';
+                setDeleteMessage(response.message);
+                hendlePatientUI(true);
+            }
+
+        } catch (error) {
+            setDeleteMessage('Error deleting patient');
+        }
+    }
+
+    if (deleteMessage) {
+        setInterval(() => {
+            setDeleteMessage('');
+            hendlePatientUI(false);
+
+        }, 5000);
+    }
     return (
         <Wrapper>
             <SidebarContainer>
@@ -15,6 +44,7 @@ function ListPatient() {
             </SidebarContainer>
             <Content>
                 <TopBar title='Patient List' />
+                <Message message={deleteMessage} />
                 <Activity>
                     <DataFiltter>
                         <GreenButton>+ Add Patient</GreenButton>
@@ -36,106 +66,23 @@ function ListPatient() {
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                            <td>Germany</td>
-                            <td>Germany</td>
-                            <td>Germany</td>
-                            <td>Germany</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Francisco Chang</td>
-                            <td>Mexico</td>
-                            <td>Mexico</td>
-                            <td>Mexico</td>
-                            <td>Mexico</td>
-                            <td>Mexico</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
+                        {
+                            patientList.length ? patientList.map((item, index) => (
+                                <tr>
+                                    <td>{index +1}</td>
+                                    <td><img style={{height: '100px', width: '100px'}} src={item.picture}/></td>
+                                    <td>{item.fastName}</td>
+                                    <td>{item.department}</td>
+                                    <td>{item.emailAddress}</td>
+                                    <td>{item.mobileNo}</td>
+                                    <td>{item.status}</td>
+                                    <td><Link to='/patient/0'><BiEdit onClick={()=> hendleEditPatient(item._id)} size='1.5rem' color='darkblue' /></Link> 
+                                    <AiFillDelete onClick={()=>hendleDeletePatient(item._id)} color='red' size='1.5rem' /></td>
+                                </tr>
+                            )): <p></p>
+                        }
+
+
                     </table>
                 </Activity>
 

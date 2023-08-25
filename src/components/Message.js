@@ -11,6 +11,7 @@ function Message({ message }) {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        transition:  '2s',
 
                     }}>
                     <div style={{

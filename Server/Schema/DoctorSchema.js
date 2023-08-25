@@ -29,7 +29,11 @@ const DoctorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ShortBiography:{
+    department:{
+        type: String,
+        required: true
+    },
+    shortBiography:{
         type: String,
         required: true
     },
@@ -57,6 +61,23 @@ const DoctorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    schedule:[
+        {
+            abailableDays: {
+                type: String
+            },
+            availableTime: {
+                type: String
+            },
+            patientTime: {
+                type: String
+            },
+            status: {
+                type: String
+            },
+            // You can add more properties related to the schedule if needed
+        }
+    ],
     status:{
         type: String,
         required: true

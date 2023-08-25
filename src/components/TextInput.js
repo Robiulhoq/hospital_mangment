@@ -1,21 +1,24 @@
 import styled from 'styled-components';
 import React from 'react';
 
-function Input({ title, placeholder, name, onChange, type, options, className}) {
+function Input({ title, placeholder, name, onChange, type, options, className, defaultValue}) {
   return (
     <StyledInput className={className}>
       <p>{title}</p>
       {type === 'text' ? (
-        <input name={name}  onChange={onChange} type="text" placeholder={placeholder} />
+        <input name={name} defaultValue={defaultValue}  onChange={onChange} type="text" placeholder={placeholder} />
       ) : type === 'textarea' ? (
-        <textarea name={name} onChange={onChange} />
+        <textarea defaultValue={defaultValue} name={name} onChange={onChange} />
       ) : type === 'file'?(
-        <input name={name}  onChange={onChange} type="file" placeholder={placeholder} />
+        <input  name={name}  onChange={(e)=>onChange(e.target.files[0])} accept="image/*" type="file" placeholder={placeholder} />
       ) 
-      : type === 'radio' ? <select name={name} onChange={onChange}>
-        <option>{options[0]}</option>
-        <option>{options[1]}</option>
-      </select> : null}
+      : type === 'radio' ?  <select name={name} onBlur={onChange} value={defaultValue}>
+      {options.map((item, index) => (
+        <option key={index} value={item.value}>
+          {item.label}
+        </option>
+      ))}
+    </select> : null}
     </StyledInput>
   );
 }

@@ -25,10 +25,10 @@ function Sidebar() {
           <img src="https://picsum.photos/100/100" alt="" />
         </div>
       </div>
-      <div class="sidebar">
+      <div className="sidebar">
         <ul>
           {
-            sidebar_option.map((item, index) => <li onClick={() => expanedSubItem(index)} className='list_item'>
+            sidebar_option.map((item, index) => <li key={index} onClick={() => expanedSubItem(index)} className='list_item'>
               <a href="#"><span> <IconContext.Provider value={{ size: '1rem' }}>
                 {renderIcon(item.icon)}
               </IconContext.Provider ><span className='title'>{item.option}</span></span>

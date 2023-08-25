@@ -21,7 +21,7 @@ const PatientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    phoneNo:{
+    mobileNo:{
         type: String,
         required: true
     },
@@ -37,7 +37,7 @@ const PatientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    bloudGroup:{
+    bloodGroup:{
         type: String,
         required: true
     },
@@ -48,3 +48,4 @@ const PatientSchema = new mongoose.Schema({
 });
 
 module.exports = PatientSchema;
+
