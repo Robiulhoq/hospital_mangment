@@ -1,4 +1,4 @@
-import React from "react";  
+import React, { useContext, useState } from "react";
 import { Wrapper, SidebarContainer, Content, Activity } from '../../components/Common';
 import { BlueButton, GreenButton } from '../../components/Buttons';
 import TextInput from '../../components/TextInput';
@@ -7,10 +7,33 @@ import TopBar from "../../components/TopBar";
 import DataFiltter from "../../components/DataFiltter";
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
+import { DataContext } from "../../ContextApi/DataContext";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-function BedList(){
+function BedList() {
+    const { bedList, hendleBedUI, hendleEditBed } = useContext(DataContext);
+    const [message, setMessage] = useState('');
+    const hendleDeleteBed = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:5000/bed/${id}`);
+            if (response.status === 200) {
+                response.message = 'Bed Delete Successfull';
+                setMessage(response.message);
+                hendleBedUI(true);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    if (message) {
+        setInterval(() => {
+            setMessage('');
+            hendleBedUI(false);
+        }, 5000);
+    }
 
-    return(
+    return (
         <Wrapper>
             <SidebarContainer>
                 <Sidebar />
@@ -18,7 +41,7 @@ function BedList(){
             <Content >
                 <TopBar title='Bed List' />
                 <Activity>
-                <DataFiltter>
+                    <DataFiltter>
                         <GreenButton>+ Add Payment</GreenButton>
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
@@ -27,7 +50,7 @@ function BedList(){
                             <TextInput type='text' title='Search' />
                         </div>
                     </DataFiltter>
-                    <h3 style={{margin: '1rem'}}>Debit</h3>
+                    <h3 style={{ margin: '1rem' }}>Debit</h3>
                     <table className='department_table'>
                         <tr>
                             <th>SL. NO</th>
@@ -38,25 +61,21 @@ function BedList(){
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
-                       
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
+                        {
+                            bedList.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{index +1}</td>
+                                    <td>{item.bedType}</td>
+                                    <td>{item.description}</td>
+                                    <td>{item.bedCapacity}</td>
+                                    <td>{item.charge}</td>
+                                    <td>{item.status}</td>
+                                    <td> <Link to='/bed/0' ><BiEdit onClick={()=> hendleEditBed(item._id)} size='1.5rem' color='darkblue' /> </Link> 
+                                    <AiFillDelete onClick={()=> hendleDeleteBed(item._id)} color='red' size='1.5rem' /></td>
+                                </tr>
+                            ))
+                        }
+
                     </table>
                 </Activity>
             </Content>

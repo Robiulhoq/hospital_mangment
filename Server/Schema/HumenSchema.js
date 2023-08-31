@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const HumenResourceSchema = new mongoose.Schema({
+    userRole:{
+        type: String,
+        required: true
+    },
     fastName:{
         type: String,
         required: true
@@ -17,15 +21,11 @@ const HumenResourceSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    userRole:{
+    mobileNo:{
         type: String,
         required: true
     },
-    address:{
-        type: String,
-        required: true
-    },
-    phoneNo:{
+    sex:{
         type: String,
         required: true
     },
@@ -33,11 +33,7 @@ const HumenResourceSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    specialist:{
-        type: String,
-        required: true
-    },
-    sex:{
+    address:{
         type: String,
         required: true
     },

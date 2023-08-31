@@ -19,6 +19,10 @@
 .invoice_headline> tr> th{
     background-color: #337AB7;
 }
+.diagnosis_headline> tr> th{
+    background-color: #d9bbbb;
+    color: black !important;
+}
 .invoice_table {
     font-family: 'Alegreya Sans', sans-serif;
     border-collapse: collapse;

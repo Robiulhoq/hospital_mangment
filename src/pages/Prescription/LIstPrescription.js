@@ -1,4 +1,6 @@
-import React from "react";  
+// case study showing table component
+
+import React, { useContext } from "react";
 import { Wrapper, SidebarContainer, Content, Activity } from '../../components/Common';
 import { BlueButton, GreenButton } from '../../components/Buttons';
 import TextInput from '../../components/TextInput';
@@ -8,11 +10,13 @@ import DataFiltter from "../../components/DataFiltter";
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
 import { GrView } from 'react-icons/gr';
+import { DataContext } from "../../ContextApi/DataContext";
 
 
-function ListPrescription(){
+function ListPrescription() {
+    const { caseStudyList } = useContext(DataContext);
 
-    return(
+    return (
         <Wrapper>
             <SidebarContainer>
                 <Sidebar />
@@ -20,7 +24,7 @@ function ListPrescription(){
             <Content >
                 <TopBar title='List Prescription' />
                 <Activity>
-                <DataFiltter>
+                    <DataFiltter>
                         <GreenButton>+ Add Appoinment</GreenButton>
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
@@ -32,81 +36,38 @@ function ListPrescription(){
                     <table className='department_table'>
                         <tr>
                             <th>SL. NO</th>
-                            <th>Department</th>
-                            <th>Drescripton</th>
+                            <th>Patient Id</th>
+                            <th>Food Allergies</th>
+                            <th>Tendency Bleed</th>
+                            <th>Heart Disease</th>
+                            <th>Diabetic</th>
+                            <th>Sergery</th>
+                            <th>Accident</th>
+                            <th>Current Medicine</th>
+                            <th>reference</th>
                             <th>Status</th>
                             <th>Action</th>
+
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                            <td>Germany</td>
-                            <td><GrView size='1.5rem' color='darkblue' /></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Francisco Chang</td>
-                            <td>Mexico</td>
-                            <td>Mexico</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
+                        {
+                            caseStudyList.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{index +1}</td>
+                                    <td>{item.patientId}</td>
+                                    <td>{item.footAllergies}</td>
+                                    <td>{item.tendencyBleed}</td>
+                                    <td>{item.heartDisease}</td>
+                                    <td>{item.diabetic}</td>
+                                    <td>{item.sergery}</td>
+                                    <td>{item.accident}</td>
+                                    <td>{item.currentMedicine}</td>
+                                    <td>{item.reference}</td>
+                                    <td>{item.status}</td>
+                                    <td><GrView size='1.5rem' color='darkblue' /></td>
+                                </tr>
+                            ))
+                        }
+
                     </table>
                 </Activity>
             </Content>

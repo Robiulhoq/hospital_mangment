@@ -1,47 +1,68 @@
 const mongoose = require('mongoose');
 
 const PatientSchema = new mongoose.Schema({
-    fastName:{
+    fastName: {
         type: String,
         required: true
     },
-    lastName:{
+    lastName: {
         type: String,
         required: true
     },
-    emailAddress:{
+    emailAddress: {
         type: String,
         required: true
     },
-    password:{
+    password: {
         type: String,
         required: true
     },
-    address:{
+    address: {
         type: String,
         required: true
     },
-    mobileNo:{
+    mobileNo: {
         type: String,
         required: true
     },
-    picture:{
+    picture: {
         type: String,
         required: true
     },
-    dathOfBirth:{
+    dathOfBirth: {
         type: String,
         required: true
     },
-    sex:{
+    sex: {
         type: String,
         required: true
     },
-    bloodGroup:{
+    bloodGroup: {
         type: String,
         required: true
     },
-    status:{
+    appoinment: [
+        {
+            doctorName: {
+                type: String
+            },
+            department: {
+                type: String
+            },
+            date: {
+                type: String
+            },
+            problem: {
+                type: String
+            },
+            status: {
+                type: String
+            }
+        }
+    ],
+    caseStudy: [String],
+    prescription: [String],
+    status: {
         type: String,
         required: true
     }

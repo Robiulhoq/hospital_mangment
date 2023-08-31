@@ -1,16 +1,25 @@
 const mongoose = require('mongoose');
 const ScheduleSchema = require('../Schema/ScheduleSchema.js');
 const Schedule = mongoose.model("Schedule", ScheduleSchema);
+const { Doctor } = require('../Controllers/DoctorControllers.js');
 const createError = require('../utils/error.js');
 
-const createdSchedule = async (req, res, next) => {
-    const newSchedule = new Schedule(req.body);
-    try {
-        const savedSchedule = await newSchedule.save();
-        res.status(200).json(savedSchedule);
+const createdSchedule = async (req, res, next) =>{
+    const doctorId = req.params.id;
+    try{
+        const updateSchedule = await Doctor.findOneAndUpdate({ _id: doctorId }, {
+            $push:{
+                schedule: req.body
+            }
+        },
+        { new: true })
+        res.status(200).json(updateSchedule)
     } catch (error){
-        next(error)
+        res.status(500).json({
+            error: error
+        })
     }
+
 }
 
 const putSchedule = async (req, res, next) =>{

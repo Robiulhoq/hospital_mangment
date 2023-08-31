@@ -41,6 +41,7 @@ import Appoinment from './pages/Appoinment/Appoinment';
 import AppoinmentList from './pages/Appoinment/AppoinmentList';
 import AddPrescription from './pages/Prescription/AddPrescription';
 import DataProvider from './ContextApi/DataProvider';
+import PrintExample from './pages/Prescription/PrintExample';
 
 const router = createBrowserRouter([
   {
@@ -93,23 +94,23 @@ const router = createBrowserRouter([
   },
   {
     path: "appoinment/0",
-    element: <Appoinment/>,
+    element:<DataProvider><Appoinment/></DataProvider> ,
   },
   {
     path: "appoinment/1",
-    element: <AppoinmentList/>,
+    element:<DataProvider><AppoinmentList/></DataProvider>,
   },
   {
     path: "prescripton/0",
-    element: <Prescription/>,
+    element:<DataProvider> <Prescription/></DataProvider>,
   },
   {
     path: "prescripton/1",
-    element: <ListPrescription/>,
+    element: <DataProvider> <ListPrescription/></DataProvider> ,
   },
   {
     path: "prescripton/2",
-    element: <PrintPrescription/>,
+    element: <PrintExample/>,
   },
   {
     path: "prescripton/3",
@@ -141,35 +142,35 @@ const router = createBrowserRouter([
   },
   {
     path: "labtest/0",
-    element: <LabTest/>,
+    element:<DataProvider> <LabTest/></DataProvider> ,
   },
   {
     path: "labtest/1",
-    element: <TestReport/>,
+    element: <DataProvider> <TestReport/></DataProvider> ,
   },
   {
     path: "hr/0",
-    element: <Hr/>,
+    element:<DataProvider> <Hr/></DataProvider> ,
   },
   {
     path: "hr/1",
-    element: <EmployList/>,
+    element:<DataProvider> <EmployList/></DataProvider> ,
   },
   {
     path: "medicine/0",
-    element: <AddMedicine/>,
+    element:<DataProvider> <AddMedicine/></DataProvider>,
   },
   {
     path: "medicine/1",
-    element: <MedicineList/>,
+    element:<DataProvider> <MedicineList/></DataProvider> ,
   },
   {
     path: "bed/0",
-    element: <BedManager/>, 
+    element:<DataProvider> <BedManager/></DataProvider> , 
   },
   {
     path: "bed/1",
-    element: <BedList/>, 
+    element:<DataProvider> <BedList/></DataProvider> , 
   },
   {
     path: "bed/2",

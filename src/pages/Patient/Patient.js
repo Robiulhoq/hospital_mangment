@@ -25,7 +25,7 @@ function Patient() {
         address: '',
         status: 'active'
     });
-
+console.log(patient);
     const hendleChange = (e) => {
         const updatePatient = { ...patient }
         updatePatient[e.target.name] = e.target.value;

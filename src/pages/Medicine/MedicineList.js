@@ -1,4 +1,4 @@
-import React from "react";  
+import React, { useContext, useState } from "react";
 import { Wrapper, SidebarContainer, Content, Activity } from '../../components/Common';
 import { BlueButton, GreenButton } from '../../components/Buttons';
 import TextInput from '../../components/TextInput';
@@ -7,18 +7,42 @@ import TopBar from "../../components/TopBar";
 import DataFiltter from "../../components/DataFiltter";
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
+import { DataContext } from "../../ContextApi/DataContext";
+import axios from "axios";
+import Message from "../../components/Message";
+import { Link } from "react-router-dom";
 
-function MedicineList(){
-
-    return(
+function MedicineList() {
+    const { medicineList, hendleMedicineUI, hendleEditMedicine } = useContext(DataContext);
+    const [message, setMessage] = useState('');
+    const hendleDeleteMedicine = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:5000/medicine/${id}`);
+            if (response.status === 200) {
+                response.message = 'Medicine Delete Successfull';
+                setMessage(response.message);
+                hendleMedicineUI(true);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    if (message) {
+        setInterval(() => {
+            setMessage('');
+            hendleMedicineUI(false);
+        }, 5000);
+    }
+    return (
         <Wrapper>
             <SidebarContainer>
                 <Sidebar />
             </SidebarContainer>
             <Content >
                 <TopBar title='Medicine List' />
+                <Message message={message} />
                 <Activity>
-                <DataFiltter>
+                    <DataFiltter>
                         <GreenButton>+ Add Payment</GreenButton>
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
@@ -27,7 +51,7 @@ function MedicineList(){
                             <TextInput type='text' title='Search' />
                         </div>
                     </DataFiltter>
-                    <h3 style={{margin: '1rem'}}>Debit</h3>
+                    <h3 style={{ margin: '1rem' }}>Debit</h3>
                     <table className='department_table'>
                         <tr>
                             <th>SL. NO</th>
@@ -38,25 +62,20 @@ function MedicineList(){
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
-                       
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
+                        {
+                            medicineList.map((item, index) => (
+                                <tr>
+                                    <td>{index + 1}</td>
+                                    <td>{item.medicineName}</td>
+                                    <td>{item.description}</td>
+                                    <td>{item.price}</td>
+                                    <td>{item.manufactured}</td>
+                                    <td>{item.status}</td>
+                                    <td> <Link to='/medicine/0'><BiEdit onClick={() => hendleEditMedicine(item._id)} size='1.5rem' color='darkblue' /></Link> 
+                                        <AiFillDelete onClick={() => hendleDeleteMedicine(item._id)} color='red' size='1.5rem' /></td>
+                                </tr>
+                            ))
+                        }
                     </table>
                 </Activity>
             </Content>

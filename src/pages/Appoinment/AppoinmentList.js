@@ -1,4 +1,4 @@
-import React from "react";  
+import React, { useContext, useState } from "react";
 import { Wrapper, SidebarContainer, Content, Activity } from '../../components/Common';
 import { BlueButton, GreenButton } from '../../components/Buttons';
 import TextInput from '../../components/TextInput';
@@ -7,18 +7,41 @@ import TopBar from "../../components/TopBar";
 import DataFiltter from "../../components/DataFiltter";
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
+import { DataContext } from "../../ContextApi/DataContext";
+import axios from "axios";
+import Message from "../../components/Message";
+function AppoinmentList() {
+    const { patientList, hendlePatientUI } = useContext(DataContext);
 
-function AppoinmentList(){
-
-    return(
+    const [message, setMessage] = useState('');
+    const deleteAppoinment = async (patientId, apId) => {
+        try {
+            const response = await axios.delete(`http://localhost:5000/patient/appoinment/${patientId}/${apId}`)
+            if(response.status === 200){
+                hendlePatientUI(true);
+                response.message = 'Appoinment Delete successfull';
+                setMessage(response.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    if (message) {
+        setInterval(() => {
+            setMessage('');
+            hendlePatientUI(false)
+        }, 5000);
+    }
+    return (
         <Wrapper>
             <SidebarContainer>
                 <Sidebar />
             </SidebarContainer>
             <Content >
                 <TopBar title='Appoinment List' />
+                <Message message={message} />
                 <Activity>
-                <DataFiltter>
+                    <DataFiltter>
                         <GreenButton>+ Add Appoinment</GreenButton>
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
@@ -30,81 +53,30 @@ function AppoinmentList(){
                     <table className='department_table'>
                         <tr>
                             <th>SL. NO</th>
+                            <th>Patient ID</th>
+                            <th>Doctor Name</th>
+                            <th>Appoinment Date</th>
                             <th>Department</th>
-                            <th>Drescripton</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                            <td>Germany</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Francisco Chang</td>
-                            <td>Mexico</td>
-                            <td>Mexico</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
+                        {
+                            patientList.map((item, index) => item.appoinment.map(ap => (
+                                <tr>
+                                    <td>{index + 1}</td>
+                                    <td>{item._id}</td>
+                                    <td>{ap.doctorName}</td>
+                                    <td>{ap.date}</td>
+                                    <td>{ap.department}</td>
+
+                                    <td>{ap.status}</td>
+                                    <td>
+                                    <AiFillDelete onClick={()=> deleteAppoinment(item._id, ap._id)} color='red' size='1.5rem' /></td>
+                                </tr>
+
+                            )))
+                        }
+
                     </table>
                 </Activity>
             </Content>

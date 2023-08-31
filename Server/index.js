@@ -14,6 +14,14 @@ const patientDocumentRouter = require('./router/pDocument.js');
 const schedule = require('./router/schedule.js');
 const appoinment = require('./router/appoinment.js');
 const Labreport = require('./router/labreport.js');
+const CaseStudy = require('./router/caseStudy.js');
+const Medicine = require('./router/medicine.js');
+const Bed = require('./router/bed.js');
+const Hr = require('./router/humenResource.js');
+const prescription = require('./router/prescription.js');
+const Lab = require('./router/labreport.js');
+
+
 
 const connect = async () => {
   try {
@@ -55,6 +63,12 @@ app.use('/patientdocument', patientDocumentRouter);
 app.use('/schedule', schedule);
 app.use('/appoinment', appoinment);
 app.use('/labreport', Labreport);
+app.use('/casestudy', CaseStudy)
+app.use('/medicine', Medicine);
+app.use('/bed', Bed);
+app.use('/hr', Hr);
+app.use('/prescription', prescription);
+app.use('/lab', Lab);
 
 
 app.use((err, req, res, next) => {

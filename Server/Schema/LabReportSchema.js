@@ -5,15 +5,23 @@ const LabreportSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    refDoctorName:{
+    date: {
         type: String,
         required: true
     },
-    problem:{
+    testName:{
         type: String,
         required: true
     },
-    attatchFile:{
+    result:{
+        type: String,
+        required: true
+    },
+    doctorName:{
+        type: String,
+        required: true
+    },
+    status:{
         type: String,
         required: true
     }

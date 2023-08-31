@@ -48,7 +48,9 @@ const getAllDoctor = async (req, res, next) =>{
           })
       }
 }
-const pushDoctor = async (req, res, next) =>{
+// Schedule add (schedule api create start)
+
+const createdSchedule = async (req, res, next) =>{
     const doctorId = req.params.id;
     try{
         const updateSchedule = await Doctor.findOneAndUpdate({ _id: doctorId }, {
@@ -65,4 +67,64 @@ const pushDoctor = async (req, res, next) =>{
     }
 
 }
-module.exports = {createdDoctor, putDoctor, deleteDoctor, getAllDoctor,pushDoctor,  Doctor};
+
+const putSchedule = async (req, res, next) => {
+    const doctorId = req.params.id;
+    const scheduleId = req.params.scheduleId; // Assuming you pass scheduleId in the URL
+    
+    try {
+        const updatedDoctor = await Doctor.findOneAndUpdate(
+            { _id: doctorId, "schedule._id": scheduleId }, // Find doctor by ID and matching schedule ID
+            {
+                $set: {
+                    "schedule.$.abailableDays": req.body.abailableDays, // Update schedule fields as needed
+                    "schedule.$.availableTime": req.body.availableTime,
+                    "schedule.$.patientTime": req.body.patientTime,
+                    "schedule.$.status": req.body.status,
+                    // Add more fields to update here
+                }
+            },
+            { new: true }
+        );
+
+        if (!updatedDoctor) {
+            return res.status(404).json({ error: "Doctor or schedule not found" });
+        }
+
+        res.status(200).json(updatedDoctor);
+    } catch (error) {
+        res.status(500).json({
+            error: error
+        });
+    }
+};
+
+const deleteSchedule = async (req, res, next) => {
+    const doctorId = req.params.id;
+    const scheduleId = req.params.scheduleId; // Assuming you pass scheduleId in the URL
+    
+    try {
+        const updatedDoctor = await Doctor.findOneAndUpdate(
+            { _id: doctorId },
+            {
+                $pull: {
+                    schedule: { _id: scheduleId } // Remove the matching schedule from the array
+                }
+            },
+            { new: true }
+        );
+
+        if (!updatedDoctor) {
+            return res.status(404).json({ error: "Doctor not found" });
+        }
+
+        res.status(200).json(updatedDoctor);
+    } catch (error) {
+        res.status(500).json({
+            error: error
+        });
+    }
+};
+
+module.exports = { createdDoctor, putDoctor, deleteDoctor, getAllDoctor, createdSchedule, putSchedule, deleteSchedule, deleteSchedule, Doctor };
+

@@ -5,10 +5,6 @@ const MedicineSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    categoryName:{
-        type: String,
-        required: true
-    },
     description:{
         type: String,
         required: true
@@ -17,7 +13,7 @@ const MedicineSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    manufacturedBy:{
+    manufactured:{
         type: String,
         required: true
     },

@@ -58,11 +58,13 @@ function ListPatient() {
                     <table className='department_table'>
                         <tr>
                             <th>SL. NO</th>
+                            <th>ID NO</th>
                             <th>Picture</th>
                             <th>Name</th>
-                            <th>Department</th>
+                            <th>Address</th>
                             <th>E-mail address</th>
                             <th>Mobile No</th>
+                            <th>Blood Group</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -70,11 +72,13 @@ function ListPatient() {
                             patientList.length ? patientList.map((item, index) => (
                                 <tr>
                                     <td>{index +1}</td>
+                                    <td>{item._id}</td>
                                     <td><img style={{height: '100px', width: '100px'}} src={item.picture}/></td>
                                     <td>{item.fastName}</td>
-                                    <td>{item.department}</td>
+                                    <td>{item.address}</td>
                                     <td>{item.emailAddress}</td>
                                     <td>{item.mobileNo}</td>
+                                    <td>{item.bloodGroup}</td>
                                     <td>{item.status}</td>
                                     <td><Link to='/patient/0'><BiEdit onClick={()=> hendleEditPatient(item._id)} size='1.5rem' color='darkblue' /></Link> 
                                     <AiFillDelete onClick={()=>hendleDeletePatient(item._id)} color='red' size='1.5rem' /></td>
