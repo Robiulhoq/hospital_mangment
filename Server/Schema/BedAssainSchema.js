@@ -1,14 +1,26 @@
 const mongoose = require('mongoose');
 
 const BedAssainSchema = new mongoose.Schema({
-    bedassainName:{
+    patientId:{
         type: String,
         required: true,
     },
-    description:{
-        type: String
+    bedType:{
+        type: Number
     },
-    status:{
+    assainDate:{
+        type: Date,
+        required: true
+    },
+    dischargeDate:{
+        type: Date,
+        required: true
+    },
+    description:{
+        type: String,
+        required: true
+    },
+     status:{
         type: String,
         required: true
     }

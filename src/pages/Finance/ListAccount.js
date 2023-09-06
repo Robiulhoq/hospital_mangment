@@ -1,4 +1,4 @@
-import React from "react";  
+import React, { useContext, useState } from "react";
 import { Wrapper, SidebarContainer, Content, Activity } from '../../components/Common';
 import { BlueButton, GreenButton } from '../../components/Buttons';
 import TextInput from '../../components/TextInput';
@@ -7,17 +7,44 @@ import TopBar from "../../components/TopBar";
 import DataFiltter from "../../components/DataFiltter";
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
-function ListService(){
+import { DataContext } from "../../ContextApi/DataContext";
+import axios from "axios";
+import Message from "../../components/Message";
+import { Link } from "react-router-dom";
 
-    return(
+function ListService() {
+    const { accountList, hendleAccoutUI, hendleEditAccount } = useContext(DataContext);
+    const [message, setMessage] = useState('')
+    const hendleDeleteAccount = async (id) =>{
+        try{
+            const response = await  axios.delete(`http://localhost:5000/account/${id}`);
+            if(response.status === 200){
+                response.message = "Account Delete successfull!";
+                setMessage(response.message);
+                hendleAccoutUI(true);
+            }
+        }catch(error){
+            console.log(error);
+        }
+    }
+    if (message) {
+        setInterval(() => {
+            setMessage('');
+            hendleAccoutUI(false);
+
+        }, 5000);
+    }
+    
+    return (
         <Wrapper>
             <SidebarContainer>
                 <Sidebar />
             </SidebarContainer>
             <Content >
                 <TopBar title='List Payment' />
+                <Message message={message} />
                 <Activity>
-                <DataFiltter>
+                    <DataFiltter>
                         <GreenButton>+ Add Payment</GreenButton>
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
@@ -26,39 +53,31 @@ function ListService(){
                             <TextInput type='text' title='Search' />
                         </div>
                     </DataFiltter>
-                    <h3 style={{margin: '1rem'}}>Debit</h3>
+                    <h3 style={{ margin: '1rem' }}>Debit</h3>
                     <table className='department_table'>
                         <tr>
                             <th>SL. NO</th>
-                            <th>Date</th>
                             <th>Account Name</th>
-                            <th>Pay to</th>
+                            <th>Account Type</th>
                             <th>Description</th>
-                            <th>Amount</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
-                       
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td>Austria</td>
-                            <td><BiEdit size='1.5rem' color='darkblue' /> <AiFillDelete color='red' size='1.5rem' /></td>
-                        </tr>
+                        { accountList?
+                            accountList.map((item, index) => (
+                                <tr>
+                                    <td>{index +1}</td>
+                                    <td>{item.accountName}</td>
+                                    <td>{item.accountType}</td>
+                                    <td>{item.description}</td>
+                                    <td>{item.status}</td>
+                                    <td> <Link to='/finance/2' ><BiEdit onClick={()=> hendleEditAccount(item._id)} size='1.5rem' color='darkblue' /> </Link> 
+                                    <AiFillDelete onClick={()=> hendleDeleteAccount(item._id)} color='red' size='1.5rem' /></td>
+                                </tr>
+                            )): <p>Loading</p>
+                        }
+
+
                     </table>
                 </Activity>
             </Content>

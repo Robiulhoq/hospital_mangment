@@ -15,7 +15,7 @@ const PrintPrescription = forwardRef((props, ref, print) => {
     const [prescription, setPrescription] = useState(null);
     const [diagnoses, setDiagnosis] = useState(null);
     // console.log(prescription);
-    const [singlePatient, setSinglePatient] = useState(null);
+    const [singlePatient, setSinglePatient] = useState([]);
     useEffect(() => {
         fetch(`http://localhost:5000/prescription/${patientId}`)
             .then(res => res.json())
@@ -55,7 +55,7 @@ const PrintPrescription = forwardRef((props, ref, print) => {
                         </div>
                     </section>
                     
-                    {singlePatient ?
+                    {singlePatient.length ?
                         singlePatient.map(item => (
                             <section id="basicInfo">
                                 <p><b>Patient Name: {item.fastName} </b></p>

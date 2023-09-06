@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import '../Finance/Finance.css';
 import { Wrapper, SidebarContainer, Content, Activity } from '../../components/Common';
 import { BlueButton, GreenButton } from '../../components/Buttons';
@@ -6,14 +6,17 @@ import TextInput from '../../components/TextInput';
 import Sidebar from "../../components/Sidebar";
 import TopBar from "../../components/TopBar";
 import axios from "axios";
+import { DataContext } from "../../ContextApi/DataContext";
 
 
 
 function AddPrescription() {
+    const {medicineList} = useContext(DataContext);
+    console.log(medicineList);
     const [totalMedicine, setTotalMedicine] = useState(1);
     const [totalDiagnosis, setTotalDiagnosis] = useState(1);
     const [patientId, setPatientId] = useState('');
-    console.log(patientId);
+    
     const [medicine, setMedicine] = useState([{
         medicineName: '',
         medicineType: '',
@@ -35,7 +38,7 @@ function AddPrescription() {
         }]); // Add an empty invoice input
     };
     const prescription = medicine.concat(diagnosis);
-    console.log(prescription);
+    
     const handleAddDiagnosis = () => {
         setTotalDiagnosis(totalDiagnosis + 1);
         setDiagnosis([...diagnosis, {
@@ -85,6 +88,14 @@ function AddPrescription() {
         }
     }
 
+    // Single patient
+    const [singlePatient, setSinglePatient] = useState(null);
+    useEffect(() => {
+        fetch(`http://localhost:5000/patient/filter/${patientId}`)
+            .then(res => res.json())
+            .then(data => setSinglePatient(data));
+    }, [patientId])
+
     return (
         <Wrapper>
             <SidebarContainer>
@@ -96,9 +107,9 @@ function AddPrescription() {
                     <section id="patientAndHospital">
                         <div className="patient_info_container">
                             <TextInput className='custom_input' onChange={(e)=> setPatientId(e.target.value)} name='patientId' title="Patient Id" type='text' />
-                            <TextInput className='custom_input' title="Full Name" type='text' />
-                            <TextInput className='custom_input' title="Sex" type='text' />
-                            <TextInput className='custom_input' title="Dath of birth" type='text' />
+                            <TextInput className='custom_input' defaultValue={singlePatient? singlePatient[0].fastName: null} title="Full Name" type='text' />
+                            <TextInput className='custom_input' defaultValue={singlePatient? singlePatient[0].sex: null} title="Sex" type='text' />
+                            <TextInput className='custom_input' defaultValue={singlePatient? singlePatient[0].dathOfBirth: null} title="Dath of birth" type='text' />
                             <TextInput className='custom_input' title="Chif complain" type='text' />
                             <TextInput className='custom_input' title="Weight" type='text' />
                         </div>
@@ -124,9 +135,13 @@ function AddPrescription() {
                                     <tr key={index}>
                                         <td>
                                             <select name="medicineName" onChange={(e) => handleMedicineChange(e, index)} className="invoice_input">
-                                                <option>............................</option>
-                                                <option>.....</option>
-                                                <option>.....</option>
+                                                {
+                                                  medicineList?  medicineList.map(item => (
+
+                                                        <option>{item.medicineName}</option>
+                                                    )): null
+                                                }
+                                                
                                             </select>
                                         </td>
 
@@ -156,12 +171,8 @@ function AddPrescription() {
                             {
                                 diagnosis.map((item, index) => (
                                     <tr key={index}>
-                                        <td>
-                                            <select style={{minWidth: '97%'}} name="diagnosis" onChange={(e) => handleDiagnosisChange(e, index)} className="invoice_input">
-                                                <option>............................</option>
-                                                <option>.....</option>
-                                                <option>.....</option>
-                                            </select>
+                                        <td style={{minWidth: '97%'}} name="diagnosis" onChange={(e) => handleDiagnosisChange(e, index)} className="invoice_input">
+                                        <input style={{minWidth: '100%'}} name="instruction" onChange={(e) => handleDiagnosisChange(e, index)} className="invoice_input" />
                                         </td>
                                         <td style={{minWidth: '300px'}}><input style={{minWidth: '100%'}} name="instruction" onChange={(e) => handleDiagnosisChange(e, index)} className="invoice_input" /></td>
                                         <td style={{ display: 'flex' }}><GreenButton onClick={ handleAddDiagnosis } >Add</GreenButton>
@@ -172,10 +183,9 @@ function AddPrescription() {
 
                         </table>
                     </section>
-                    <TextInput className='custom_input' title="Address" type='text' />
-                    <TextInput className='custom_input' title="Address" type='text' />
+                    
                     <section id="save_and_activity">
-                        <TextInput type="radio" title="Status" options={['active', 'deactive']} />
+                       
                         <div><BlueButton>Reset</BlueButton> <GreenButton onClick={hendleSavePrescription}>Save</GreenButton></div>
                     </section>
                 </Activity>

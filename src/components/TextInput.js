@@ -18,7 +18,7 @@ function Input({ title, placeholder, name, onChange, type, options, className, d
           {item.label}
         </option>
       ))}
-    </select> : null}
+    </select> : <input name={name} defaultValue={defaultValue}  onChange={onChange} type={type} placeholder={placeholder} />}
     </StyledInput>
   );
 }

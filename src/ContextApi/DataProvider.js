@@ -148,6 +148,59 @@ const DataProvider = ({ children }) => {
     const hendleEditLab = id =>{
         setEditLabId(id);
     }
+
+    // Account API intergation start
+    const [accountList, setAccountList] = useState([]);
+    const [editAccoutId, setEditAccoutId] = useState('');
+    const [accoutUI, setAccoutUI] = useState(false);
+    
+    useEffect(()=>{
+        fetch('http://localhost:5000/account')
+        .then(res => res.json())
+        .then(data => setAccountList(data))
+    }, [accoutUI]);
+    const hendleAccoutUI = state =>{
+        setAccoutUI(state);
+    }
+    const hendleEditAccount = id =>{
+        setEditAccoutId(id);
+    }
+
+    
+    // Assain Bed API intergation start
+    const [assainBedList, setAssainBedList] = useState([]);
+    const [editAssainBedId, setEditAssainBedId] = useState('');
+    const [assainBedUI, setAssainBedUI] = useState(false);
+
+    useEffect(()=>{
+        fetch('http://localhost:5000/assainbed')
+        .then(res => res.json())
+        .then(data => setAssainBedList(data))
+    },[assainBedUI])
+    
+    const hendleAssainBedUI = state =>{
+        setAssainBedUI(state);
+    }
+    const hendleEditAssainBed = id =>{
+        setEditAssainBedId(id);
+    }
+
+    // Payment API intergation start
+    const [paymentList, setPaymentList] = useState([]);
+    const [editPaymentId, setEditPaymentId] = useState('');
+    const [paymentUI, setPaymentUI] = useState(false);
+
+    useEffect(()=>{
+        fetch('http://localhost:5000/payment')
+        .then(res => res.json())
+        .then(data => setPaymentList(data))
+    }, [paymentUI]);
+    const hendlePaymentUI = state =>{
+        setPaymentUI(state);
+    }
+    const hendleEditPayment = id =>{
+        setEditPaymentId(id);
+    }
     return (
         <div>
             <DataContext.Provider value={{
@@ -190,7 +243,22 @@ const DataProvider = ({ children }) => {
                 labList,
                 hendleLabUI,
                 hendleEditLab,
-                eidtLabId
+                eidtLabId,
+
+                accountList,
+                hendleAccoutUI,
+                hendleEditAccount,
+                editAccoutId,
+
+                assainBedList,
+                hendleAssainBedUI,
+                hendleEditAssainBed,
+                editAssainBedId,
+
+                paymentList,
+                hendlePaymentUI,
+                hendleEditPayment,
+                editPaymentId
             }}>
                 {children}
             </DataContext.Provider>

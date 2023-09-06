@@ -89,7 +89,8 @@ const Department = () => {
                     <BlueButton>Depratment List</BlueButton>
                     <TextInput defaultValue={department.departmentName} onChange={hendleChange} name='departmentName' title="Department Name" placeholder='Department Name' type='text' />
                     <TextInput defaultValue={department.description} onChange={hendleChange} name='description' title="Description" placeholder='Description' type='textarea' />
-                    <TextInput defaultValue={department.status} onChange={hendleChange} name='status' title="status" type='radio' options={['active', 'deactive']} />
+                    <TextInput defaultValue={department.status} onChange={hendleChange} name='status' title="status" type='radio' 
+                    options={[{label: 'Active', value: 'Active'},{label: 'Deactive', value: 'Deactive'}]} />
                     <GreenButton onClick={hendleSaveDepartment}>Save</GreenButton>
 
                 </Activity>

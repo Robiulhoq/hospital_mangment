@@ -12,7 +12,7 @@ const BedSchema = new mongoose.Schema({
         type: String
     },
     charge:{
-        type: String
+        type: Number
     },
     status:{
         type: String,

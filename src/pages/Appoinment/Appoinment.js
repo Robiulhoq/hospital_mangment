@@ -16,7 +16,7 @@ function Appoinment() {
         problem: '',
         status: 'active'
     });
-    
+    console.log(appoinment);
     const hendleChange = (e) => {
         const updateAppoinment = { ...appoinment }
         updateAppoinment[e.target.name] = e.target.value;
@@ -63,13 +63,30 @@ function Appoinment() {
                 <Message message={message} />
                 <Activity>
                     <TextInput type='text' onChange={(e) => setPatientId(e.target.value)} title='Patient ID' placeholder='Patient ID' />
-                    <TextInput type='radio' onChange={hendleChange} name='department' title='Department Name ' placeholder='Department Name' options={departmentList.map(item => ({ label: item.departmentName, value: item.departmentName }))} />
-                    <TextInput type='radio' name='doctorName' onChange={hendleChange} title='Doctor Name ' placeholder='Doctor Name' options={doctorList.map(item => ({ label: item.fastName, value: item.fastName }))} />
+                    <TextInput type='radio' onChange={hendleChange} name='department' title='Department Name ' placeholder='Department Name'
 
-                    <TextInput type='text' name='date' onChange={hendleChange} title='Appointment Date *' placeholder='Appointment Date *1' />
+                        options={departmentList.map(item => ({ label: item.departmentName, value: item.departmentName }))} />
+
+                    <TextInput type='radio' name='doctorName' onChange={hendleChange} title='Doctor Name ' placeholder='Doctor Name'
+                        options={doctorList.map(item => (
+                            { label: appoinment.department === item.department ? item.fastName : null, value: appoinment.department === item.department ? item.fastName : null }
+
+                        )
+                        )} />
+                    {
+                        doctorList.map(item => (appoinment.doctorName === item.fastName ?
+                            item.schedule.map(items => (
+                               
+                                    <li style={{marginLeft: '19rem', listStyle: 'none', color: 'green'}}>{items.abailableDays + ' ' + items.availableTime}</li>
+                                
+                            )): null
+                            ))
+                    }
+
+                    <TextInput type='date' name='date' onChange={hendleChange} title='Appointment Date *' placeholder='Appointment Date *1' />
                     <TextInput type='textarea' name='problem' onChange={hendleChange} title='Problem' placeholder='Problem' />
-                    <TextInput type='radio' name='status' onChange={hendleChange} title='Status' placeholder='Status' 
-                    options={[{label: 'Active', value: 'active'}, {label: 'Deactive', value: 'Deactive'}]} />
+                    <TextInput type='radio' name='status' onChange={hendleChange} title='Status' placeholder='Status'
+                        options={[{ label: 'Active', value: 'active' }, { label: 'Deactive', value: 'Deactive' }]} />
                     <GreenButton onClick={handleSaveAppointment}>Save</GreenButton>
                 </Activity>
             </Content>

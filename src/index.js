@@ -42,6 +42,7 @@ import AppoinmentList from './pages/Appoinment/AppoinmentList';
 import AddPrescription from './pages/Prescription/AddPrescription';
 import DataProvider from './ContextApi/DataProvider';
 import PrintExample from './pages/Prescription/PrintExample';
+import PrintInvoice from './pages/Finance/PrintInvoice';
 
 const router = createBrowserRouter([
   {
@@ -114,31 +115,31 @@ const router = createBrowserRouter([
   },
   {
     path: "prescripton/3",
-    element: <AddPrescription/>,
+    element: <DataProvider> <AddPrescription/></DataProvider> ,
   },
   {
     path: "finance/0",
-    element: <Finance/>,
+    element: <DataProvider> <Finance/></DataProvider> ,
   },
   {
     path: "finance/1",
-    element: <ListInvoice/>,
+    element: <PrintInvoice /> ,
   },
   {
     path: "finance/2",
-    element: <AddAccount/>,
+    element: <DataProvider> <AddAccount/></DataProvider> ,
   },
   {
     path: "finance/3",
-    element: <ListPayment/>,
+    element: <DataProvider> <ListAccount/></DataProvider>  ,
   },
   {
     path: "finance/4",
-    element: <AddPayment/>,
+    element:<DataProvider> <AddPayment/></DataProvider> ,
   },
   {
     path: "finance/5",
-    element: <ListAccount/>,
+    element:<DataProvider> <ListPayment/></DataProvider> ,
   },
   {
     path: "labtest/0",
@@ -174,11 +175,11 @@ const router = createBrowserRouter([
   },
   {
     path: "bed/2",
-    element: <AssignBed/>,
+    element:<DataProvider> <AssignBed/></DataProvider> ,
   },
   {
     path: "bed/3",
-    element: <AssignBedList/>,
+    element:<DataProvider> <AssignBedList/></DataProvider> ,
   }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));

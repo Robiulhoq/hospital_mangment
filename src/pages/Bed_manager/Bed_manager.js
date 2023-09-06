@@ -13,7 +13,7 @@ function BedManager() {
         bedType: '',
         description: '',
         bedCapacity: '',
-        charge: '',
+        charge: 0,
         status: 'active'
     });
 
@@ -38,7 +38,7 @@ function BedManager() {
                     bedType: '',
                     description: '',
                     bedCapacity: '',
-                    charge: '',
+                    charge: 0,
                     status: 'active'
                 }))
             }
