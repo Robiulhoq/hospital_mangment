@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { DataContext } from './DataContext';
+import { getCookie } from '../Utils/getCookie';
 
 const DataProvider = ({ children }) => {
 
     // Load  all department function start here
-
+     
+    const token = getCookie('access_token');
+   
     const [departmentList, setDepartmentList] = useState([]);
     const [editDepartmentId, setEditDepartmentId] = useState(null);
-    const [update, setUpdate] = useState(true);
+    const [update, setUpdate] = useState(false);
     useEffect(() => {
-        fetch('http://localhost:5000/department')
-            .then(res => res.json())
-            .then(data => setDepartmentList(data))
-    }, [update]);
+        fetch('http://localhost:5000/department', {
+          headers: {
+            'Authorization': `Bearer ${token}`, // Include the access token
+          },
+        })
+          .then(res => res.json())
+          .then(data => setDepartmentList(data))
+      }, [update]); // Make sure to include accessToken in the dependency array
+      
 
     const updateUI = (state) => {
         setUpdate(state);
@@ -28,7 +36,11 @@ const DataProvider = ({ children }) => {
     const [editDoctorId, setEditDoctorId] = useState(null);
     const [doctorUI, setDoctorUI] = useState(false)
     useEffect(() => {
-        fetch('http://localhost:5000/doctor')
+        fetch('http://localhost:5000/doctor',{
+            headers: {
+              'Authorization': `Bearer ${token}`, // Include the access token
+            },
+          })
             .then(res => res.json())
             .then(data => setDoctorList(data))
     }, [doctorUI])
@@ -47,7 +59,11 @@ const DataProvider = ({ children }) => {
     const [editPatientId, setEditPatientId] = useState(null);
     const [patientUI, setPatientUI] = useState(false);
     useEffect(() => {
-        fetch('http://localhost:5000/patient')
+        fetch('http://localhost:5000/patient',{
+            headers: {
+              'Authorization': `Bearer ${token}`, // Include the access token
+            },
+          })
             .then(res => res.json())
             .then(data => setPatientList(data))
     }, [patientUI]);
@@ -75,7 +91,11 @@ const DataProvider = ({ children }) => {
     const [caseStudyList, setCaseStudyList] = useState([]);
     const [caseStudyUI, setCaseStudyUI] = useState(false)
     useEffect(()=>{
-        fetch('http://localhost:5000/casestudy')
+        fetch('http://localhost:5000/casestudy',{
+            headers: {
+              'Authorization': `Bearer ${token}`, // Include the access token
+            },
+          })
         .then(res => res.json())
         .then(data => setCaseStudyList(data))
     }, [caseStudyUI]);
@@ -89,7 +109,11 @@ const DataProvider = ({ children }) => {
     const [editMedicineId, setEditMedicineId] = useState('');
     const [medicineUI, setMedicineUI] = useState(false);
     useEffect(()=>{
-        fetch('http://localhost:5000/medicine')
+        fetch('http://localhost:5000/medicine',{
+            headers: {
+              'Authorization': `Bearer ${token}`, // Include the access token
+            },
+          })
         .then(res => res.json())
         .then(data => setMedicineList(data));
     },[medicineUI]);
@@ -106,7 +130,11 @@ const DataProvider = ({ children }) => {
     const [editBedId, setEditBedId] = useState('');
     const [bedUI, setBedUI] = useState(false);
     useEffect(()=>{
-        fetch('http://localhost:5000/bed')
+        fetch('http://localhost:5000/bed',{
+            headers: {
+              'Authorization': `Bearer ${token}`, // Include the access token
+            },
+          })
         .then(res => res.json())
         .then(data => setBedList(data));
     },[bedUI]);
@@ -121,7 +149,11 @@ const DataProvider = ({ children }) => {
     const [editHrId, setEditHrId] = useState('');
     const [hrUI, setHrUI] = useState(false);
     useEffect(()=>{
-        fetch('http://localhost:5000/hr')
+        fetch('http://localhost:5000/hr', {
+            headers: {
+              'Authorization': `Bearer ${token}`, // Include the access token
+            },
+          })
         .then(res => res.json())
         .then(data => setHrList(data));
     },[hrUI]);
@@ -138,7 +170,11 @@ const DataProvider = ({ children }) => {
     const [labUI, setLabUI] = useState(false);
 
     useEffect(()=>{
-        fetch('http://localhost:5000/lab')
+        fetch('http://localhost:5000/lab',{
+            headers: {
+              'Authorization': `Bearer ${token}`, // Include the access token
+            },
+          })
         .then(res => res.json())
         .then(data => setLabList(data))
     },[labUI]);
@@ -152,10 +188,14 @@ const DataProvider = ({ children }) => {
     // Account API intergation start
     const [accountList, setAccountList] = useState([]);
     const [editAccoutId, setEditAccoutId] = useState('');
-    const [accoutUI, setAccoutUI] = useState(false);
+    const [accoutUI, setAccoutUI] = useState(true);
     
     useEffect(()=>{
-        fetch('http://localhost:5000/account')
+        fetch('http://localhost:5000/account', {
+            headers: {
+              'Authorization': `Bearer ${token}`, // Include the access token
+            },
+          })
         .then(res => res.json())
         .then(data => setAccountList(data))
     }, [accoutUI]);
@@ -173,7 +213,11 @@ const DataProvider = ({ children }) => {
     const [assainBedUI, setAssainBedUI] = useState(false);
 
     useEffect(()=>{
-        fetch('http://localhost:5000/assainbed')
+        fetch('http://localhost:5000/assainbed',{
+            headers: {
+              'Authorization': `Bearer ${token}`, // Include the access token
+            },
+          })
         .then(res => res.json())
         .then(data => setAssainBedList(data))
     },[assainBedUI])
@@ -191,7 +235,11 @@ const DataProvider = ({ children }) => {
     const [paymentUI, setPaymentUI] = useState(false);
 
     useEffect(()=>{
-        fetch('http://localhost:5000/payment')
+        fetch('http://localhost:5000/payment',{
+            headers: {
+              'Authorization': `Bearer ${token}`, // Include the access token
+            },
+          })
         .then(res => res.json())
         .then(data => setPaymentList(data))
     }, [paymentUI]);
@@ -201,6 +249,8 @@ const DataProvider = ({ children }) => {
     const hendleEditPayment = id =>{
         setEditPaymentId(id);
     }
+
+    
     return (
         <div>
             <DataContext.Provider value={{
@@ -258,7 +308,9 @@ const DataProvider = ({ children }) => {
                 paymentList,
                 hendlePaymentUI,
                 hendleEditPayment,
-                editPaymentId
+                editPaymentId,
+
+               
             }}>
                 {children}
             </DataContext.Provider>

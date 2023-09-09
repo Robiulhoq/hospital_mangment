@@ -4,26 +4,33 @@ import { BlueButton, GreenButton } from '../../components/Buttons';
 import TextInput from '../../components/TextInput';
 import Sidebar from "../../components/Sidebar";
 import TopBar from "../../components/TopBar";
+import { getCookie } from "../../Utils/getCookie";
 
 const ListInvoice = forwardRef((props, ref, print) => {
+    const { userRole } = props;
     const [patientId, setPatientId] = useState('');
     const [singlePatient, setSinglePatient] = useState(null);
     const [singleInvoice, setSingleInvoice] = useState(null);
+    const token = getCookie('access_token');
     useEffect(() => {
-        fetch(`http://localhost:5000/patient/filter/${patientId}`)
+        fetch(`http://localhost:5000/patient/filter/${patientId}`,{
+            headers: {'Authorization': `Bearer ${token}`}
+        })
             .then(res => res.json())
             .then(data => setSinglePatient(data));
     }, [patientId]);
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/invoice/filter/${patientId}`)
+        fetch(`http://localhost:5000/invoice/filter/${patientId}`,{
+            headers:{'Authorization': `Bearer ${token}`}
+        })
         .then(res => res.json())
         .then(data => setSingleInvoice(data))
     },[patientId])
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='List Invoice' />

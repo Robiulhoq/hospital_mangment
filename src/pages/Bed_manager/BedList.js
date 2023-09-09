@@ -10,13 +10,17 @@ import { AiFillDelete } from 'react-icons/ai';
 import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { getCookie } from "../../Utils/getCookie";
 
-function BedList() {
+function BedList({userRole}) {
     const { bedList, hendleBedUI, hendleEditBed } = useContext(DataContext);
     const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleDeleteBed = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/bed/${id}`);
+            const response = await axios.delete(`http://localhost:5000/bed/${id}`,{
+                headers: {'Authorization': `Bearer ${token}`}
+            });
             if (response.status === 200) {
                 response.message = 'Bed Delete Successfull';
                 setMessage(response.message);
@@ -36,7 +40,7 @@ function BedList() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Bed List' />

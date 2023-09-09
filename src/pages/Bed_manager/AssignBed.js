@@ -6,9 +6,10 @@ import Sidebar from "../../components/Sidebar";
 import TopBar from "../../components/TopBar";
 import Message from "../../components/Message";
 import { DataContext } from "../../ContextApi/DataContext";
+import { getCookie } from "../../Utils/getCookie";
 
 
-function AssignBed() {
+function AssignBed({userRole}) {
     const { bedList, hendleAssainBedUI } = useContext(DataContext);
     const [assainBed, setAssainBed] = useState({
         patientId: '',
@@ -24,13 +25,15 @@ function AssignBed() {
         updateAssainBed[e.target.name] = e.target.value;
         setAssainBed(updateAssainBed);
     }
-    const [message, setMessage] = useState('')
+    const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const hendeAssainBed = async () => {
         try {
             const response = await fetch('http://localhost:5000/assainbed', {
                 method: 'POST',
                 body: JSON.stringify(assainBed),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             if (response.status === 200) {
                 response.message = "Assain Bed Successfull!"
@@ -51,7 +54,7 @@ function AssignBed() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Assain Bed' />

@@ -11,14 +11,18 @@ import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import Message from "../../components/Message";
 import { Link } from "react-router-dom";
-function ListSchedule() {
+import { getCookie } from "../../Utils/getCookie";
+function ListSchedule({userRole}) {
     const { doctorList, hendleDoctorUI, hendleEditSchedule } = useContext(DataContext);
     // const schedule = doctorList.map(item => item.schedule);
     // console.log(schedule);
     const [deleteMessage, setDeleteMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleDeleteSchedule = async (doctorId, scheduleId) =>{
         try{
-            const response = await axios.delete(`http://localhost:5000/doctor/schedule/${doctorId}/${scheduleId}`);
+            const response = await axios.delete(`http://localhost:5000/doctor/schedule/${doctorId}/${scheduleId}`,{
+                headers: {'Authorization': `Bearer ${token}`}
+            });
             response.message = 'Schedule delete successfull';
             setDeleteMessage(response.message);
             hendleDoctorUI(true);
@@ -36,7 +40,7 @@ function ListSchedule() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='List Schedule' />

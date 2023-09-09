@@ -10,13 +10,17 @@ import { AiFillDelete } from 'react-icons/ai';
 import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import Message from "../../components/Message";
-function AppoinmentList() {
+import { getCookie } from "../../Utils/getCookie";
+function AppoinmentList({userRole}) {
     const { patientList, hendlePatientUI } = useContext(DataContext);
 
     const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const deleteAppoinment = async (patientId, apId) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/patient/appoinment/${patientId}/${apId}`)
+            const response = await axios.delete(`http://localhost:5000/patient/appoinment/${patientId}/${apId}`,{
+                headers: {'Authorization': `Bearer ${token}`}
+            })
             if(response.status === 200){
                 hendlePatientUI(true);
                 response.message = 'Appoinment Delete successfull';
@@ -35,7 +39,7 @@ function AppoinmentList() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Appoinment List' />

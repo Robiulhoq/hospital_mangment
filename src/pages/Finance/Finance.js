@@ -8,9 +8,10 @@ import TopBar from "../../components/TopBar";
 import { DataContext } from "../../ContextApi/DataContext";
 import Message from "../../components/Message";
 import { Loading } from "../../components/Loading";
+import { getCookie } from "../../Utils/getCookie";
 
 
-function Finance() {
+function Finance({userRole}) {
     const { patientList, accountList } = useContext(DataContext);
 
     const [totalInvoice, setTotalInvoice] = useState(1);
@@ -79,6 +80,8 @@ function Finance() {
 
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const token = getCookie('access_token');
+
     const hendleSaveInvoice = async () => {
         setLoading(true);
         const combinedInvoice = {
@@ -86,11 +89,14 @@ function Finance() {
             invoice: invoice
         };
         try {
-            
+
             const resp = await fetch('http://localhost:5000/invoice', {
                 method: 'POST',
                 body: JSON.stringify(combinedInvoice),
-                headers: { 'Content-Type': 'application/json' }
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
             });
             if (resp.status === 200) {
                 setLoading(false)
@@ -113,35 +119,36 @@ function Finance() {
     }
     // Single patient
     const [singlePatient, setSinglePatient] = useState(null);
-    
+
     useEffect(() => {
-        fetch(`http://localhost:5000/patient/filter/${fullInvoice.patientId}`)
-            .then(res => res.json())
-            .then(data => setSinglePatient(data));
+        fetch(`http://localhost:5000/patient/filter/${fullInvoice.patientId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(res => res.json())
+        .then(data => setSinglePatient(data));
     }, [fullInvoice.patientId])
 
     if (message) {
         setInterval(() => {
             setMessage('');
-            
+
         }, 5000);
     }
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Invoice' />
                 <Message message={message} />
                 {
-                    loading == true? <Loading /> :
+                    loading == true ? <Loading /> :
                         <Activity id="invoice_container">
                             <section id="patientAndHospital">
                                 <div className="patient_info_container">
                                     <TextInput className='custom_input' name='patientId' onChange={hendleChange} title="Patient Id" type='text' />
-                                    <TextInput className='custom_input' defaultValue={singlePatient? singlePatient[0].fastName: null} title="Full Name" type='text' />
-                                    <TextInput className='custom_input' defaultValue={singlePatient? singlePatient[0].address: null} title="Address" type='text' />
+                                    <TextInput className='custom_input' defaultValue={singlePatient ? singlePatient[0].fastName : null} title="Full Name" type='text' />
+                                    <TextInput className='custom_input' defaultValue={singlePatient ? singlePatient[0].address : null} title="Address" type='text' />
                                 </div>
                                 <div className="hospital_info_container">
                                     <p><b>Demo Hospital Lemited</b></p>
@@ -170,7 +177,7 @@ function Finance() {
                                                                 <option>{item.accountName}</option>
                                                             ))
                                                         }
-                                                        
+
                                                     </select>
                                                 </td>
                                                 <td><input name="description" onChange={(e) => handleInvoiceChange(e, index)} className="invoice_input" /></td>
@@ -223,7 +230,7 @@ function Finance() {
                             </section>
 
                             <section id="save_and_activity">
-                               
+
                                 <div><BlueButton>Reset</BlueButton> <GreenButton onClick={hendleSaveInvoice}>Save</GreenButton></div>
                             </section>
                         </Activity>

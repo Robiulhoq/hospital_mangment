@@ -12,7 +12,7 @@ import axios from "axios";
 import Message from "../../components/Message";
 import { Link } from "react-router-dom";
 
-function TestReport(){
+function TestReport({userRole}){
     const {labList, hendleLabUI, hendleEditLab} = useContext(DataContext);
     const [deleteMessage, setDeleteMessage] = useState('');
 
@@ -39,7 +39,7 @@ function TestReport(){
     return(
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Test Report' />

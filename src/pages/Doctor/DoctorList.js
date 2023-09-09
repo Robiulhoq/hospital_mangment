@@ -11,16 +11,19 @@ import { DataContext } from '../../ContextApi/DataContext';
 import axios from 'axios';
 import Message from '../../components/Message';
 import { Link } from 'react-router-dom';
+import { getCookie } from '../../Utils/getCookie';
 
-function DoctorList() {
+function DoctorList({userRole}) {
     const { hendleDoctorUI, doctorList, handleEditDoctor } = useContext(DataContext);
 
     const [deleteMessage, setDeleteMessage] = useState('');
-
+    const token = getCookie('access_token');
     const hendleDeleteDoctor = async (id) => {
         try {
 
-            const response = await axios.delete(`http://localhost:5000/doctor/${id}`);
+            const response = await axios.delete(`http://localhost:5000/doctor/${id}`,{
+                headers: {'Authorization': `Bearer ${token}`}
+            });
             setDeleteMessage(response.data);
             hendleDoctorUI(true);
 
@@ -38,7 +41,7 @@ function DoctorList() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content>
                 <TopBar title='Doctor List' />

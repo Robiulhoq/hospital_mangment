@@ -8,8 +8,9 @@ import { DataContext } from '../../ContextApi/DataContext';
 import Message from '../../components/Message';
 import { Loading } from '../../components/Loading';
 import axios from 'axios';
+import { getCookie } from '../../Utils/getCookie';
 
-function Patient() {
+function Patient({userRole}) {
     const { patientList, hendlePatientUI, editPatientId} = useContext(DataContext);
     const [message, setMessage] = useState('');
     const [patient, setPatient] = useState({
@@ -73,14 +74,15 @@ console.log(patient);
             console.error(error);
         }
     }
-
+    const token = getCookie('access_token');
     const hendleSavePatient = async () => {
         try {
 
             const response = await fetch('http://localhost:5000/patient', {
                 method: 'POST',
                 body: JSON.stringify(patient),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
 
             if (response.status === 200) {
@@ -124,7 +126,8 @@ console.log(patient);
             const response = await fetch(`http://localhost:5000/patient/${editPatientId}`, {
                 method: 'PUT',
                 body: JSON.stringify(patient),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             hendlePatientUI(true);
             response.message = 'Patient edit successfull';
@@ -143,7 +146,7 @@ console.log(patient);
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Patient' />

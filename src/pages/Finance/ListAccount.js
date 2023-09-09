@@ -11,13 +11,17 @@ import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import Message from "../../components/Message";
 import { Link } from "react-router-dom";
+import { getCookie } from "../../Utils/getCookie";
 
-function ListService() {
+function ListService({userRole}) {
     const { accountList, hendleAccoutUI, hendleEditAccount } = useContext(DataContext);
-    const [message, setMessage] = useState('')
+    const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleDeleteAccount = async (id) =>{
         try{
-            const response = await  axios.delete(`http://localhost:5000/account/${id}`);
+            const response = await  axios.delete(`http://localhost:5000/account/${id}`, {
+                headers: {'Authorization': `Bearer ${token}` }
+            });
             if(response.status === 200){
                 response.message = "Account Delete successfull!";
                 setMessage(response.message);
@@ -38,7 +42,7 @@ function ListService() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='List Payment' />

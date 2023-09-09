@@ -1,10 +1,11 @@
 const express = require('express');
 const { createdAppoinment, putAppoinment, deleteAppoinment, getAllAppoinment } = require('../Controllers/appoinmentControllers.js');
+const { verifyToken } = require('../utils/VerifyToken.js');
 const router = express.Router();
 
-router.post('/', createdAppoinment);
-router.put('/:id', putAppoinment);
-router.delete('/:id', deleteAppoinment);
-router.get('/', getAllAppoinment);
+router.post('/', verifyToken, createdAppoinment);
+router.put('/:id', verifyToken, putAppoinment);
+router.delete('/:id', verifyToken, deleteAppoinment);
+router.get('/', verifyToken, getAllAppoinment);
 
 module.exports = router

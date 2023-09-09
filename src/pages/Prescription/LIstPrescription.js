@@ -13,13 +13,13 @@ import { GrView } from 'react-icons/gr';
 import { DataContext } from "../../ContextApi/DataContext";
 
 
-function ListPrescription() {
+function ListPrescription({userRole}) {
     const { caseStudyList } = useContext(DataContext);
 
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='List Prescription' />

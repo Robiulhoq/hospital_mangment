@@ -10,14 +10,18 @@ import { AiFillDelete } from 'react-icons/ai';
 import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import Message from "../../components/Message";
+import { getCookie } from "../../Utils/getCookie";
 
-function AssignBedList() {
+function AssignBedList({userRole}) {
     const { assainBedList, bedList, hendleAssainBedUI } = useContext(DataContext);
 
     const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleDeleteAssainBed = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/assainbed/${id}`)
+            const response = await axios.delete(`http://localhost:5000/assainbed/${id}`, {
+                headers: {'Authorization': `Bearer ${token}`}
+            })
             if (response === 200) {
                 hendleAssainBedUI(true);
                 response.message = 'Delete Successfull';
@@ -37,7 +41,7 @@ function AssignBedList() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Assaine Bed List' />

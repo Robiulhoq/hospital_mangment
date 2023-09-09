@@ -7,7 +7,9 @@ import TopBar from "../../components/TopBar";
 import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import Message from "../../components/Message";
-function BedManager() {
+import { getCookie } from "../../Utils/getCookie";
+
+function BedManager({userRole}) {
     const { hendleBedUI, editBedId, bedList } = useContext(DataContext);
     const [bed, setBed] = useState({
         bedType: '',
@@ -24,10 +26,12 @@ function BedManager() {
         setBed(updateBed);
     }
     const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleSaveBed = async () => {
         try {
             const response = await axios.post('http://localhost:5000/bed', bed, {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             if (response.status === 200) {
                 response.message = 'Bed add successfull';
@@ -89,7 +93,7 @@ function BedManager() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Bed' />

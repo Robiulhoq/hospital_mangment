@@ -6,7 +6,8 @@ import Sidebar from "../../components/Sidebar";
 import TopBar from "../../components/TopBar";
 import { DataContext } from "../../ContextApi/DataContext";
 import Message from "../../components/Message";
-function AddService() {
+import { getCookie } from "../../Utils/getCookie";
+function AddService({userRole}) {
     const { editAccoutId, accountList, hendleAccoutUI } = useContext(DataContext);
     const [account, setAddAccount] = useState({
         accountName: '',
@@ -20,13 +21,15 @@ function AddService() {
         updateAccount[e.target.name] = e.target.value;
         setAddAccount(updateAccount);
     }
-    const [message, setMessage] = useState('')
+    const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleSaveAccount = async () => {
         try {
             const response = await fetch('http://localhost:5000/account', {
                 method: 'POST',
                 body: JSON.stringify(account),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             if (response.status === 200) {
                 response.message = 'Account save successfull!';
@@ -96,7 +99,7 @@ function AddService() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Account' />

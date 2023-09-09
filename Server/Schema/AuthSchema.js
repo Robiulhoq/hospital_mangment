@@ -13,8 +13,8 @@ const AuthSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    isAdmin:{
-        type: Boolean
+    userRole:{
+        type: String
     }
 }, {
     timestamps: true });

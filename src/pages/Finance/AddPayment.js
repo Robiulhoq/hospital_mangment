@@ -6,8 +6,9 @@ import Sidebar from "../../components/Sidebar";
 import TopBar from "../../components/TopBar";
 import { DataContext } from "../../ContextApi/DataContext";
 import Message from "../../components/Message";
+import { getCookie } from "../../Utils/getCookie";
 
-function AddPayment() {
+function AddPayment({userRole}) {
     const { accountList, hendlePaymentUI, editPaymentId, paymentList } = useContext(DataContext);
     const [payment, setPayment] = useState({
         date: '',
@@ -24,12 +25,14 @@ function AddPayment() {
         setPayment(updatePayment);
     }
     const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleSavePayment = async () => {
         try {
             const response = await fetch('http://localhost:5000/payment', {
                 method: 'POST',
                 body: JSON.stringify(payment),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`}
             });
             if (response.status === 200) {
                 response.message = "Payment add successfull!";
@@ -61,7 +64,8 @@ function AddPayment() {
             const response = await fetch(`http://localhost:5000/payment/${editPaymentId}`, {
                 method: 'PUT',
                 body: JSON.stringify(payment),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`}
             });
             if (response.status === 200) {
                 response.message = "Payment edit successfull!";
@@ -82,7 +86,7 @@ function AddPayment() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Payment' />

@@ -11,15 +11,18 @@ import { DataContext } from "../../ContextApi/DataContext";
 import Message from "../../components/Message";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { getCookie } from "../../Utils/getCookie";
 
-function EmployList() {
+function EmployList({userRole}) {
     const { hrList, hendleHrUI, hendleEditHr, editHrId } = useContext(DataContext);
     const [deleteMessage, setDeleteMessage] = useState('');
-
+    const token = getCookie('access_token');
     const hendleDeleteEmploy = async (id) => {
         try {
 
-            const response = await axios.delete(`http://localhost:5000/hr/${id}`);
+            const response = await axios.delete(`http://localhost:5000/hr/${id}`,{
+                headers: {'Authorization': `Bearer ${token}`}
+            });
             if(response.status === 200){
                 response.message = "Employ delete successfull";
                 setDeleteMessage(response.message);
@@ -40,7 +43,7 @@ function EmployList() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole}/>
             </SidebarContainer>
             <Content >
                 <TopBar title='Employ List' />

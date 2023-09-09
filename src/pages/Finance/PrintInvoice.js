@@ -4,7 +4,7 @@ import { useReactToPrint } from 'react-to-print';
 import ListInvoice from './ListInvoice';
 import { GreenButton } from '../../components/Buttons';
 
-const PrintExample = () => {
+const PrintExample = ({userRole}) => {
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -13,7 +13,7 @@ const PrintExample = () => {
   return (
     <div>
       
-      <ListInvoice ref={componentRef} />
+      <ListInvoice userRole={userRole} ref={componentRef} />
       <GreenButton style={{position: 'relative', left: '83rem', bottom: '18rem'}} onClick={handlePrint}>Print</GreenButton>
       
       

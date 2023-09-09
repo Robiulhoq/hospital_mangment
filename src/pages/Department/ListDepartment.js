@@ -12,15 +12,18 @@ import axios from 'axios';
 import Message from '../../components/Message';
 import { DataContext } from '../../ContextApi/DataContext';
 import { Link } from 'react-router-dom';
+import { getCookie } from '../../Utils/getCookie';
 
-const ListDepartment = () => {
+const ListDepartment = ({userRole}) => {
     const {updateUI, departmentList, handleEditDepartment  } = useContext(DataContext);
     const [deleteMessage, setDeleteMessage] = useState('');
-
+    const token = getCookie('access_token');
     const deleteDepartment = async (id) => {
         try {
 
-            const response = await axios.delete(`http://localhost:5000/department/${id}`);
+            const response = await axios.delete(`http://localhost:5000/department/${id}`, {
+                headers: {'Authorization': `Bearer ${token}`}
+            });
             setDeleteMessage(response.data);
             updateUI(true);
 
@@ -39,7 +42,7 @@ const ListDepartment = () => {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content>
                 <TopBar title='List department' />
@@ -63,7 +66,7 @@ const ListDepartment = () => {
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
-                        {departmentList.length ?
+                        {departmentList.length?
                             departmentList.map((item, index) => (
                                 <tr key={index}>
                                     <td>{index + 1}</td>

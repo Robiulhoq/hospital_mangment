@@ -9,8 +9,9 @@ import { DataContext } from '../../ContextApi/DataContext';
 import Message from '../../components/Message';
 import axios from 'axios';
 import { Loading } from '../../components/Loading';
+import { getCookie } from '../../Utils/getCookie';
 
-function Doctor() {
+function Doctor({userRole}) {
     const [loading, setLoading] = useState(false);
     // load doctor api data form server and store it context api. use context api data
 
@@ -113,7 +114,7 @@ function Doctor() {
 
 
     }
-
+    const token = getCookie('access_token');
     const hendleSaveDoctor = async () => {
 
         try {
@@ -121,7 +122,8 @@ function Doctor() {
             const response = await fetch('http://localhost:5000/doctor', {
                 method: 'POST',
                 body: JSON.stringify(doctor),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             hendleDoctorUI(true);
             if (response.status === 200) {
@@ -164,14 +166,16 @@ function Doctor() {
         }
 
     }, [doctor.picture])
-
+    
     const hendleEditDoctor = async () => {
         setLoading(true)
         try {
             const response = await fetch(`http://localhost:5000/doctor/${editDoctorId}`, {
                 method: 'PUT',
                 body: JSON.stringify(doctor),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
             });
             hendleDoctorUI(true);
             response.message = 'Doctor edit successfull';
@@ -192,7 +196,7 @@ function Doctor() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Doctor' />

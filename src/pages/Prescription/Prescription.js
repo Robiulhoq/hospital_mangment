@@ -9,8 +9,9 @@ import TopBar from "../../components/TopBar";
 import axios from "axios";
 import Message from "../../components/Message";
 import { DataContext } from "../../ContextApi/DataContext";
+import { getCookie } from "../../Utils/getCookie";
 
-function Prescription() {
+function Prescription({userRole}) {
     const { hendleCaseStudyUI } = useContext(DataContext);
     const [caseStudy, setCaseStudy] = useState({
         patientId: '',
@@ -39,10 +40,12 @@ function Prescription() {
     }
     
     const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleSaveCaseStudy = async () => {
         try {
             const response = await axios.post(`http://localhost:5000/casestudy/${caseStudy.patientId}`, caseStudy, {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`}
             });
             if (response.status === 200) {
                 response.message = 'Case study create successfull';
@@ -80,7 +83,7 @@ function Prescription() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Prescription' />

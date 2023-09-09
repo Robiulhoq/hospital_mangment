@@ -6,9 +6,9 @@ import { Wrapper, SidebarContainer, Content, Activity } from '../../components/C
 import { BlueButton, GreenButton } from '../../components/Buttons';
 import Message from '../../components/Message';
 import { DataContext } from '../../ContextApi/DataContext';
+import { getCookie } from '../../Utils/getCookie';
 
-
-const Department = () => {
+const Department = ({userRole}) => {
     const { updateUI, departmentList, editDepartmentId } = useContext(DataContext);
     const [message, setMessage] = useState('');
     const [editMode, setEditMode] = useState(false);
@@ -38,7 +38,7 @@ const Department = () => {
             setEditMode(true);
         }
     }, [editDepartmentId, departmentList]);
-
+    const token = getCookie('access_token');
     const hendleSaveDepartment = async () => {
         try {
             let apiUrl = 'http://localhost:5000/department';
@@ -52,7 +52,8 @@ const Department = () => {
             const response = await fetch(apiUrl, {
                 method: method,
                 body: JSON.stringify(department),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
           
             updateUI(true);
@@ -80,7 +81,7 @@ const Department = () => {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content>
                 <TopBar title='Add Department' />

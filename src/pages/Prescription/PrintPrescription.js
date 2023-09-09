@@ -8,32 +8,39 @@ import TopBar from "../../components/TopBar";
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
 import { GrView } from 'react-icons/gr';
+import { getCookie } from "../../Utils/getCookie";
 
 const PrintPrescription = forwardRef((props, ref, print) => {
+    const {userRole} = props;
     const [patientId, setPatientId] = useState('');
     console.log(patientId);
     const [prescription, setPrescription] = useState(null);
     const [diagnoses, setDiagnosis] = useState(null);
     // console.log(prescription);
     const [singlePatient, setSinglePatient] = useState([]);
+    const token = getCookie('access_token');
     useEffect(() => {
-        fetch(`http://localhost:5000/prescription/${patientId}`)
+        fetch(`http://localhost:5000/prescription/${patientId}`, {
+            headers: {'Authorization': `Bearer ${token}`}
+        })
             .then(res => res.json())
             .then(data => setPrescription(data))
     }, [patientId]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/patient/filter/${patientId}`)
+        fetch(`http://localhost:5000/patient/filter/${patientId}`,{
+            headers: {'Authorization': `Bearer ${token}`}
+        })
             .then(res => res.json())
             .then(data => setSinglePatient(data));
     }, [patientId])
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
-                <TopBar title='Print Schedule' />
+                <TopBar title='Print Prescription' />
                 <Activity id="prescription_container">
                     <TextInput onChange={(e) => setPatientId(e.target.value)} type='text' title='Enter your patient id' />
                     <div ref={ref}>

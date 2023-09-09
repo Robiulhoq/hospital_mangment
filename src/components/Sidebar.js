@@ -8,8 +8,9 @@ import {
 import { FaUserDoctor, FaMoneyBillWave, FaBed } from 'react-icons/fa';
 import { GiHypodermicTest, GiMedicines } from 'react-icons/gi';
 import sidebar_option from '../Data/Sidebar_option.json';
-import {Link} from 'react-router-dom';  
-function Sidebar() {
+import { Link } from 'react-router-dom';
+function Sidebar({userRole}) {
+  
   const [option, setOption] = useState(sidebar_option);
   const expanedSubItem = (index) => {
     const copyOption = { ...option }
@@ -17,6 +18,8 @@ function Sidebar() {
     setOption(copyOption);
 
   }
+  const admin = false;
+  // const userRole = "admin";
   return (
     <div className='sidebar_container'>
       <div className="logo_container">
@@ -28,22 +31,35 @@ function Sidebar() {
       <div className="sidebar">
         <ul>
           {
-            sidebar_option.map((item, index) => <li key={index} onClick={() => expanedSubItem(index)} className='list_item'>
-              <a href="#"><span> <IconContext.Provider value={{ size: '1rem' }}>
-                {renderIcon(item.icon)}
-              </IconContext.Provider ><span className='title'>{item.option}</span></span>
+            sidebar_option.map((item, index) => {
+              if (item.access.includes(userRole)) {
+                return (
+                  <li key={index} onClick={() => expanedSubItem(index)} className='list_item'>
 
-                {
-                  item.state == false ?
-                    <span className='expended_icon'><AiOutlineLeft /></span> :
-                    <span className='expended_icon'><AiOutlineDown /></span>
-                }
-              </a>
-              {
-                item.state == true ?
-                  item.subOption.map((subItem, idx) => <Link className='sub_title' to={subItem.path} >{subItem.title}</Link>) : null
+                    <a href="#"><span> <IconContext.Provider value={{ size: '1rem' }}>
+                      {renderIcon(item.icon)}
+                    </IconContext.Provider ><span className='title'>{item.option}</span></span>
+
+                      {
+                        item.state == false ?
+                          <span className='expended_icon'><AiOutlineLeft /></span> :
+                          <span className='expended_icon'><AiOutlineDown /></span>
+                      }
+                    </a>
+
+
+                    {
+                      item.state == true ?
+                        item.subOption.map((subItem, idx) => <Link className='sub_title' to={subItem.path} >{subItem.title}</Link>) : null
+                    }
+                  </li>
+                )
               }
-            </li>)
+
+            }
+
+
+            )
 
           }
         </ul>

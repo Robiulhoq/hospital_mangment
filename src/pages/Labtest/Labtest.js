@@ -8,8 +8,9 @@ import axios from "axios";
 import Message from "../../components/Message";
 import { Loading } from "../../components/Loading";
 import { DataContext } from "../../ContextApi/DataContext";
+import { getCookie } from "../../Utils/getCookie";
 
-function LabTest() {
+function LabTest({userRole}) {
     const { labList, hendleLabUI, eidtLabId } = useContext(DataContext);
     const [lab, setLab] = useState({
         patientId: '',
@@ -27,6 +28,7 @@ function LabTest() {
     };
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const token = getCookie('access_token');
     const hendleSaveLabTest = async () => {
 
         try {
@@ -34,7 +36,8 @@ function LabTest() {
             const response = await fetch('http://localhost:5000/lab', {
                 method: 'POST',
                 body: JSON.stringify(lab),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             if (response.status === 200) {
                 setLoading(false);
@@ -78,7 +81,8 @@ function LabTest() {
             const response = await fetch(`http://localhost:5000/lab/${eidtLabId}`, {
                 method: 'PUT',
                 body: JSON.stringify(lab),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             if(response.status === 200){
                 setLoading(false)
@@ -110,7 +114,7 @@ function LabTest() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Labtest' />

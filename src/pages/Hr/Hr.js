@@ -7,9 +7,10 @@ import TopBar from "../../components/TopBar";
 import { DataContext } from "../../ContextApi/DataContext";
 import Message from "../../components/Message";
 import axios from "axios";
+import { getCookie } from "../../Utils/getCookie";
 
 
-function Hr() {
+function Hr({userRole}) {
     const { hrList, hendleHrUI, editHrId } = useContext(DataContext);
     const [hr, setHr] = useState({
         userRole: '',
@@ -48,7 +49,8 @@ function Hr() {
             console.error(error);
         }
     }
-    const [message, setMessage] = useState('')
+    const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleSaveHr = async () => {
 
         try {
@@ -56,7 +58,8 @@ function Hr() {
             const response = await fetch('http://localhost:5000/hr', {
                 method: 'POST',
                 body: JSON.stringify(hr),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
 
             if (response.status === 200) {
@@ -125,7 +128,9 @@ function Hr() {
             const response = await fetch(`http://localhost:5000/hr/${editHrId}`, {
                 method: 'PUT',
                 body: JSON.stringify(hr),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+             }
             });
             if (response.status === 200) {
                 hendleHrUI(true);
@@ -146,7 +151,7 @@ function Hr() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Humen resource' />

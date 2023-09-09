@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
+const dotenv = require('dotenv');
 const app = express();
 
 const authRouter = require('./router/auth.js');
@@ -42,6 +43,7 @@ mongoose.connection.on('disconnected', () => {
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+dotenv.config()
 
 // Configure Cloudinary
 cloudinary.config({

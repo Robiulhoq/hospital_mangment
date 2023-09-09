@@ -7,7 +7,7 @@ const User = mongoose.model("User", AuthSchema);
 
 const rigister = async (req, res, next) => {
     try {
-        const { username, email, password, isAdmin } = req.body;
+        const { username, email, password, userRole } = req.body;
 
         if (!username || !email || !password) {
             return next(createError(400, 'Username, email, and password are required.'));
@@ -18,7 +18,7 @@ const rigister = async (req, res, next) => {
             username: username,
             email: email,
             password: hash,
-            isAdmin: isAdmin
+            userRole: userRole
         });
         await newUser.save();
         res.status(200).send('User has been created.')
@@ -29,8 +29,9 @@ const rigister = async (req, res, next) => {
 
 
 const login = async (req, res, next) => {
+    
     try {
-        const user = await User.findOne({username: req.body.username});
+        const user = await User.findOne({email: req.body.email});
         if(!user) return next(createError(404, 'User Not found!'));
         const isCorrectPassword = await bcrypt.compare(req.body.password, user.password);
         if(!isCorrectPassword) return next(createError(404, 'password is worng or user name is worng'));
@@ -39,7 +40,10 @@ const login = async (req, res, next) => {
         const {password, isAdmin, ...otherDetails} = user._doc;
         res.cookie("access_token", token, {
             httpOnly: true
-        }).status(200).send(otherDetails);
+        }).status(200).send({
+            data: otherDetails,
+            token: token
+        });
     } catch (error) {
         next(error)
     }

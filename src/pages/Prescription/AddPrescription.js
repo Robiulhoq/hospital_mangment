@@ -7,10 +7,11 @@ import Sidebar from "../../components/Sidebar";
 import TopBar from "../../components/TopBar";
 import axios from "axios";
 import { DataContext } from "../../ContextApi/DataContext";
+import { getCookie } from "../../Utils/getCookie";
 
 
 
-function AddPrescription() {
+function AddPrescription({userRole}) {
     const {medicineList} = useContext(DataContext);
     console.log(medicineList);
     const [totalMedicine, setTotalMedicine] = useState(1);
@@ -74,11 +75,12 @@ function AddPrescription() {
         updatedDiagnosis[index][name] = value;
         setDiagnosis(updatedDiagnosis);
     };
-
+    const token = getCookie('access_token');
     const hendleSavePrescription = async () =>{
         try{
             const response = await axios.post(`http://localhost:5000/prescription/${patientId}`, prescription, {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             if(response.status === 200){
                 console.log('Success');
@@ -91,7 +93,9 @@ function AddPrescription() {
     // Single patient
     const [singlePatient, setSinglePatient] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/patient/filter/${patientId}`)
+        fetch(`http://localhost:5000/patient/filter/${patientId}`,{
+            headers: {'Authorization': `Bearer ${token}`}
+        })
             .then(res => res.json())
             .then(data => setSinglePatient(data));
     }, [patientId])
@@ -99,7 +103,7 @@ function AddPrescription() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Prescription' />

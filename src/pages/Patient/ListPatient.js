@@ -11,14 +11,18 @@ import { DataContext } from '../../ContextApi/DataContext';
 import axios from 'axios';
 import Message from '../../components/Message';
 import { Link } from 'react-router-dom';
+import { getCookie } from '../../Utils/getCookie';
 
-function ListPatient() {
+function ListPatient({userRole}) {
     const { patientList, hendleEditPatient, hendlePatientUI } = useContext(DataContext);
     const [deleteMessage, setDeleteMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleDeletePatient = async (id) =>{
         try {
 
-            const response = await axios.delete(`http://localhost:5000/patient/${id}`);
+            const response = await axios.delete(`http://localhost:5000/patient/${id}`,{
+                headers: {'Authorization': `Bearer ${token}`}
+            });
             if(response.status == 200){
                 response.message = 'Pataient delete successfull';
                 setDeleteMessage(response.message);
@@ -40,7 +44,7 @@ function ListPatient() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content>
                 <TopBar title='Patient List' />

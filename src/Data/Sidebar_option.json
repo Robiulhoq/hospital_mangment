@@ -2,9 +2,12 @@
   {
     "option": "Dashboard",
     "state": false,
+    "access": ["admin"],
     "icon": "AiFillAccountBook",
     "subOption": [
+      
       {
+        
         "title": "Back1",
         "path": "/"
       }
@@ -14,6 +17,7 @@
     "option": "Department",
     "path": "/department",
     "state": false,
+    "access": ["admin"],
     "icon": "AiFillCodepenCircle",
     "subOption": [
       {
@@ -29,6 +33,7 @@
   {
     "option": "Doctor",
     "state": false,
+    "access": ["admin", "doctor"],
     "icon": "AiFillMedicineBox",
     "subOption": [
       {
@@ -44,6 +49,7 @@
   {
     "option": "Patient",
     "state": false,
+    "access": ["admin","doctor"],
     "icon": "AiFillFrown",
     "subOption": [
       {
@@ -53,20 +59,14 @@
       {
         "title": "List patient",
         "path": "/patient/1"
-      },
-      {
-        "title": "Add document",
-        "path": "/patient/2"
-      },
-      {
-        "title": "List document",
-        "path": "/patient/3"
       }
+      
     ]
   },
   {
     "option": "Schedule",
     "state": false,
+    "access": ["admin","doctor"],
     "icon": "AiOutlineCalendar",
     "subOption": [
       {
@@ -82,6 +82,7 @@
   {
     "option": "Appoinment",
     "state": false,
+    "access": ["admin","doctor"],
     "icon": "AiOutlineCheckSquare",
     "subOption": [
       {
@@ -97,6 +98,7 @@
   {
     "option": "Prescripton",
     "state": false,
+    "access": ["admin","doctor"],
     "icon": "AiOutlineBook",
     "subOption": [
       {
@@ -120,6 +122,7 @@
   {
     "option": "Finance",
     "state": false,
+    "access": ["admin","accounted"],
     "icon": "FaMoneyBillWave",
     "subOption": [
       {
@@ -151,6 +154,7 @@
   {
     "option": "Lab test",
     "state": false,
+    "access": ["admin","doctor"],
     "icon": "GiHypodermicTest",
     "subOption": [
       {
@@ -166,6 +170,7 @@
   {
     "option": "Humen resource",
     "state": false,
+    "access": ["admin"],
     "icon": "AiFillIdcard",
     "subOption": [
       {
@@ -185,6 +190,7 @@
   {
     "option": "Medicine",
     "state": false,
+    "access": ["admin"],
     "icon": "GiMedicines",
     "subOption": [
       {
@@ -200,6 +206,7 @@
   {
     "option": "Bed manager",
     "state": false,
+    "access": ["admin", "nurse"],
     "icon": "FaBed",
     "subOption": [
       {
@@ -217,21 +224,6 @@
       {
         "title":"Assign Bed List",
         "path": "/bed/3"
-      }
-    ]
-  },
-  {
-    "option": "Mail",
-    "state": false,
-    "icon": "AiOutlineMail",
-    "subOption": [
-      {
-        "title":"Send Mail",
-        "path": "/mail/1"
-      },
-      {
-        "title":"All Mail",
-        "path": "/mail/1"
       }
     ]
   }

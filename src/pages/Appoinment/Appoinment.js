@@ -7,7 +7,8 @@ import TopBar from "../../components/TopBar";
 import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import Message from "../../components/Message";
-function Appoinment() {
+import { getCookie } from '../../Utils/getCookie';
+function Appoinment({userRole}) {
     const { departmentList, doctorList, hendlePatientUI } = useContext(DataContext);
     const [appoinment, setAppoinment] = useState({
         doctorName: '',
@@ -24,11 +25,13 @@ function Appoinment() {
     }
     const [patientId, setPatientId] = useState('');
     const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const handleSaveAppointment = async () => {
         try {
             const response = await axios.post(`http://localhost:5000/patient/appoinment/${patientId}`,
                 appoinment, {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             if (response.status === 200) {
                 hendlePatientUI(true);
@@ -56,7 +59,7 @@ function Appoinment() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Appoinment' />

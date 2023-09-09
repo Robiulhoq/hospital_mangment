@@ -1,11 +1,12 @@
 const express = require('express');
 const { createdPrescription, putPrescription, deletePrescription, getAllPrescription, getPrescription } = require('../Controllers/prescriptionControllers.js');
+const { verifyToken } = require('../utils/VerifyToken.js');
 const router = express.Router();
 
-router.post('/:id', createdPrescription);
-router.put('/:id', putPrescription);
-router.delete('/:id', deletePrescription);
+router.post('/:id',verifyToken, createdPrescription);
+router.put('/:id',verifyToken, putPrescription);
+router.delete('/:id',verifyToken, deletePrescription);
 // router.get('/', getAllPrescription);
-router.get('/:id', getPrescription);
+router.get('/:id',verifyToken, getPrescription);
 
 module.exports = router

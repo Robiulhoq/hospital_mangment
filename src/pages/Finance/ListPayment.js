@@ -11,15 +11,18 @@ import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import Message from "../../components/Message";
 import { Link } from "react-router-dom";
+import { getCookie } from "../../Utils/getCookie";
 
 
-function ListPayment() {
+function ListPayment({userRole}) {
     const { paymentList, hendlePaymentUI, hendleEditPayment } = useContext(DataContext);
     const [message, setMessage] = useState('');
-
+    const token = getCookie('access_token');
     const hendleDeletePayment = async(id) =>{
         try{
-            const response = await axios.delete(`http://localhost:5000/payment/${id}`)
+            const response = await axios.delete(`http://localhost:5000/payment/${id}`,{
+                headers: {'Authorization': `Bearer ${token}`}
+            })
             if(response.status === 200){
                 response.message = "Payment delete successfull";
                 setMessage(response.message);
@@ -39,7 +42,7 @@ function ListPayment() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='List Payment' />

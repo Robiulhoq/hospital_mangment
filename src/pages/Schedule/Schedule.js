@@ -6,8 +6,9 @@ import Sidebar from "../../components/Sidebar";
 import TopBar from "../../components/TopBar";
 import { DataContext } from "../../ContextApi/DataContext";
 import Message from "../../components/Message";
+import { getCookie } from "../../Utils/getCookie";
 
-function Schedule() {
+function Schedule({userRole}) {
     const { doctorList, editSchedule, hendleDoctorUI } = useContext(DataContext);
     const [schedule, setSchedule] = useState({
         abailableDays: '',
@@ -24,13 +25,15 @@ function Schedule() {
     }
     const [editDoctorid, setEditDoctorId] = useState('');
     const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleAddDoctorSchedule = async () => {
 
         try {
             const response = await fetch(`http://localhost:5000/doctor/schedule/${editDoctorid}`, {
                 method: 'POST',
                 body: JSON.stringify(schedule),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             if(response.status === 200){
                 response.message = 'Schedule add successfull';
@@ -79,7 +82,8 @@ function Schedule() {
             const response = await fetch(`http://localhost:5000/doctor/schedule/${editSchedule.id}/${editSchedule.scheduleId}`, {
                 method: 'PUT',
                 body: JSON.stringify(schedule),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             if (response.status === 200) {
                 setSchedule(prevSchedule => ({
@@ -111,7 +115,7 @@ function Schedule() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Schedule' />

@@ -7,8 +7,9 @@ import TopBar from "../../components/TopBar";
 import axios from "axios";
 import Message from "../../components/Message";
 import { DataContext } from "../../ContextApi/DataContext";
+import { getCookie } from "../../Utils/getCookie";
 
-function AddMedicine() {
+function AddMedicine({userRole}) {
     const { hendleMedicineUI, editMedicineId, medicineList } = useContext(DataContext);
     const [medicine, setMedicine] = useState({
         medicineName: '',
@@ -24,10 +25,12 @@ function AddMedicine() {
         setMedicine(updateMedicine);
     }
     const [message, setMessage] = useState('');
+    const token = getCookie('access_token');
     const hendleSaveMedicine = async () => {
         try {
             const response = await axios.post('http://localhost:5000/medicine', medicine, {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             if (response.status === 200) {
                 response.message = 'Medicine add successfull';
@@ -67,7 +70,8 @@ function AddMedicine() {
             const response = await fetch(`http://localhost:5000/medicine/${editMedicineId}`, {
                 method:'PUT',
                 body: JSON.stringify(medicine),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` }
             });
             if (response.status === 200) {
                 response.message = 'Medicine Edit Successfull';
@@ -88,7 +92,7 @@ function AddMedicine() {
     return (
         <Wrapper>
             <SidebarContainer>
-                <Sidebar />
+                <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Medicine' />
