@@ -11,10 +11,12 @@ import { Loading } from "../../components/Loading";
 import { getCookie } from "../../Utils/getCookie";
 
 
-function Finance({userRole}) {
+function Finance({ userRole }) {
     const { patientList, accountList } = useContext(DataContext);
 
     const [totalInvoice, setTotalInvoice] = useState(1);
+    const dabitAccount = accountList.filter(item => item.accountType === "Dabit");
+    const defaultAccountName = dabitAccount.length > 0 ? dabitAccount[0].accountName : '';
     const [invoice, setInvoice] = useState([{
         accoutName: '',
         description: '',
@@ -22,10 +24,10 @@ function Finance({userRole}) {
         price: 0,
         subTotal: 0
     }]); // Initial invoice state with one input
-
+    console.log(invoice);
     const [fullInvoice, setFullInvoice] = useState({
         patientId: '',
-        vat: '',
+        vat: 0,
         discount: 0,
         grandTotal: 0,
         paid: 0,
@@ -76,20 +78,22 @@ function Finance({userRole}) {
             due: due,
             grandTotal: grandTotal
         }));
-    }, [due, grandTotal])
+    }, [ fullInvoice.paid])
 
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const token = getCookie('access_token');
+    // console.log('full invoce', fullInvoice, 'invoice', invoice);
+    const dueToSend = due === 0 ? null : due;
 
     const hendleSaveInvoice = async () => {
-        setLoading(true);
         const combinedInvoice = {
             ...fullInvoice,
             invoice: invoice
         };
+    
         try {
-
+            setLoading(true);
             const resp = await fetch('http://localhost:5000/invoice', {
                 method: 'POST',
                 body: JSON.stringify(combinedInvoice),
@@ -98,35 +102,39 @@ function Finance({userRole}) {
                     'Authorization': `Bearer ${token}`
                 }
             });
+    
             if (resp.status === 200) {
-                setLoading(false)
-                resp.message = "Invoice add successfull!";
+                resp.message = "Invoice add successful!";
                 setMessage(resp.message);
-                setFullInvoice(prvInvoice => ({
-                    ...prvInvoice,
-                    patientId: '',
-                    vat: '',
-                    discount: 0,
-                    grandTotal: 0,
-                    paid: 0,
-                    due: 0
-                }))
-
+                // ...
+            } else {
+                // Handle other HTTP response statuses, log or display the error message
+                const errorData = await resp.json(); // If the server sends an error message
+                console.error(`HTTP Error ${resp.status}: ${errorData.message}`);
             }
+    
+            setLoading(false);
         } catch (error) {
-            console.log(error);
+            console.error("An error occurred:", error);
         }
-    }
+    };
+    
     // Single patient
-    const [singlePatient, setSinglePatient] = useState(null);
-
+    const [singlePatient, setSinglePatient] = useState([]);
+    // console.log(fullInvoice.patientId.length);
+    // console.log(singlePatient);
     useEffect(() => {
-        fetch(`http://localhost:5000/patient/filter/${fullInvoice.patientId}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        }).then(res => res.json())
-        .then(data => setSinglePatient(data));
+        if (fullInvoice.patientId.length == 24) {
+            
+            fetch(`http://localhost:5000/patient/filter/${fullInvoice.patientId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            }).then(res => res.json())
+                .then(data => setSinglePatient(data));
+        }
+
     }, [fullInvoice.patientId])
 
+    // console.log(dabitAccount);
     if (message) {
         setInterval(() => {
             setMessage('');
@@ -147,8 +155,8 @@ function Finance({userRole}) {
                             <section id="patientAndHospital">
                                 <div className="patient_info_container">
                                     <TextInput className='custom_input' name='patientId' onChange={hendleChange} title="Patient Id" type='text' />
-                                    <TextInput className='custom_input' defaultValue={singlePatient ? singlePatient[0].fastName : null} title="Full Name" type='text' />
-                                    <TextInput className='custom_input' defaultValue={singlePatient ? singlePatient[0].address : null} title="Address" type='text' />
+                                    <TextInput className='custom_input' value={singlePatient.length ? singlePatient[0].fastName : null} title="Full Name" type='text' />
+                                    <TextInput className='custom_input' value={singlePatient.length && fullInvoice.patientId ? singlePatient[0].address : null} title="Address" type='text' />
                                 </div>
                                 <div className="hospital_info_container">
                                     <p><b>Demo Hospital Lemited</b></p>
@@ -172,10 +180,12 @@ function Finance({userRole}) {
                                             <tr key={index}>
                                                 <td>
                                                     <select name="accoutName" onChange={(e) => handleInvoiceChange(e, index)} className="invoice_input">
+                                                    <option>Select</option>
                                                         {
-                                                            accountList.map(item => (
-                                                                <option>{item.accountName}</option>
-                                                            ))
+                                                            dabitAccount.map(items => (
+                                                                <option>{items.accountName}</option>
+                                                            )
+                                                            )
                                                         }
 
                                                     </select>
@@ -195,37 +205,37 @@ function Finance({userRole}) {
                             <section id="calculation" className="total">
                                 <>
                                     <h4>Total</h4>
-                                    <input value={total} />
+                                    <input type="number" value={total} />
                                 </>
                             </section>
                             <section id="calculation" className="vat">
                                 <>
                                     <h4>Vat</h4>
-                                    <input onChange={hendleChange} name="vat" placeholder="%" />
+                                    <input onChange={hendleChange} type="number" name="vat" placeholder="%" />
                                 </>
                             </section>
                             <section id="calculation" className="discount">
                                 <>
                                     <h4>Discount</h4>
-                                    <input onChange={hendleChange} name="discount" placeholder="%" />
+                                    <input type="number" onChange={hendleChange} name="discount" placeholder="%" />
                                 </>
                             </section>
                             <section id="calculation" className="grand">
                                 <>
                                     <h4>Grand Total</h4>
-                                    <input name="grandTotal" value={grandTotal} onChange={hendleChange} />
+                                    <input type="number" name="grandTotal" value={grandTotal} onChange={hendleChange} />
                                 </>
                             </section>
                             <section id="calculation" className="paid">
                                 <>
                                     <h4>Paid</h4>
-                                    <input name="paid" onChange={hendleChange} />
+                                    <input type="number" name="paid" onChange={hendleChange} />
                                 </>
                             </section>
                             <section id="calculation" className="due">
                                 <>
                                     <h4>Due</h4>
-                                    <input name="due" value={due} onChange={hendleChange} />
+                                    <input type="number" name="due" value={due} />
                                 </>
                             </section>
 

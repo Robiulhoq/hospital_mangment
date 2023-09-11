@@ -18,7 +18,7 @@ const PaymentSchema = new mongoose.Schema({
         required: true
     },
     amount:{
-        type: String,
+        type: Number,
         required: true
     },
     status:{

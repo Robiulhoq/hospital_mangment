@@ -11,6 +11,7 @@ import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import Message from "../../components/Message";
 import { getCookie } from "../../Utils/getCookie";
+import { Link } from "react-router-dom";
 function AppoinmentList({userRole}) {
     const { patientList, hendlePatientUI } = useContext(DataContext);
 
@@ -18,6 +19,7 @@ function AppoinmentList({userRole}) {
     const token = getCookie('access_token');
     const deleteAppoinment = async (patientId, apId) => {
         try {
+    
             const response = await axios.delete(`http://localhost:5000/patient/appoinment/${patientId}/${apId}`,{
                 headers: {'Authorization': `Bearer ${token}`}
             })
@@ -46,7 +48,7 @@ function AppoinmentList({userRole}) {
                 <Message message={message} />
                 <Activity>
                     <DataFiltter>
-                        <GreenButton>+ Add Appoinment</GreenButton>
+                    <Link to='/appoinment/0' ><GreenButton>+ Add Appoinment</GreenButton></Link> 
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

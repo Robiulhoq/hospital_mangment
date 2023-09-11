@@ -7,7 +7,7 @@ const createdInvoice = async (req, res, next) => {
     try {
         const { patientId, grandTotal, paid, due, invoice, vat, discount } = req.body;
         // Validate the incoming data (add more specific validation as needed)
-        if (!patientId || !grandTotal || !paid || !due || !Array.isArray(invoice)) {
+        if (!patientId || !grandTotal || !paid || !Array.isArray(invoice)) {
             return res.status(400).json({ error: 'Invalid or incomplete data provided' });
         }
 

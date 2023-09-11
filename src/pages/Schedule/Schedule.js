@@ -7,6 +7,8 @@ import TopBar from "../../components/TopBar";
 import { DataContext } from "../../ContextApi/DataContext";
 import Message from "../../components/Message";
 import { getCookie } from "../../Utils/getCookie";
+import { Loading } from "../../components/Loading";
+import { Link } from "react-router-dom";
 
 function Schedule({userRole}) {
     const { doctorList, editSchedule, hendleDoctorUI } = useContext(DataContext);
@@ -26,9 +28,11 @@ function Schedule({userRole}) {
     const [editDoctorid, setEditDoctorId] = useState('');
     const [message, setMessage] = useState('');
     const token = getCookie('access_token');
+    const [loading, setLoading] = useState(false);
     const hendleAddDoctorSchedule = async () => {
 
         try {
+            setLoading(true);
             const response = await fetch(`http://localhost:5000/doctor/schedule/${editDoctorid}`, {
                 method: 'POST',
                 body: JSON.stringify(schedule),
@@ -47,7 +51,7 @@ function Schedule({userRole}) {
                     status: 'active'
                 }))
             }
-           
+           setLoading(false);
 
         } catch (error) {
             console.log(error);
@@ -79,6 +83,7 @@ function Schedule({userRole}) {
 
     const hendleEditSchedule = async () => {
         try {
+            setLoading(true);
             const response = await fetch(`http://localhost:5000/doctor/schedule/${editSchedule.id}/${editSchedule.scheduleId}`, {
                 method: 'PUT',
                 body: JSON.stringify(schedule),
@@ -97,6 +102,7 @@ function Schedule({userRole}) {
                 response.message = 'Schedule edit successfull';
                 setMessage(response.message);
             }
+            setLoading(false);
 
         } catch (error) {
             console.log(error);
@@ -120,7 +126,11 @@ function Schedule({userRole}) {
             <Content >
                 <TopBar title='Add Schedule' />
                 <Message message={message} />
+                {
+                    loading? <Loading />:
+                
                 <Activity>
+                     <Link to='/schedule/1' ><GreenButton>List Schedule</GreenButton></Link>
                     <TextInput
                         name="doctorId"
                         type="radio"
@@ -137,7 +147,7 @@ function Schedule({userRole}) {
                     <TextInput onChange={hendleChange} name='status' type='radio' title='Status'
                         options={[{ label: 'Active', value: 'Active' }, { label: 'Deactive', value: 'Deative' }]} />
                     <GreenButton onClick={editMode ? hendleEditSchedule : hendleAddDoctorSchedule}>Save</GreenButton>
-                </Activity>
+                </Activity>}
             </Content>
         </Wrapper>
     )

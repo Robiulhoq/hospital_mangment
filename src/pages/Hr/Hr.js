@@ -8,9 +8,11 @@ import { DataContext } from "../../ContextApi/DataContext";
 import Message from "../../components/Message";
 import axios from "axios";
 import { getCookie } from "../../Utils/getCookie";
+import { Loading } from "../../components/Loading";
+import { Link } from "react-router-dom";
 
 
-function Hr({userRole}) {
+function Hr({ userRole }) {
     const { hrList, hendleHrUI, editHrId } = useContext(DataContext);
     const [hr, setHr] = useState({
         userRole: '',
@@ -24,7 +26,7 @@ function Hr({userRole}) {
         address: '',
         status: 'active'
     });
-    
+
     const hendleChange = (e) => {
         const updateHr = { ...hr }
         updateHr[e.target.name] = e.target.value;
@@ -51,15 +53,18 @@ function Hr({userRole}) {
     }
     const [message, setMessage] = useState('');
     const token = getCookie('access_token');
+    const [loading, setLoading] = useState(false);
     const hendleSaveHr = async () => {
 
         try {
-
+            setLoading(true);
             const response = await fetch('http://localhost:5000/hr', {
                 method: 'POST',
                 body: JSON.stringify(hr),
-                headers: { 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` }
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
             });
 
             if (response.status === 200) {
@@ -84,6 +89,7 @@ function Hr({userRole}) {
             } else {
                 console.log(response.statusText);
             }
+            setLoading(false);
 
         } catch (error) {
             console.log(error);
@@ -125,18 +131,21 @@ function Hr({userRole}) {
 
     const hendleEditHr = async () => {
         try {
+            setLoading(true);
             const response = await fetch(`http://localhost:5000/hr/${editHrId}`, {
                 method: 'PUT',
                 body: JSON.stringify(hr),
-                headers: { 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-             }
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
             });
             if (response.status === 200) {
                 hendleHrUI(true);
                 response.message = 'Hr edit successfull';
                 setMessage(response.message);
             }
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -156,7 +165,11 @@ function Hr({userRole}) {
             <Content >
                 <TopBar title='Humen resource' />
                 <Message message={message} />
+                {
+                    loading? <Loading />: 
+               
                 <Activity>
+                    <Link to='/hr/1' ><GreenButton>List Employ</GreenButton></Link> 
                     <TextInput onChange={hendleChange} name='userRole' title='User Role' type='radio'
                         options={[{ label: 'Admin', value: 'Admin' }, { label: 'Doctor', value: 'Doctor' }, { label: 'Patient', value: 'Patient' }]} />
                     <TextInput defaultValue={hr.fastName} onChange={hendleChange} name='fastName' title='Fast Name' type='text' placeholder='Fast Name' />
@@ -172,6 +185,7 @@ function Hr({userRole}) {
                         options={[{ label: 'Active', value: 'Active' }, { label: 'Deactive', value: 'Deactive' }]} />
                     <GreenButton onClick={editMode ? hendleEditHr : hendleImageUpload} >Save</GreenButton>
                 </Activity>
+                 }
             </Content>
         </Wrapper>
     )

@@ -8,6 +8,8 @@ import axios from "axios";
 import Message from "../../components/Message";
 import { DataContext } from "../../ContextApi/DataContext";
 import { getCookie } from "../../Utils/getCookie";
+import { Loading } from "../../components/Loading";
+import { Link } from "react-router-dom";
 
 function AddMedicine({userRole}) {
     const { hendleMedicineUI, editMedicineId, medicineList } = useContext(DataContext);
@@ -26,8 +28,10 @@ function AddMedicine({userRole}) {
     }
     const [message, setMessage] = useState('');
     const token = getCookie('access_token');
+    const [loading, setLoading] = useState(false);
     const hendleSaveMedicine = async () => {
         try {
+            setLoading(true);
             const response = await axios.post('http://localhost:5000/medicine', medicine, {
                 headers: { 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}` }
@@ -45,6 +49,7 @@ function AddMedicine({userRole}) {
                     status: 'active'
                 }))
             }
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -97,14 +102,18 @@ function AddMedicine({userRole}) {
             <Content >
                 <TopBar title='Add Medicine' />
                 <Message message={message} />
+                {
+                    loading? <Loading />: 
+                
                 <Activity>
+                    <Link to='/medicine/1' ><GreenButton>List Medicine</GreenButton></Link> 
                     <TextInput defaultValue={medicine.medicineName} onChange={hendleChange} name='medicineName' title='Medicine Name' type='text' placeholder='Medicine Name' />
                     <TextInput defaultValue={medicine.description} onChange={hendleChange} name='description' title='Description' type='textarea' placeholder='Description' />
                     <TextInput defaultValue={medicine.price} onChange={hendleChange} name='price' title='Price' type='text' placeholder='price' />
                     <TextInput defaultValue={medicine.manufactured} onChange={hendleChange} name='manufactured' title='Manufactured By' type='text' placeholder='Manufactured By' />
                     <TextInput defaultValue={medicine.status} onChange={hendleChange} name='status' title='status' type='radio' options={[{ label: 'Active', value: 'Active' }, { label: 'Deactive', value: 'Deactive' }]} />
                     <GreenButton onClick={editMode ? hendleEditMedicine : hendleSaveMedicine} >Save</GreenButton>
-                </Activity>
+                </Activity>}
             </Content>
         </Wrapper>
     )

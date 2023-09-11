@@ -50,7 +50,8 @@ const ListDepartment = ({userRole}) => {
                 <Activity>
 
                     <DataFiltter>
-                        <GreenButton>+ Add Department</GreenButton>
+                        <Link to='/department/0' ><GreenButton>+ Add Department</GreenButton></Link>
+                        
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

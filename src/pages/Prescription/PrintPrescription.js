@@ -9,6 +9,7 @@ import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
 import { GrView } from 'react-icons/gr';
 import { getCookie } from "../../Utils/getCookie";
+import { Link } from "react-router-dom";
 
 const PrintPrescription = forwardRef((props, ref, print) => {
     const {userRole} = props;
@@ -42,6 +43,7 @@ const PrintPrescription = forwardRef((props, ref, print) => {
             <Content >
                 <TopBar title='Print Prescription' />
                 <Activity id="prescription_container">
+                <Link to='/prescripton/3' ><GreenButton>+ Add prescription</GreenButton></Link> 
                     <TextInput onChange={(e) => setPatientId(e.target.value)} type='text' title='Enter your patient id' />
                     <div ref={ref}>
                     <section id="patintId">

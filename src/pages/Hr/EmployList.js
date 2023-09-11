@@ -50,7 +50,7 @@ function EmployList({userRole}) {
                 <Message message={deleteMessage} />
                 <Activity>
                     <DataFiltter>
-                        <GreenButton>+ Add Payment</GreenButton>
+                    <Link to='/hr/0' ><GreenButton>+ Add Employ</GreenButton></Link> 
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

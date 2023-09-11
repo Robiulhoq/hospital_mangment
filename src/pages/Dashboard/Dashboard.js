@@ -15,18 +15,33 @@ import { DataContext } from '../../ContextApi/DataContext';
 Chart.register(ArcElement, CategoryScale, LinearScale, BarController, BarElement);
 export default function Dashboard({ userRole }) {
     const { doctorList, patientList, caseStudyList,
-        labList, invoiceList, hrList, bedList } = useContext(DataContext);
-
+        labList, invoiceList, hrList, bedList, paymentList} = useContext(DataContext);
+        
     const appoinmentList = patientList.map(item => item.appoinment.length);
     const apLength = appoinmentList.reduce((current, next) => current + next, 0);
     
+    const getMohthInvome = monthNo =>{
+       const grandTotal = invoiceList.map(item => (new Date(item.createdAt).getMonth()+1 === monthNo) ? item.paid : 0);
+       const total = grandTotal.reduce((current, nxt) => current + nxt, 0);
+       return total;
+        
+    }
+    const getMohthExpance = monthNo =>{
+        const grandTotal = paymentList.map(item => (new Date(item.date).getMonth()+1 === monthNo)? parseInt(item.amount): 0);
+        
+        const total = grandTotal.reduce((current, nxt) => current + nxt, 0);
+        return total;
+    }
+    console.log(getMohthExpance(8));
+    
 
     const chartdata = {
-        labels: ['Jun', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels: ['Jun', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'JULY', 'AUG', 'SEP', 'OCT', 'NUV', 'DEC'],
         datasets: [
             {
                 label: '# of Votes',
-                data: [120, 190, 130, 50, 80, 100],
+                data: [getMohthInvome(1), getMohthInvome(2), getMohthInvome(3), getMohthInvome(4), getMohthInvome(5), getMohthInvome(6),
+                    getMohthInvome(7), getMohthInvome(8), getMohthInvome(9), getMohthInvome(10), getMohthInvome(11), getMohthInvome(12)],
                 backgroundColor: [
                     '#FFB61E',
                     '#FFB61E',
@@ -48,7 +63,8 @@ export default function Dashboard({ userRole }) {
             },
             {
                 label: '# of Votes',
-                data: [90, 90, 30, 20, 20, 30],
+                data: [getMohthExpance(1), getMohthExpance(2), getMohthExpance(3), getMohthExpance(4), getMohthExpance(5), getMohthExpance(6), 
+                    getMohthExpance(7), getMohthExpance(8), getMohthExpance(9), getMohthExpance(10), getMohthExpance(11), getMohthExpance(12)],
                 backgroundColor: [
                     '#73B0D7',
                     '#73B0D7',
@@ -149,7 +165,7 @@ export default function Dashboard({ userRole }) {
                 </div>
                 <div className="chart_area">
                     <div className="income_expance">
-                        <p>Per mounth income/expance</p>
+                        <p>Per mounth <span style={{background: '#FFB61E', padding: '5px'}}>income</span> | <span style={{background: '#73B0D7', padding: '5px'}}>expance</span> in 2023</p>
                         <Bar data={chartdata} />
                     </div>
                     <div className="comparison">

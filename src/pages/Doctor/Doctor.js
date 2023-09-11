@@ -10,6 +10,7 @@ import Message from '../../components/Message';
 import axios from 'axios';
 import { Loading } from '../../components/Loading';
 import { getCookie } from '../../Utils/getCookie';
+import { Link } from 'react-router-dom';
 
 function Doctor({userRole}) {
     const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ function Doctor({userRole}) {
         schedule: [],
         status: 'active'
     });
-   
+   console.log(doctor);
     // store input change data in state
     const hendleChange = (e) => {
         const updateDoctor = { ...doctor }
@@ -118,7 +119,7 @@ function Doctor({userRole}) {
     const hendleSaveDoctor = async () => {
 
         try {
-
+            setLoading(true);
             const response = await fetch('http://localhost:5000/doctor', {
                 method: 'POST',
                 body: JSON.stringify(doctor),
@@ -150,7 +151,7 @@ function Doctor({userRole}) {
                     schedule: [],
                     status: 'active'
                 }));
-                setLoading(false);
+                
             } else {
                 console.log(response.statusText);
             }
@@ -168,8 +169,9 @@ function Doctor({userRole}) {
     }, [doctor.picture])
     
     const hendleEditDoctor = async () => {
-        setLoading(true)
+        
         try {
+            setLoading(true)
             const response = await fetch(`http://localhost:5000/doctor/${editDoctorId}`, {
                 method: 'PUT',
                 body: JSON.stringify(doctor),
@@ -184,7 +186,7 @@ function Doctor({userRole}) {
         } catch (error) {
             console.log(error);
         }
-
+        setLoading(false);
     }
     // Show event message in user
     if (message) {
@@ -204,6 +206,7 @@ function Doctor({userRole}) {
                 {
                     loading ? <Loading /> :
                         <Activity>
+                            <Link to='/doctor/1' ><BlueButton>Doctor List</BlueButton></Link>
                             <TextInput name='fastName' onChange={hendleChange} defaultValue={doctor.fastName} type='text' title='Fast Name' placeholder='Fast name' />
                             <TextInput name='lastName' onChange={hendleChange} defaultValue={doctor.lastName} type='text' title='Last Name' placeholder='Last name' />
                             <TextInput name='emailAddress' onChange={hendleChange} defaultValue={doctor.emailAddress} type='text' title='Email Name' placeholder='Email name' />

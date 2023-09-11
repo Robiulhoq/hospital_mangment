@@ -45,11 +45,11 @@ function ListService({userRole}) {
                 <Sidebar userRole={userRole} />
             </SidebarContainer>
             <Content >
-                <TopBar title='List Payment' />
+                <TopBar title='List Account' />
                 <Message message={message} />
                 <Activity>
                     <DataFiltter>
-                        <GreenButton>+ Add Payment</GreenButton>
+                    <Link to='/finance/2' ><GreenButton>+ Add Account</GreenButton></Link>  
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>
@@ -73,7 +73,7 @@ function ListService({userRole}) {
                                     <td>{index +1}</td>
                                     <td>{item.accountName}</td>
                                     <td>{item.accountType}</td>
-                                    <td>{item.description}</td>
+                                    <td>{item.drescription}</td>
                                     <td>{item.status}</td>
                                     <td> <Link to='/finance/2' ><BiEdit onClick={()=> hendleEditAccount(item._id)} size='1.5rem' color='darkblue' /> </Link> 
                                     <AiFillDelete onClick={()=> hendleDeleteAccount(item._id)} color='red' size='1.5rem' /></td>

@@ -7,6 +7,8 @@ import { BlueButton, GreenButton } from '../../components/Buttons';
 import Message from '../../components/Message';
 import { DataContext } from '../../ContextApi/DataContext';
 import { getCookie } from '../../Utils/getCookie';
+import { Loading } from '../../components/Loading';
+import { Link } from 'react-router-dom';
 
 const Department = ({userRole}) => {
     const { updateUI, departmentList, editDepartmentId } = useContext(DataContext);
@@ -39,8 +41,10 @@ const Department = ({userRole}) => {
         }
     }, [editDepartmentId, departmentList]);
     const token = getCookie('access_token');
+    const [loading, setLoading] = useState(false);
     const hendleSaveDepartment = async () => {
         try {
+            setLoading(true);
             let apiUrl = 'http://localhost:5000/department';
             let method = 'POST';
 
@@ -59,6 +63,7 @@ const Department = ({userRole}) => {
             updateUI(true);
             response.message = editMode ? 'Department edit successfull' : 'Department save successfull';
             setMessage(response.message);
+            setLoading(false);
 
         } catch (error) {
             console.error('Error:', error);
@@ -86,15 +91,17 @@ const Department = ({userRole}) => {
             <Content>
                 <TopBar title='Add Department' />
                 <Message message={message} />
+                {loading? <Loading />:
+                
                 <Activity>
-                    <BlueButton>Depratment List</BlueButton>
+                    <Link to='/department/1' ><BlueButton>Depratment List</BlueButton></Link>
                     <TextInput defaultValue={department.departmentName} onChange={hendleChange} name='departmentName' title="Department Name" placeholder='Department Name' type='text' />
                     <TextInput defaultValue={department.description} onChange={hendleChange} name='description' title="Description" placeholder='Description' type='textarea' />
                     <TextInput defaultValue={department.status} onChange={hendleChange} name='status' title="status" type='radio' 
                     options={[{label: 'Active', value: 'Active'},{label: 'Deactive', value: 'Deactive'}]} />
                     <GreenButton onClick={hendleSaveDepartment}>Save</GreenButton>
 
-                </Activity>
+                </Activity>}
             </Content>
         </Wrapper>
     )

@@ -49,7 +49,7 @@ function ListPayment({userRole}) {
                 <Message message={message} />
                 <Activity>
                     <DataFiltter>
-                        <GreenButton>+ Add Account</GreenButton>
+                    <Link to='/finance/4' ><GreenButton>+ Add Payment</GreenButton></Link> 
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

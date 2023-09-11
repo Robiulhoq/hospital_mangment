@@ -47,7 +47,7 @@ function MedicineList({userRole}) {
                 <Message message={message} />
                 <Activity>
                     <DataFiltter>
-                        <GreenButton>+ Add Payment</GreenButton>
+                    <Link to='/medicine/0' ><GreenButton>+ Add medicine</GreenButton></Link> 
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

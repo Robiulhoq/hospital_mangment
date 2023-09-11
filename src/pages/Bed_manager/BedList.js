@@ -46,7 +46,7 @@ function BedList({userRole}) {
                 <TopBar title='Bed List' />
                 <Activity>
                     <DataFiltter>
-                        <GreenButton>+ Add Payment</GreenButton>
+                    <Link to='/bed/0' ><GreenButton>+ Add Bed</GreenButton></Link> 
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

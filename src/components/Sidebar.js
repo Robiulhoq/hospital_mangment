@@ -24,7 +24,7 @@ function Sidebar({userRole}) {
     <div className='sidebar_container'>
       <div className="logo_container">
         <div>
-          <h3>Brand Name</h3>
+          <h3>Demo hospital Ltd</h3>
           <img src="https://picsum.photos/100/100" alt="" />
         </div>
       </div>

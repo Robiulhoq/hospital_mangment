@@ -46,7 +46,7 @@ function TestReport({userRole}){
                 <Message message={deleteMessage} />
                 <Activity>
                 <DataFiltter>
-                        <GreenButton>+ Add Test</GreenButton>
+                        <Link to='/labtest/0' ><GreenButton>+ Add Report</GreenButton></Link> 
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

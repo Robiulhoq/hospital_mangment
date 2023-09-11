@@ -8,6 +8,7 @@ import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import Message from "../../components/Message";
 import { getCookie } from '../../Utils/getCookie';
+import { Link } from "react-router-dom";
 function Appoinment({userRole}) {
     const { departmentList, doctorList, hendlePatientUI } = useContext(DataContext);
     const [appoinment, setAppoinment] = useState({
@@ -26,8 +27,10 @@ function Appoinment({userRole}) {
     const [patientId, setPatientId] = useState('');
     const [message, setMessage] = useState('');
     const token = getCookie('access_token');
+    const [loading, setLoading] = useState(false);
     const handleSaveAppointment = async () => {
         try {
+            setLoading(true);
             const response = await axios.post(`http://localhost:5000/patient/appoinment/${patientId}`,
                 appoinment, {
                 headers: { 'Content-Type': 'application/json',
@@ -46,6 +49,7 @@ function Appoinment({userRole}) {
                     status: 'active'
                 }))
             }
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -65,6 +69,7 @@ function Appoinment({userRole}) {
                 <TopBar title='Add Appoinment' />
                 <Message message={message} />
                 <Activity>
+                <Link to='/appoinment/1' ><GreenButton>List Appoinment</GreenButton></Link>
                     <TextInput type='text' onChange={(e) => setPatientId(e.target.value)} title='Patient ID' placeholder='Patient ID' />
                     <TextInput type='radio' onChange={hendleChange} name='department' title='Department Name ' placeholder='Department Name'
 

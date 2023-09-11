@@ -250,6 +250,15 @@ const DataProvider = ({ children }) => {
         setEditPaymentId(id);
     }
 
+    // Invoice API intergation start
+    const [invoiceList, setInvoiceList] = useState([]);
+    useEffect(()=>{
+      fetch('http://localhost:5000/invoice', {
+        headers: {'Authorization': `Bearer ${token}`}
+      })
+      .then(res => res.json())
+      .then(data => setInvoiceList(data));
+    },[]);
     
     return (
         <div>
@@ -310,7 +319,7 @@ const DataProvider = ({ children }) => {
                 hendleEditPayment,
                 editPaymentId,
 
-               
+               invoiceList
             }}>
                 {children}
             </DataContext.Provider>

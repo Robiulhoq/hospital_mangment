@@ -8,6 +8,8 @@ import TopBar from "../../components/TopBar";
 import axios from "axios";
 import { DataContext } from "../../ContextApi/DataContext";
 import { getCookie } from "../../Utils/getCookie";
+import { Loading } from "../../components/Loading";
+import { Link } from "react-router-dom";
 
 
 
@@ -76,8 +78,10 @@ function AddPrescription({userRole}) {
         setDiagnosis(updatedDiagnosis);
     };
     const token = getCookie('access_token');
+    const [loading, setLoading] = useState(false);
     const hendleSavePrescription = async () =>{
         try{
+            setLoading(true);
             const response = await axios.post(`http://localhost:5000/prescription/${patientId}`, prescription, {
                 headers: { 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}` }
@@ -85,6 +89,7 @@ function AddPrescription({userRole}) {
             if(response.status === 200){
                 console.log('Success');
             }
+            setLoading(false);
         }catch(error){
             console.log(error);
         }
@@ -107,6 +112,10 @@ function AddPrescription({userRole}) {
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Prescription' />
+                <Link to='/prescripton/2' ><GreenButton>Print Prescription</GreenButton></Link> 
+                {
+                    loading? <Loading />:
+                
                 <Activity id="invoice_container">
                     <section id="patientAndHospital">
                         <div className="patient_info_container">
@@ -192,7 +201,7 @@ function AddPrescription({userRole}) {
                        
                         <div><BlueButton>Reset</BlueButton> <GreenButton onClick={hendleSavePrescription}>Save</GreenButton></div>
                     </section>
-                </Activity>
+                </Activity>}
             </Content>
         </Wrapper>
     )

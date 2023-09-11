@@ -9,6 +9,7 @@ import Message from "../../components/Message";
 import { Loading } from "../../components/Loading";
 import { DataContext } from "../../ContextApi/DataContext";
 import { getCookie } from "../../Utils/getCookie";
+import { Link } from "react-router-dom";
 
 function LabTest({userRole}) {
     const { labList, hendleLabUI, eidtLabId } = useContext(DataContext);
@@ -85,7 +86,7 @@ function LabTest({userRole}) {
                 'Authorization': `Bearer ${token}` }
             });
             if(response.status === 200){
-                setLoading(false)
+                
                 response.message = 'Lab report edit successfull';
                 setMessage(response.message)
                 hendleLabUI(true);
@@ -99,6 +100,7 @@ function LabTest({userRole}) {
                     status: 'active'
                 }))
             }
+            setLoading(false);
         }catch(error){
             console.log(error);
         }
@@ -122,6 +124,7 @@ function LabTest({userRole}) {
                 {
                     loading === true ? <Loading /> :
                         <Activity>
+                            <Link to='/labtest/1' ><GreenButton>List report</GreenButton></Link> 
                             <TextInput name='patientId' defaultValue={lab.patientId} onChange={hendleChange} type='text' title='Patient Id' placeholder='Patient Id' />
                             <TextInput name='date' defaultValue={lab.date} onChange={hendleChange} type='text' title='Date' placeholder='Date' />
                             <TextInput name='testName' defaultValue={lab.testName} onChange={hendleChange} type='text' title='Test Name' placeholder='Test Name' />

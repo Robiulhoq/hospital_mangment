@@ -7,6 +7,8 @@ import TopBar from "../../components/TopBar";
 import Message from "../../components/Message";
 import { DataContext } from "../../ContextApi/DataContext";
 import { getCookie } from "../../Utils/getCookie";
+import { Loading } from "../../components/Loading";
+import { Link } from "react-router-dom";
 
 
 function AssignBed({userRole}) {
@@ -27,8 +29,10 @@ function AssignBed({userRole}) {
     }
     const [message, setMessage] = useState('');
     const token = getCookie('access_token');
+    const [loading, setLoading] = useState(false);
     const hendeAssainBed = async () => {
         try {
+            setLoading(true);
             const response = await fetch('http://localhost:5000/assainbed', {
                 method: 'POST',
                 body: JSON.stringify(assainBed),
@@ -40,6 +44,7 @@ function AssignBed({userRole}) {
                 setMessage(response.message);
                 hendleAssainBedUI(true);
             }
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -59,7 +64,11 @@ function AssignBed({userRole}) {
             <Content >
                 <TopBar title='Assain Bed' />
                 <Message message={message} />
+                {
+                    loading? <Loading/>:
+                
                 <Activity>
+                    <Link to='/bed/3' ><GreenButton>Assain bed List</GreenButton></Link> 
                     <TextInput name='patientId' onChange={hendleChange} title='Patient ID' type='text' placeholder='Patient Id' />
                     <TextInput name='bedType' onChange={hendleChange} title='Bed Type' type='radio'
                         options={bedList ? bedList.map(item => ({ label: item.bedType, value: item.charge })) : null} placeholder='Bed Type' />
@@ -69,7 +78,7 @@ function AssignBed({userRole}) {
                     <TextInput name='status' onChange={hendleChange} title='Status' type='radio'
                         options={[{ label: 'Active', value: 'Active' }, { label: 'Deactive', value: 'Deactive' }]} />
                     <GreenButton onClick={hendeAssainBed} >Save</GreenButton>
-                </Activity>
+                </Activity>}
             </Content>
         </Wrapper>
     )

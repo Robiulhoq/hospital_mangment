@@ -8,6 +8,8 @@ import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import Message from "../../components/Message";
 import { getCookie } from "../../Utils/getCookie";
+import { Loading } from "../../components/Loading";
+import { Link } from "react-router-dom";
 
 function BedManager({userRole}) {
     const { hendleBedUI, editBedId, bedList } = useContext(DataContext);
@@ -27,8 +29,10 @@ function BedManager({userRole}) {
     }
     const [message, setMessage] = useState('');
     const token = getCookie('access_token');
+    const [loading, setLoading] = useState(false);
     const hendleSaveBed = async () => {
         try {
+            setLoading(true);
             const response = await axios.post('http://localhost:5000/bed', bed, {
                 headers: { 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}` }
@@ -46,6 +50,7 @@ function BedManager({userRole}) {
                     status: 'active'
                 }))
             }
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -68,6 +73,7 @@ function BedManager({userRole}) {
 
     const hendleEditBed = async () => {
         try {
+            setLoading(true);
             const response = await fetch(`http://localhost:5000/bed/${editBedId}`, {
                 method: 'PUT',
                 body: JSON.stringify(bed),
@@ -78,6 +84,7 @@ function BedManager({userRole}) {
                 setMessage(response.message);
                 hendleBedUI(true);
             }
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -98,7 +105,11 @@ function BedManager({userRole}) {
             <Content >
                 <TopBar title='Add Bed' />
                 <Message message={message} />
+                {
+                    loading? <Loading />:
+                
                 <Activity>
+                    <Link to='/bed/1' ><GreenButton>Bed List</GreenButton></Link> 
                     <TextInput defaultValue={bed.bedType} onChange={hendleChange} name='bedType' title='Bed Type' type='text' placeholder='Bed Type' />
                     <TextInput defaultValue={bed.description} onChange={hendleChange} name='description' title='Description' type='textarea' placeholder='Description' />
                     <TextInput defaultValue={bed.bedCapacity} onChange={hendleChange} name='bedCapacity' title='Bed Capacity ' type='text' placeholder='Bed Capacity ' />
@@ -106,7 +117,7 @@ function BedManager({userRole}) {
                     <TextInput defaultValue={bed.status} onChange={hendleChange} name='status' title='Status' type='radio'
                         options={[{ label: 'Active', value: 'Active' }, { label: 'Deactive', value: 'Deactive' }]} />
                     <GreenButton onClick={editMode ? hendleEditBed : hendleSaveBed} >Save</GreenButton>
-                </Activity>
+                </Activity>}
             </Content>
         </Wrapper>
     )

@@ -47,7 +47,7 @@ function ListSchedule({userRole}) {
                 <Message message={deleteMessage} />
                 <Activity>
                     <DataFiltter>
-                        <GreenButton>+ Add Doctor</GreenButton>
+                    <Link to='/schedule/0' ><GreenButton>+ Add Schedule</GreenButton></Link> 
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

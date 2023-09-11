@@ -10,6 +10,9 @@ function TopBar({ title }) {
             setProfile(false)
         }
     }
+    function delete_cookie(name) {
+        document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      }
     return (
         <>
         <div className='top_bar'>
@@ -21,9 +24,7 @@ function TopBar({ title }) {
         {
             profile == true?
             <ul className='profile_option'>
-            <li><a href="">Profile</a></li>
-            <li><a href="">Edit Profile</a></li>
-            <li><a href="">Log Out</a></li>
+            <li onClick={(delete_cookie('access_token'))} ><a href="">Log Out</a></li>
         </ul>: null
         }
     </>

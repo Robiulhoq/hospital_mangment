@@ -11,6 +11,7 @@ import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
 import { GrView } from 'react-icons/gr';
 import { DataContext } from "../../ContextApi/DataContext";
+import { Link } from "react-router-dom";
 
 
 function ListPrescription({userRole}) {
@@ -25,7 +26,7 @@ function ListPrescription({userRole}) {
                 <TopBar title='List Prescription' />
                 <Activity>
                     <DataFiltter>
-                        <GreenButton>+ Add Appoinment</GreenButton>
+                    <Link to='/prescripton/0' ><GreenButton>+ Add Case Study</GreenButton></Link> 
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

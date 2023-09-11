@@ -51,7 +51,7 @@ function ListPatient({userRole}) {
                 <Message message={deleteMessage} />
                 <Activity>
                     <DataFiltter>
-                        <GreenButton>+ Add Patient</GreenButton>
+                    <Link to='/patient/0' ><GreenButton>+ Add Patient</GreenButton></Link> 
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

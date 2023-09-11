@@ -11,6 +11,7 @@ import { DataContext } from "../../ContextApi/DataContext";
 import axios from "axios";
 import Message from "../../components/Message";
 import { getCookie } from "../../Utils/getCookie";
+import { Link } from "react-router-dom";
 
 function AssignBedList({userRole}) {
     const { assainBedList, bedList, hendleAssainBedUI } = useContext(DataContext);
@@ -48,7 +49,7 @@ function AssignBedList({userRole}) {
                 <Message message={message} />
                 <Activity>
                     <DataFiltter>
-                        <GreenButton>+ Assaine Bed</GreenButton>
+                    <Link to='/bed/2' ><GreenButton>+ Assain Bed</GreenButton></Link> 
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

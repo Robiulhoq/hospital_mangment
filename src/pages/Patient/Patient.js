@@ -9,6 +9,7 @@ import Message from '../../components/Message';
 import { Loading } from '../../components/Loading';
 import axios from 'axios';
 import { getCookie } from '../../Utils/getCookie';
+import { Link } from 'react-router-dom';
 
 function Patient({userRole}) {
     const { patientList, hendlePatientUI, editPatientId} = useContext(DataContext);
@@ -77,7 +78,7 @@ console.log(patient);
     const token = getCookie('access_token');
     const hendleSavePatient = async () => {
         try {
-
+            setLoading(true);
             const response = await fetch('http://localhost:5000/patient', {
                 method: 'POST',
                 body: JSON.stringify(patient),
@@ -104,7 +105,7 @@ console.log(patient);
                     status: 'active'
                 }))
             }
-            setLoading(false)
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -121,7 +122,7 @@ console.log(patient);
     
 
     const hendleEditPatient = async () => {
-        setLoading(true)
+        setLoading(true);
         try {
             const response = await fetch(`http://localhost:5000/patient/${editPatientId}`, {
                 method: 'PUT',
@@ -136,6 +137,7 @@ console.log(patient);
         } catch (error) {
             console.log(error);
         }
+        setLoading(false);
     }
     if (message) {
         setInterval(() => {
@@ -154,6 +156,7 @@ console.log(patient);
                 {
                     loading ? <Loading /> :
                         <Activity>
+                             <Link to='/patient/1' ><GreenButton>List patient</GreenButton></Link>
                             <TextInput onChange={hendleChange} defaultValue={patient.fastName} type='text' name='fastName' title='Fast Name' placeholder='Fast name' />
                             <TextInput onChange={hendleChange} defaultValue={patient.lastName} type='text' name='lastName' title='Last Name' placeholder='Last name' />
                             <TextInput onChange={hendleChange} defaultValue={patient.emailAddress} type='text' name='emailAddress' title='Email address' placeholder='Email address' />

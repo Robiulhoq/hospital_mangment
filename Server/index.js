@@ -47,9 +47,9 @@ dotenv.config()
 
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: 'dv8sz8mml',
-  api_key: '259259562123635',
-  api_secret: '1j0AJuSvwFzlQp3mLUSrETNN_ak'
+  cloud_name: process.env.cloudName,
+  api_key:process.env.apiKey ,
+  api_secret: process.env.apiSecret
 });
 async function handleUpload(file) {
   const res = await cloudinary.uploader.upload(file, {

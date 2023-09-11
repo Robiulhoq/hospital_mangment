@@ -10,6 +10,8 @@ import axios from "axios";
 import Message from "../../components/Message";
 import { DataContext } from "../../ContextApi/DataContext";
 import { getCookie } from "../../Utils/getCookie";
+import { Link } from "react-router-dom";
+import { Loading } from "../../components/Loading";
 
 function Prescription({userRole}) {
     const { hendleCaseStudyUI } = useContext(DataContext);
@@ -41,8 +43,10 @@ function Prescription({userRole}) {
     
     const [message, setMessage] = useState('');
     const token = getCookie('access_token');
+    const [loading, setLoading] = useState(false);
     const hendleSaveCaseStudy = async () => {
         try {
+            setLoading(true);
             const response = await axios.post(`http://localhost:5000/casestudy/${caseStudy.patientId}`, caseStudy, {
                 headers: { 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`}
@@ -71,6 +75,7 @@ function Prescription({userRole}) {
                 }));
                 hendleCaseStudyUI(true);
             }
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -88,7 +93,11 @@ function Prescription({userRole}) {
             <Content >
                 <TopBar title='Add Prescription' />
                 <Message message={message} />
+                {
+                   loading? <Loading /> :
+               
                 <Activity>
+                <Link to='/prescripton/1' ><GreenButton>List Case Study</GreenButton></Link>
                     <TextInput onChange={hendleChange} type='text' name='patientId' title='Patient ID' placeholder='Patient ID' />
                     <TextInput onChange={hendleChange} type='text' name='footAllergies' title='Food Allergies' placeholder='Food Allergies' />
                     <TextInput onChange={hendleChange} type='text' name='tendencyBleed' title='Tendency Bleed' placeholder='Tendency Bleed' />
@@ -108,7 +117,7 @@ function Prescription({userRole}) {
                     <TextInput onChange={hendleChange} type='radio' name='status' title='Status'
                         options={[{ label: 'active', value: 'active' }, { label: 'Deactive', value: 'Deactive' }]} />
                     <GreenButton onClick={hendleSaveCaseStudy} >Save</GreenButton>
-                </Activity>
+                </Activity> }
             </Content>
         </Wrapper>
     )

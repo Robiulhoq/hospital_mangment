@@ -7,13 +7,15 @@ import TopBar from "../../components/TopBar";
 import { DataContext } from "../../ContextApi/DataContext";
 import Message from "../../components/Message";
 import { getCookie } from "../../Utils/getCookie";
+import { Loading } from "../../components/Loading";
+import { Link } from "react-router-dom";
 function AddService({userRole}) {
     const { editAccoutId, accountList, hendleAccoutUI } = useContext(DataContext);
     const [account, setAddAccount] = useState({
         accountName: '',
-        accountType: '',
+        accountType: 'Dabit',
         drescription: '',
-        status: ''
+        status: 'active'
     });
     console.log(account)
     const hendleChange = (e) => {
@@ -21,17 +23,22 @@ function AddService({userRole}) {
         updateAccount[e.target.name] = e.target.value;
         setAddAccount(updateAccount);
     }
+    const [loading, setLoading] = useState(false);
+    console.log(loading);
     const [message, setMessage] = useState('');
     const token = getCookie('access_token');
     const hendleSaveAccount = async () => {
         try {
+            setLoading(true);
             const response = await fetch('http://localhost:5000/account', {
                 method: 'POST',
                 body: JSON.stringify(account),
                 headers: { 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}` }
             });
+            
             if (response.status === 200) {
+                setLoading(false);
                 response.message = 'Account save successfull!';
                 setMessage(response.message);
                 hendleAccoutUI(true);
@@ -42,7 +49,9 @@ function AddService({userRole}) {
                     drescription: '',
                     status: ''
                 }));
+                
             }
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -104,13 +113,18 @@ function AddService({userRole}) {
             <Content >
                 <TopBar title='Add Account' />
                 <Message message={message} />
-                <Activity>
+                {
+                    loading? <Loading />:
+                    <Activity>
+                        <Link to='/finance/3' ><GreenButton>List account</GreenButton></Link> 
                     <TextInput name='accountName' defaultValue={account.accountName} onChange={hendleChange} title='Account Name' type='text' placeholder='Account name' />
-                    <TextInput name='accountType'  onChange={hendleChange} title='Account Type' type='radio' options={[{ label: 'Dabit', value: 'Deabit' }, { label: 'Credit', value: 'Credit' }]} />
+                    <TextInput name='accountType'  onChange={hendleChange} title='Account Type' type='radio' options={[{ label: 'Dabit', value: 'Dabit' }, { label: 'Credit', value: 'Credit' }]} />
                     <TextInput name='drescription' defaultValue={account.drescription} onChange={hendleChange} title='Drescription' type='textarea' placeholder='Drescription' />
                     <TextInput name='status'  onChange={hendleChange} title='Status' type='radio' options={[{ label: 'Active', value: 'Active' }, { label: 'Deactive', value: 'Deactive' }]} />
                     <GreenButton onClick={editMode ? hendleEditAccount : hendleSaveAccount} >Save</GreenButton>
                 </Activity>
+                }
+                
             </Content>
         </Wrapper>
     )
