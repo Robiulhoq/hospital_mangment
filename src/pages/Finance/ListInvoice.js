@@ -13,7 +13,7 @@ const ListInvoice = forwardRef((props, ref, print) => {
     const [singleInvoice, setSingleInvoice] = useState(null);
     const token = getCookie('access_token');
     useEffect(() => {
-        fetch(`http://localhost:5000/patient/filter/${patientId}`,{
+        fetch(`https://hospital-mangment.onrender.com/patient/filter/${patientId}`,{
             headers: {'Authorization': `Bearer ${token}`}
         })
             .then(res => res.json())
@@ -21,7 +21,7 @@ const ListInvoice = forwardRef((props, ref, print) => {
     }, [patientId]);
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/invoice/filter/${patientId}`,{
+        fetch(`https://hospital-mangment.onrender.com/invoice/filter/${patientId}`,{
             headers:{'Authorization': `Bearer ${token}`}
         })
         .then(res => res.json())

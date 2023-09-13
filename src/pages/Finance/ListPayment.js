@@ -20,7 +20,7 @@ function ListPayment({userRole}) {
     const token = getCookie('access_token');
     const hendleDeletePayment = async(id) =>{
         try{
-            const response = await axios.delete(`http://localhost:5000/payment/${id}`,{
+            const response = await axios.delete(`https://hospital-mangment.onrender.com/payment/${id}`,{
                 headers: {'Authorization': `Bearer ${token}`}
             })
             if(response.status === 200){

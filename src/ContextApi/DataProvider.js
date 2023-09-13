@@ -12,7 +12,7 @@ const DataProvider = ({ children }) => {
     const [editDepartmentId, setEditDepartmentId] = useState(null);
     const [update, setUpdate] = useState(false);
     useEffect(() => {
-        fetch('http://localhost:5000/department', {
+        fetch('https://hospital-mangment.onrender.com/department', {
           headers: {
             'Authorization': `Bearer ${token}`, // Include the access token
           },
@@ -36,7 +36,7 @@ const DataProvider = ({ children }) => {
     const [editDoctorId, setEditDoctorId] = useState(null);
     const [doctorUI, setDoctorUI] = useState(false)
     useEffect(() => {
-        fetch('http://localhost:5000/doctor',{
+        fetch('https://hospital-mangment.onrender.com/doctor',{
             headers: {
               'Authorization': `Bearer ${token}`, // Include the access token
             },
@@ -59,7 +59,7 @@ const DataProvider = ({ children }) => {
     const [editPatientId, setEditPatientId] = useState(null);
     const [patientUI, setPatientUI] = useState(false);
     useEffect(() => {
-        fetch('http://localhost:5000/patient',{
+        fetch('https://hospital-mangment.onrender.com/patient',{
             headers: {
               'Authorization': `Bearer ${token}`, // Include the access token
             },
@@ -91,7 +91,7 @@ const DataProvider = ({ children }) => {
     const [caseStudyList, setCaseStudyList] = useState([]);
     const [caseStudyUI, setCaseStudyUI] = useState(false)
     useEffect(()=>{
-        fetch('http://localhost:5000/casestudy',{
+        fetch('https://hospital-mangment.onrender.com/casestudy',{
             headers: {
               'Authorization': `Bearer ${token}`, // Include the access token
             },
@@ -109,7 +109,7 @@ const DataProvider = ({ children }) => {
     const [editMedicineId, setEditMedicineId] = useState('');
     const [medicineUI, setMedicineUI] = useState(false);
     useEffect(()=>{
-        fetch('http://localhost:5000/medicine',{
+        fetch('https://hospital-mangment.onrender.com/medicine',{
             headers: {
               'Authorization': `Bearer ${token}`, // Include the access token
             },
@@ -130,7 +130,7 @@ const DataProvider = ({ children }) => {
     const [editBedId, setEditBedId] = useState('');
     const [bedUI, setBedUI] = useState(false);
     useEffect(()=>{
-        fetch('http://localhost:5000/bed',{
+        fetch('https://hospital-mangment.onrender.com/bed',{
             headers: {
               'Authorization': `Bearer ${token}`, // Include the access token
             },
@@ -149,7 +149,7 @@ const DataProvider = ({ children }) => {
     const [editHrId, setEditHrId] = useState('');
     const [hrUI, setHrUI] = useState(false);
     useEffect(()=>{
-        fetch('http://localhost:5000/hr', {
+        fetch('https://hospital-mangment.onrender.com/hr', {
             headers: {
               'Authorization': `Bearer ${token}`, // Include the access token
             },
@@ -170,7 +170,7 @@ const DataProvider = ({ children }) => {
     const [labUI, setLabUI] = useState(false);
 
     useEffect(()=>{
-        fetch('http://localhost:5000/lab',{
+        fetch('https://hospital-mangment.onrender.com/lab',{
             headers: {
               'Authorization': `Bearer ${token}`, // Include the access token
             },
@@ -191,7 +191,7 @@ const DataProvider = ({ children }) => {
     const [accoutUI, setAccoutUI] = useState(true);
     
     useEffect(()=>{
-        fetch('http://localhost:5000/account', {
+        fetch('https://hospital-mangment.onrender.com/account', {
             headers: {
               'Authorization': `Bearer ${token}`, // Include the access token
             },
@@ -213,7 +213,7 @@ const DataProvider = ({ children }) => {
     const [assainBedUI, setAssainBedUI] = useState(false);
 
     useEffect(()=>{
-        fetch('http://localhost:5000/assainbed',{
+        fetch('https://hospital-mangment.onrender.com/assainbed',{
             headers: {
               'Authorization': `Bearer ${token}`, // Include the access token
             },
@@ -235,7 +235,7 @@ const DataProvider = ({ children }) => {
     const [paymentUI, setPaymentUI] = useState(false);
 
     useEffect(()=>{
-        fetch('http://localhost:5000/payment',{
+        fetch('https://hospital-mangment.onrender.com/payment',{
             headers: {
               'Authorization': `Bearer ${token}`, // Include the access token
             },
@@ -253,7 +253,7 @@ const DataProvider = ({ children }) => {
     // Invoice API intergation start
     const [invoiceList, setInvoiceList] = useState([]);
     useEffect(()=>{
-      fetch('http://localhost:5000/invoice', {
+      fetch('https://hospital-mangment.onrender.com/invoice', {
         headers: {'Authorization': `Bearer ${token}`}
       })
       .then(res => res.json())

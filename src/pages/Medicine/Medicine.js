@@ -32,7 +32,7 @@ function AddMedicine({userRole}) {
     const hendleSaveMedicine = async () => {
         try {
             setLoading(true);
-            const response = await axios.post('http://localhost:5000/medicine', medicine, {
+            const response = await axios.post('https://hospital-mangment.onrender.com/medicine', medicine, {
                 headers: { 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}` }
             });
@@ -72,7 +72,7 @@ function AddMedicine({userRole}) {
 
     const hendleEditMedicine = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/medicine/${editMedicineId}`, {
+            const response = await fetch(`https://hospital-mangment.onrender.com/medicine/${editMedicineId}`, {
                 method:'PUT',
                 body: JSON.stringify(medicine),
                 headers: { 'Content-Type': 'application/json',

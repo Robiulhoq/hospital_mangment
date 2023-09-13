@@ -33,7 +33,7 @@ function BedManager({userRole}) {
     const hendleSaveBed = async () => {
         try {
             setLoading(true);
-            const response = await axios.post('http://localhost:5000/bed', bed, {
+            const response = await axios.post('https://hospital-mangment.onrender.com/bed', bed, {
                 headers: { 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}` }
             });
@@ -74,7 +74,7 @@ function BedManager({userRole}) {
     const hendleEditBed = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:5000/bed/${editBedId}`, {
+            const response = await fetch(`https://hospital-mangment.onrender.com/bed/${editBedId}`, {
                 method: 'PUT',
                 body: JSON.stringify(bed),
                 headers: { 'Content-Type': 'application/json' }

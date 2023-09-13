@@ -21,7 +21,7 @@ const PrintPrescription = forwardRef((props, ref, print) => {
     const [singlePatient, setSinglePatient] = useState([]);
     const token = getCookie('access_token');
     useEffect(() => {
-        fetch(`http://localhost:5000/prescription/${patientId}`, {
+        fetch(`https://hospital-mangment.onrender.com/prescription/${patientId}`, {
             headers: {'Authorization': `Bearer ${token}`}
         })
             .then(res => res.json())
@@ -29,7 +29,7 @@ const PrintPrescription = forwardRef((props, ref, print) => {
     }, [patientId]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/patient/filter/${patientId}`,{
+        fetch(`https://hospital-mangment.onrender.com/patient/filter/${patientId}`,{
             headers: {'Authorization': `Bearer ${token}`}
         })
             .then(res => res.json())

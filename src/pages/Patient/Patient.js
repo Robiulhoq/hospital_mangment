@@ -66,7 +66,7 @@ console.log(patient);
         try {
             const formData = new FormData();
             formData.append('my_file', image);
-            const response = await axios.post('http://localhost:5000/upload', formData);
+            const response = await axios.post('https://hospital-mangment.onrender.com/upload', formData);
             const updatePatient = { ...patient }
             updatePatient.picture = response.data.secure_url;
             setPatient(updatePatient);
@@ -79,7 +79,7 @@ console.log(patient);
     const hendleSavePatient = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5000/patient', {
+            const response = await fetch('https://hospital-mangment.onrender.com/patient', {
                 method: 'POST',
                 body: JSON.stringify(patient),
                 headers: { 'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ console.log(patient);
     const hendleEditPatient = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:5000/patient/${editPatientId}`, {
+            const response = await fetch(`https://hospital-mangment.onrender.com/patient/${editPatientId}`, {
                 method: 'PUT',
                 body: JSON.stringify(patient),
                 headers: { 'Content-Type': 'application/json',

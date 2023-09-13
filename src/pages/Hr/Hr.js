@@ -42,7 +42,7 @@ function Hr({ userRole }) {
         try {
             const formData = new FormData();
             formData.append('my_file', image);
-            const response = await axios.post('http://localhost:5000/upload', formData);
+            const response = await axios.post('https://hospital-mangment.onrender.com/upload', formData);
             const updateHr = { ...hr }
             updateHr.picture = response.data.secure_url;
             setHr(updateHr);
@@ -58,7 +58,7 @@ function Hr({ userRole }) {
 
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5000/hr', {
+            const response = await fetch('https://hospital-mangment.onrender.com/hr', {
                 method: 'POST',
                 body: JSON.stringify(hr),
                 headers: {
@@ -132,7 +132,7 @@ function Hr({ userRole }) {
     const hendleEditHr = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:5000/hr/${editHrId}`, {
+            const response = await fetch(`https://hospital-mangment.onrender.com/hr/${editHrId}`, {
                 method: 'PUT',
                 body: JSON.stringify(hr),
                 headers: {

@@ -33,7 +33,7 @@ function AddPayment({ userRole }) {
     const hendleSavePayment = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5000/payment', {
+            const response = await fetch('https://hospital-mangment.onrender.com/payment', {
                 method: 'POST',
                 body: JSON.stringify(payment),
                 headers: {
@@ -79,7 +79,7 @@ function AddPayment({ userRole }) {
     const hendleEditPayment = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:5000/payment/${editPaymentId}`, {
+            const response = await fetch(`https://hospital-mangment.onrender.com/payment/${editPaymentId}`, {
                 method: 'PUT',
                 body: JSON.stringify(payment),
                 headers: {

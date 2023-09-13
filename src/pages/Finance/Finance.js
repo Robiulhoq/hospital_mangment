@@ -94,7 +94,7 @@ function Finance({ userRole }) {
     
         try {
             setLoading(true);
-            const resp = await fetch('http://localhost:5000/invoice', {
+            const resp = await fetch('https://hospital-mangment.onrender.com/invoice', {
                 method: 'POST',
                 body: JSON.stringify(combinedInvoice),
                 headers: {
@@ -126,7 +126,7 @@ function Finance({ userRole }) {
     useEffect(() => {
         if (fullInvoice.patientId.length == 24) {
             
-            fetch(`http://localhost:5000/patient/filter/${fullInvoice.patientId}`, {
+            fetch(`https://hospital-mangment.onrender.com/patient/filter/${fullInvoice.patientId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             }).then(res => res.json())
                 .then(data => setSinglePatient(data));

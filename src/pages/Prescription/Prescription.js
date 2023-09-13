@@ -47,7 +47,7 @@ function Prescription({userRole}) {
     const hendleSaveCaseStudy = async () => {
         try {
             setLoading(true);
-            const response = await axios.post(`http://localhost:5000/casestudy/${caseStudy.patientId}`, caseStudy, {
+            const response = await axios.post(`https://hospital-mangment.onrender.com/casestudy/${caseStudy.patientId}`, caseStudy, {
                 headers: { 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`}
             });

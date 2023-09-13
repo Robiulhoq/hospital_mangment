@@ -82,7 +82,7 @@ function AddPrescription({userRole}) {
     const hendleSavePrescription = async () =>{
         try{
             setLoading(true);
-            const response = await axios.post(`http://localhost:5000/prescription/${patientId}`, prescription, {
+            const response = await axios.post(`https://hospital-mangment.onrender.com/prescription/${patientId}`, prescription, {
                 headers: { 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}` }
             });
@@ -98,7 +98,7 @@ function AddPrescription({userRole}) {
     // Single patient
     const [singlePatient, setSinglePatient] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:5000/patient/filter/${patientId}`,{
+        fetch(`https://hospital-mangment.onrender.com/patient/filter/${patientId}`,{
             headers: {'Authorization': `Bearer ${token}`}
         })
             .then(res => res.json())

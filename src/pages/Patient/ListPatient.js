@@ -20,7 +20,7 @@ function ListPatient({userRole}) {
     const hendleDeletePatient = async (id) =>{
         try {
 
-            const response = await axios.delete(`http://localhost:5000/patient/${id}`,{
+            const response = await axios.delete(`https://hospital-mangment.onrender.com/patient/${id}`,{
                 headers: {'Authorization': `Bearer ${token}`}
             });
             if(response.status == 200){

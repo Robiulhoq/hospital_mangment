@@ -20,7 +20,7 @@ function EmployList({userRole}) {
     const hendleDeleteEmploy = async (id) => {
         try {
 
-            const response = await axios.delete(`http://localhost:5000/hr/${id}`,{
+            const response = await axios.delete(`https://hospital-mangment.onrender.com/hr/${id}`,{
                 headers: {'Authorization': `Bearer ${token}`}
             });
             if(response.status === 200){

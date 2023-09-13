@@ -21,7 +21,7 @@ const ListDepartment = ({userRole}) => {
     const deleteDepartment = async (id) => {
         try {
 
-            const response = await axios.delete(`http://localhost:5000/department/${id}`, {
+            const response = await axios.delete(`https://hospital-mangment.onrender.com/department/${id}`, {
                 headers: {'Authorization': `Bearer ${token}`}
             });
             setDeleteMessage(response.data);

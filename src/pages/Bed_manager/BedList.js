@@ -18,7 +18,7 @@ function BedList({userRole}) {
     const token = getCookie('access_token');
     const hendleDeleteBed = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/bed/${id}`,{
+            const response = await axios.delete(`https://hospital-mangment.onrender.com/bed/${id}`,{
                 headers: {'Authorization': `Bearer ${token}`}
             });
             if (response.status === 200) {

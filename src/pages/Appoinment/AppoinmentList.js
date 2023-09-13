@@ -20,7 +20,7 @@ function AppoinmentList({userRole}) {
     const deleteAppoinment = async (patientId, apId) => {
         try {
     
-            const response = await axios.delete(`http://localhost:5000/patient/appoinment/${patientId}/${apId}`,{
+            const response = await axios.delete(`https://hospital-mangment.onrender.com/patient/appoinment/${patientId}/${apId}`,{
                 headers: {'Authorization': `Bearer ${token}`}
             })
             if(response.status === 200){

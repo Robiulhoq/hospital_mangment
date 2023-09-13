@@ -31,7 +31,7 @@ function Appoinment({userRole}) {
     const handleSaveAppointment = async () => {
         try {
             setLoading(true);
-            const response = await axios.post(`http://localhost:5000/patient/appoinment/${patientId}`,
+            const response = await axios.post(`https://hospital-mangment.onrender.com/patient/appoinment/${patientId}`,
                 appoinment, {
                 headers: { 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}` }

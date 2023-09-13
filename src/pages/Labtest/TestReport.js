@@ -18,7 +18,7 @@ function TestReport({userRole}){
 
     const hendleDeletLabReport = async(id) =>{
         try{
-            const response = await axios.delete(`http://localhost:5000/lab/${id}`)
+            const response = await axios.delete(`https://hospital-mangment.onrender.com/lab/${id}`)
             if(response.status === 200){
                 response.message = 'Report Delete Successfull';
                 setDeleteMessage(response.message);

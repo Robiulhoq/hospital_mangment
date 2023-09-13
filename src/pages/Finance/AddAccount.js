@@ -30,7 +30,7 @@ function AddService({userRole}) {
     const hendleSaveAccount = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5000/account', {
+            const response = await fetch('https://hospital-mangment.onrender.com/account', {
                 method: 'POST',
                 body: JSON.stringify(account),
                 headers: { 'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ function AddService({userRole}) {
 
     const hendleEditAccount = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/account/${editAccoutId}`, {
+            const response = await fetch(`https://hospital-mangment.onrender.com/account/${editAccoutId}`, {
                 method: 'PUT',
                 body: JSON.stringify(account),
                 headers: { 'Content-Type': 'application/json' }

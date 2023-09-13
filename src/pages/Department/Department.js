@@ -45,7 +45,7 @@ const Department = ({userRole}) => {
     const hendleSaveDepartment = async () => {
         try {
             setLoading(true);
-            let apiUrl = 'http://localhost:5000/department';
+            let apiUrl = 'https://hospital-mangment.onrender.com/department';
             let method = 'POST';
 
             if (editMode) {

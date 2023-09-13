@@ -104,7 +104,7 @@ function Doctor({userRole}) {
         try {
             const formData = new FormData();
             formData.append('my_file', image);
-            const response = await axios.post('http://localhost:5000/upload', formData);
+            const response = await axios.post('https://hospital-mangment.onrender.com/upload', formData);
             const updateDoctor = { ...doctor }
             updateDoctor.picture = response.data.secure_url;
             setDoctor(updateDoctor);
@@ -120,7 +120,7 @@ function Doctor({userRole}) {
 
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5000/doctor', {
+            const response = await fetch('https://hospital-mangment.onrender.com/doctor', {
                 method: 'POST',
                 body: JSON.stringify(doctor),
                 headers: { 'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ function Doctor({userRole}) {
         
         try {
             setLoading(true)
-            const response = await fetch(`http://localhost:5000/doctor/${editDoctorId}`, {
+            const response = await fetch(`https://hospital-mangment.onrender.com/doctor/${editDoctorId}`, {
                 method: 'PUT',
                 body: JSON.stringify(doctor),
                 headers: { 'Content-Type': 'application/json',

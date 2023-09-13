@@ -19,7 +19,7 @@ function ListService({userRole}) {
     const token = getCookie('access_token');
     const hendleDeleteAccount = async (id) =>{
         try{
-            const response = await  axios.delete(`http://localhost:5000/account/${id}`, {
+            const response = await  axios.delete(`https://hospital-mangment.onrender.com/account/${id}`, {
                 headers: {'Authorization': `Bearer ${token}` }
             });
             if(response.status === 200){

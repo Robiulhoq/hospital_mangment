@@ -33,7 +33,7 @@ function AssignBed({userRole}) {
     const hendeAssainBed = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5000/assainbed', {
+            const response = await fetch('https://hospital-mangment.onrender.com/assainbed', {
                 method: 'POST',
                 body: JSON.stringify(assainBed),
                 headers: { 'Content-Type': 'application/json',

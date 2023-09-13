@@ -21,7 +21,7 @@ function DoctorList({userRole}) {
     const hendleDeleteDoctor = async (id) => {
         try {
 
-            const response = await axios.delete(`http://localhost:5000/doctor/${id}`,{
+            const response = await axios.delete(`https://hospital-mangment.onrender.com/doctor/${id}`,{
                 headers: {'Authorization': `Bearer ${token}`}
             });
             setDeleteMessage(response.data);

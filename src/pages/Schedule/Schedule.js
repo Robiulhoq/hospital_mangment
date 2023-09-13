@@ -33,7 +33,7 @@ function Schedule({userRole}) {
 
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:5000/doctor/schedule/${editDoctorid}`, {
+            const response = await fetch(`https://hospital-mangment.onrender.com/doctor/schedule/${editDoctorid}`, {
                 method: 'POST',
                 body: JSON.stringify(schedule),
                 headers: { 'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ function Schedule({userRole}) {
     const hendleEditSchedule = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:5000/doctor/schedule/${editSchedule.id}/${editSchedule.scheduleId}`, {
+            const response = await fetch(`https://hospital-mangment.onrender.com/doctor/schedule/${editSchedule.id}/${editSchedule.scheduleId}`, {
                 method: 'PUT',
                 body: JSON.stringify(schedule),
                 headers: { 'Content-Type': 'application/json',

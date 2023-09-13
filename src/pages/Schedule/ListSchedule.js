@@ -20,7 +20,7 @@ function ListSchedule({userRole}) {
     const token = getCookie('access_token');
     const hendleDeleteSchedule = async (doctorId, scheduleId) =>{
         try{
-            const response = await axios.delete(`http://localhost:5000/doctor/schedule/${doctorId}/${scheduleId}`,{
+            const response = await axios.delete(`https://hospital-mangment.onrender.com/doctor/schedule/${doctorId}/${scheduleId}`,{
                 headers: {'Authorization': `Bearer ${token}`}
             });
             response.message = 'Schedule delete successfull';

@@ -34,7 +34,7 @@ function LabTest({userRole}) {
 
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5000/lab', {
+            const response = await fetch('https://hospital-mangment.onrender.com/lab', {
                 method: 'POST',
                 body: JSON.stringify(lab),
                 headers: { 'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ function LabTest({userRole}) {
     const hendleEditLab = async () =>{
         try{
             setLoading(true);
-            const response = await fetch(`http://localhost:5000/lab/${eidtLabId}`, {
+            const response = await fetch(`https://hospital-mangment.onrender.com/lab/${eidtLabId}`, {
                 method: 'PUT',
                 body: JSON.stringify(lab),
                 headers: { 'Content-Type': 'application/json',
