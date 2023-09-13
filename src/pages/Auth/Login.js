@@ -4,6 +4,7 @@ import axios from 'axios';
 import { GreenButton } from '../../components/Buttons';
 import { DataContext } from '../../ContextApi/DataContext';
 import { useNavigate } from 'react-router-dom';
+import { Loading } from '../../components/Loading';
 function Login({setUserRole}) {
 const {hendleSetUserRole, userRole} = useContext(DataContext)
  const [loginInfo, setLoginInfo] = useState({
@@ -17,9 +18,11 @@ const {hendleSetUserRole, userRole} = useContext(DataContext)
     setLoginInfo(updateLoginInfo);
   }
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await fetch('http://localhost:5000/auth/login', {
         method: 'POST',
         body: JSON.stringify(loginInfo),
@@ -32,6 +35,7 @@ const {hendleSetUserRole, userRole} = useContext(DataContext)
         setUserRole(data.data.userRole);
         
       }
+      setLoading(false);
       if(data.data.userRole == 'admin'){
         navigate('/');
       }else if(data.data.userRole == 'doctor'){
@@ -48,6 +52,9 @@ const {hendleSetUserRole, userRole} = useContext(DataContext)
 
   return (
     <div className="login-container">
+      {
+        loading? <Loading />:
+        <div>
       <h1>Demo hospital limited</h1>
       <p>Enter your email and password to log in.</p>
 
@@ -75,7 +82,19 @@ const {hendleSetUserRole, userRole} = useContext(DataContext)
 
         <GreenButton onClick={handleSubmit}>Login</GreenButton>
       </div>
-
+      </div>
+      }
+      <ul style={{listStyle: 'none'}}>
+        <li>admin@gmail.com</li>
+        <li>123456</li>
+        <li>doctor@gmail.com</li>
+        <li>123456</li>
+        <li>nurse@gmail.com</li>
+        <li>123456</li>
+        <li>accounted@gmail.com</li>
+        <li>123456</li>
+      </ul>
+      
     </div>
   );
 }
