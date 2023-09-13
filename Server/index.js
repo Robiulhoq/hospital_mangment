@@ -29,7 +29,7 @@ const Payment = require('./router/payment.js');
 
 const connect = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/HospitalManagment")
+    await mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.tx9ov.mongodb.net/HospitalManagment?retryWrites=true&w=majority`)
     console.log("Connected to Mongodb");
   } catch (error) {
     throw error
