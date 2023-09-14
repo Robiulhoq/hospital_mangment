@@ -1,70 +1,89 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Hospital management soloution(MERN STACK)
 
-## Available Scripts
+● Developed a financial module for real-time income and expense tracking, complete with interactive charts for data analysis.
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Dashboard
 
-### `npm test`
+![App Screenshot](https://res.cloudinary.com/dv8sz8mml/image/upload/v1694668054/Hospital_managment/Screenshot_from_2023-09-10_17-37-35_calxzp.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+● Implemented secure user authentication and role-based access, ensuring data privacy and efficient user
+management.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Login Page
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![App Screenshot](https://res.cloudinary.com/dv8sz8mml/image/upload/v1694668054/Hospital_managment/Screenshot_from_2023-09-14_11-03-29_g01o4l.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+● Implemented secure user authentication and role-based access, ensuring data privacy and efficient user
+management.
+## Invoice
+![App Screenshot](https://res.cloudinary.com/dv8sz8mml/image/upload/v1694668054/Hospital_managment/invoice_vtlmjy.png)
 
-## Learn More
+● Integrated bed management, invoice generation, and HR solutions for enhanced operational efficiency
+and patient care.
+## Add Prescription
+![App Screenshot](https://res.cloudinary.com/dv8sz8mml/image/upload/v1694668055/Hospital_managment/prescription_fuaglb.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+● Designed a secure API with user authentication and authorization to safeguard data integrity and
+confidentiality.
+## Demo
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This application is deployed on Vercel Please check it out 😄 here.
 
-### Code Splitting
+https://hospital-mangment.vercel.app
+## Installation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Some basic Git commands are:
 
-### Analyzing the Bundle Size
+```bash
+git clone https://github.com/Robiulhoq/hospital_mangment.git
+npm install 
+npm start
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+Start Server
+```bash
+cd Server
+npm install 
+nodemon index.js
 
-### Making a Progressive Web App
+```
+## Environment Variables
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+To run this project, you will need to add the following environment variables to your .env file
+If you need CLOUDNAME, API_KEY, API_SECRET fast create accout cloudinary.com and get your environment variables.
 
-### Advanced Configuration
+or you get DB_PASS and DB_USER in mongodb
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+`CLOUDNAME`
 
-### Deployment
+`API_KEY`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+`API_SECRET`
 
-### `npm run build` fails to minify
+`DB_USER`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+`DB_PASS`
+
+
+## Examples
+
+```javascript
+cloudinary.config({
+  cloud_name: process.env.cloudName,
+  api_key:process.env.apiKey ,
+  api_secret: process.env.apiSecret
+});
+
+`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.tx9ov.mongodb.net/HospitalManagment?retryWrites=true&w=majority`
+```
+
