@@ -7,10 +7,10 @@ const spin = keyframes`
 
 export const Loading = styled.div`
   margin: 5rem auto;
-  border: 20px solid #EAF0F6;
+  border: 10px solid #EAF0F6;
   border-radius: 50%;
-  border-top: 20px solid #FF7A59;
-  width: 200px;
-  height: 200px;
+  border-top: 10px solid #FF7A59;
+  width: 150px;
+  height: 150px;
   animation: ${spin} 4s linear infinite;
 `;

@@ -5,99 +5,284 @@ import {
   AiFillAccountBook, AiFillCodepenCircle, AiFillMedicineBox, AiFillFrown,
   AiOutlineCalendar, AiOutlineCheckSquare, AiOutlineBook, AiFillIdcard, AiOutlineMail, AiOutlineLeft, AiOutlineDown
 } from "react-icons/ai";
-import { FaUserDoctor, FaMoneyBillWave, FaBed } from 'react-icons/fa';
+import { FaUserDoctor, FaHospitalUser, FaMoneyBillWave, FaBed } from 'react-icons/fa';
 import { GiHypodermicTest, GiMedicines } from 'react-icons/gi';
 import sidebar_option from '../Data/Sidebar_option.json';
 import { Link } from 'react-router-dom';
-function Sidebar({userRole}) {
-  
-  const [option, setOption] = useState(sidebar_option);
-  const expanedSubItem = (index) => {
-    const copyOption = { ...option }
-    copyOption[index].state = !copyOption[index].state;
-    setOption(copyOption);
+
+function Sidebar({ userRole }) {
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [elementId, setElementId] = useState();
+
+  function isToggleDropdown(id) {
+    setElementId(id);
+    setIsDropdownOpen(true)
 
   }
-  const admin = false;
-  // const userRole = "admin";
+
+
+  const sidebar_option = [
+    {
+      name: 'Dashboard',
+      icon: <AiFillAccountBook/>,
+      subItemName: [
+        {
+          title: 'Back',
+          path: '/'
+        }
+      ],
+      access: ['admin'],
+      state: false
+    },
+    {
+      name: 'Department',
+      icon: <AiFillCodepenCircle/>,
+      subItemName: [
+        {
+          title: 'Add Department',
+          path: '/department/0'
+        },
+        {
+          title: 'List Department',
+          path: '/department/1'
+        }
+      ],
+      access: ['admin'],
+      path: '/department',
+      state: false
+    },
+    {
+      name: 'Doctor',
+      icon: <AiFillMedicineBox/>,
+      subItemName: [
+        {
+          title: 'Add Doctor',
+          path: '/doctor/0'
+        },
+        {
+          title: 'List Doctor',
+          path: '/doctor/1'
+        }
+      ],
+      access: ['admin', 'doctor'],
+      state: false
+    },
+    {
+      name: 'Patient',
+      icon: <AiFillFrown/>,
+      subItemName: [
+        {
+          title: 'Add patient',
+          path: '/patient/0'
+        },
+        {
+          title: 'List patient',
+          path: '/patient/1'
+        }
+      ],
+      access: ['admin', 'doctor'],
+      state: false
+    },
+    {
+      name: 'Schedule',
+      icon: <AiOutlineCalendar/>,
+      subItemName: [
+        {
+          title: 'Add Schedule',
+          path: '/schedule/0'
+        },
+        {
+          title: 'List Schedule',
+          path: '/schedule/1'
+        }
+      ],
+      access: ['admin', 'doctor'],
+      state: false
+    },
+    {
+      name: 'Appoinment',
+      icon: <AiOutlineCheckSquare/>,
+      subItemName: [
+        {
+          title: 'Add Appoinment',
+          path: '/appoinment/0'
+        },
+        {
+          title: 'List Appoinment',
+          path: '/appoinment/1'
+        }
+      ],
+      access: ['admin', 'doctor'],
+      state: false
+    },
+    {
+      name: 'Prescription',
+      icon: <AiOutlineBook/>,
+      subItemName: [
+        {
+          title: 'Add Case Study',
+          path: '/prescription/0'
+        },
+        {
+          title: 'List Case Study',
+          path: '/prescription/1'
+        },
+        {
+          title: 'Add Prescription',
+          path: '/prescription/2'
+        },
+        {
+          title: 'Print Prescription',
+          path: '/prescription/3'
+        }
+      ],
+      access: ['admin', 'doctor'],
+      state: false
+    },
+    {
+      name: 'Finance',
+      icon: <FaMoneyBillWave/>,
+      subItemName: [
+        {
+          title: 'Add invoice',
+          path: '/finance/0'
+        },
+        {
+          title: 'List invoice',
+          path: '/finance/1'
+        },
+        {
+          title: 'Add account',
+          path: '/finance/2'
+        },
+        {
+          title: 'List account',
+          path: '/finance/3'
+        },
+        {
+          title: 'Add Payment',
+          path: '/finance/4'
+        },
+        {
+          title: 'Payment List',
+          path: '/finance/5'
+        }
+      ],
+      access: ['admin', 'accounted'],
+      state: false
+    },
+    {
+      name: 'Lab test',
+      icon: <GiHypodermicTest/>,
+      subItemName: [
+        {
+          title: 'Add Report',
+          path: '/labtest/0'
+        },
+        {
+          title: 'List Report',
+          path: '/labtest/1'
+        }
+      ],
+      access: ['admin', 'doctor'],
+      state: false
+    },
+    {
+      name: 'Human resource',
+      icon: <AiFillIdcard/>,
+      subItemName: [
+        {
+          title: 'Add employ',
+          path: '/hr/0'
+        },
+        {
+          title: 'List employ',
+          path: '/hr/1'
+        },
+        {
+          title: 'payment',
+          path: '/hr/2'
+        }
+      ],
+      access: ['admin'],
+      state: false
+    },
+    {
+      name: 'Medicine',
+      icon: <GiMedicines/>,
+      subItemName: [
+        {
+          title: 'Add medicine',
+          path: '/medicine/0'
+        },
+        {
+          title: 'Medicine List',
+          path: '/medicine/1'
+        }
+      ],
+      access: ['admin'],
+      state: false
+    },
+    {
+      name: 'Bed manager',
+      icon: <FaBed/>,
+      subItemName: [
+        {
+          title: 'Add bed',
+          path: '/bed/0'
+        },
+        {
+          title: 'Bed List',
+          path: '/bed/1'
+        },
+        {
+          title: 'Assign bed',
+          path: '/bed/2'
+        },
+        {
+          title: 'Assign Bed List',
+          path: '/bed/3'
+        }
+      ],
+      access: ['admin', 'nurse'],
+      state: false
+    }
+  ];
+  
   return (
     <div className='sidebar_container'>
-      <div className="logo_container">
-        <div>
-          <h3>Demo hospital Ltd</h3>
-          <img src="https://picsum.photos/100/100" alt="" />
-        </div>
+      <div className='logo_container'>
+        <h2>Hospital managmet</h2>
+        <img src="https://picsum.photos/100/100" alt="" />
       </div>
-      <div className="sidebar">
-        <ul>
+      {sidebar_option.map((item, index) => {
+
+
+        return <div className='button_group' key={index}>
           {
-            sidebar_option.map((item, index) => {
-              if (item.access.includes(userRole)) {
-                return (
-                  <li key={index} onClick={() => expanedSubItem(index)} className='list_item'>
+            item.access.includes(userRole) ?
+              <div className='dashboard_button' onClick={() => isToggleDropdown(index)}>
 
-                    <a href="#"><span> <IconContext.Provider value={{ size: '1rem' }}>
-                      {renderIcon(item.icon)}
-                    </IconContext.Provider ><span className='title'>{item.option}</span></span>
+               <span>{item.icon} <span className='icon_align'></span> {item.name}</span><span>{isDropdownOpen && elementId == index ?<AiOutlineDown></AiOutlineDown>:<AiOutlineLeft/>}</span>
+                
+                </div> : null
+          }
 
-                      {
-                        item.state == false ?
-                          <span className='expended_icon'><AiOutlineLeft /></span> :
-                          <span className='expended_icon'><AiOutlineDown /></span>
-                      }
-                    </a>
+          <div className="dropdown_content">
 
-
-                    {
-                      item.state == true ?
-                        item.subOption.map((subItem, idx) => <Link className='sub_title' to={subItem.path} >{subItem.title}</Link>) : null
-                    }
-                  </li>
-                )
-              }
-
+            {isDropdownOpen && elementId == index ?
+              item.subItemName.map(subItem => <Link to={subItem.path} >{subItem.title}</Link>) : null
             }
 
+          </div>
+        </div>
+      })
 
-            )
+      }
 
-          }
-        </ul>
-      </div>
     </div>
 
   )
 }
-const renderIcon = (iconName) => {
-  switch (iconName) {
-    case 'AiFillAccountBook':
-      return <AiFillAccountBook />;
-    case 'AiFillCodepenCircle':
-      return <AiFillCodepenCircle />;
-    case 'AiFillMedicineBox':
-      return <AiFillMedicineBox />;
-    case 'AiFillFrown':
-      return <AiFillFrown />;
-    case 'AiOutlineCalendar':
-      return <AiOutlineCalendar />;
-    case 'AiOutlineCheckSquare':
-      return <AiOutlineCheckSquare />;
-    case 'AiOutlineBook':
-      return <AiOutlineBook />;
-    case 'AiFillIdcard':
-      return <AiFillIdcard />;
-    case 'AiOutlineMail':
-      return <AiOutlineMail />;
-    case 'GiHypodermicTest':
-      return <GiHypodermicTest />;
-    case 'GiMedicines':
-      return <GiMedicines />;
-    case 'FaBed':
-      return <FaBed />;
-    case 'FaMoneyBillWave':
-      return <FaMoneyBillWave />;
-    default:
-      return null;
-  }
-};
-export default Sidebar
+export default Sidebar;

@@ -77,10 +77,10 @@ function App() {
           <Route path="/appoinment/0" element={<DoctorRoute user={userRole}><DataProvider><Appoinment userRole={userRole} /></DataProvider>  </DoctorRoute>} />
           <Route path="/appoinment/1" element={<DoctorRoute user={userRole}><DataProvider><AppoinmentList userRole={userRole}  /></DataProvider>  </DoctorRoute>} />
 
-          <Route path="/prescripton/0" element={<DoctorRoute user={userRole}><DataProvider><Prescription  userRole={userRole} /></DataProvider>  </DoctorRoute>} />
-          <Route path="/prescripton/1" element={<DoctorRoute user={userRole}><DataProvider><ListPrescription userRole={userRole}  /></DataProvider>  </DoctorRoute>} />
-          <Route path="/prescripton/2" element={<DoctorRoute user={userRole}><DataProvider><PrintExample userRole={userRole}  /></DataProvider>  </DoctorRoute>} />
-          <Route path="/prescripton/3" element={<DoctorRoute user={userRole}><DataProvider><AddPrescription userRole={userRole}  /></DataProvider>  </DoctorRoute>} />
+          <Route path="/prescription/0" element={<DoctorRoute user={userRole}><DataProvider><Prescription  userRole={userRole} /></DataProvider>  </DoctorRoute>} />
+          <Route path="/prescription/1" element={<DoctorRoute user={userRole}><DataProvider><ListPrescription userRole={userRole}  /></DataProvider>  </DoctorRoute>} />
+          <Route path="/prescription/2" element={<DoctorRoute user={userRole}><DataProvider><PrintExample userRole={userRole}  /></DataProvider>  </DoctorRoute>} />
+          <Route path="/prescription/3" element={<DoctorRoute user={userRole}><DataProvider><AddPrescription userRole={userRole}  /></DataProvider>  </DoctorRoute>} />
 
           <Route path="/finance/0" element={<AccountedRoute user={userRole}><DataProvider><Finance userRole={userRole}  /></DataProvider>  </AccountedRoute>} />
           <Route path="/finance/1" element={<AccountedRoute user={userRole}><DataProvider><PrintInvoice userRole={userRole}  /></DataProvider>  </AccountedRoute>} />
