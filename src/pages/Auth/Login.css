@@ -19,13 +19,16 @@
   }
   
   .form-group {
-    margin-bottom: 15px;
+    margin: 15px;
     text-align: left;
+  }
+  .submit_button{
+    margin: auto;
   }
   
   label {
     display: block;
-    font-size: 14px;
+    font-size: 18px;
     margin-bottom: 5px;
   }
   

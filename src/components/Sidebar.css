@@ -9,8 +9,9 @@
 
 .logo_container {
     display: flex;
-    justify-content: center;
-    margin-bottom: 1rem;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
 .logo_container img {
@@ -32,6 +33,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    transition: all 0.5s;
 }
 
 .sidebar li {
@@ -53,12 +55,17 @@
 .title {
     margin-left: 1rem;
     margin-bottom: 5px;
+    transition: all 0.5s;
 }
-
+a{
+    color: white;
+    font-size: 20px;
+}
 .sub_title {
     margin-left: 1.5rem;
     padding: 7px 10px;
     font-size: 0.9rem;
+    transition: all 0.5s;
 }
 
 .sub_title:hover {
@@ -69,4 +76,46 @@
 .list_item a {
     display: flex;
     justify-content: space-between;
+}
+.expended_icon{
+    transition: all 0.5s;
+}
+.button_group{
+    
+    margin: 0.5rem 0rem;
+}
+.dashboard_button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 2rem;
+    width: auto;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 15px;
+    color: white;
+    background-color: #042A4A;
+    border: none;
+    cursor: pointer;
+}
+.dashboard_button:hover{
+    background-color: rgb(79, 79, 214);
+}
+/* .dashboard_button span{
+    padding: 0px 10px;
+} */
+.icon_align{
+    padding-right: 8px;
+}
+.dropdown_content a{
+    display: block;
+    height: 2rem;
+    width: auto;
+    font-size: 1rem;
+    padding-left: 40px;
+    padding-top: 6px;
+    text-decoration: none;
+}
+.dropdown_content a:hover{
+    background-color: rgb(79, 79, 214);
 }

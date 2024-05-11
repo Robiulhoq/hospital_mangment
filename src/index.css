@@ -7,6 +7,6 @@
 body{
   background-color: #F1F3F6;
 }
-h1, h2, h3, h4, h5, h6, p, a{
+h1, h2, h3, h4, h5, h6, p, a, span{
   font-family: 'Alegreya Sans', sans-serif;
 }
