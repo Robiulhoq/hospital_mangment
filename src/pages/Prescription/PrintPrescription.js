@@ -43,7 +43,7 @@ const PrintPrescription = forwardRef((props, ref, print) => {
             <Content >
                 <TopBar title='Print Prescription' />
                 <Activity id="prescription_container">
-                <Link to='/prescripton/3' ><GreenButton>+ Add prescription</GreenButton></Link> 
+                <Link to='/prescription/2' ><GreenButton>+ Add prescription</GreenButton></Link> 
                     <TextInput onChange={(e) => setPatientId(e.target.value)} type='text' title='Enter your patient id' />
                     <div ref={ref}>
                     <section id="patintId">

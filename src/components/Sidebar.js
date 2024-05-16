@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import './Sidebar.css';
-import { IconContext } from 'react-icons';
 import {
   AiFillAccountBook, AiFillCodepenCircle, AiFillMedicineBox, AiFillFrown,
   AiOutlineCalendar, AiOutlineCheckSquare, AiOutlineBook, AiFillIdcard, AiOutlineMail, AiOutlineLeft, AiOutlineDown
 } from "react-icons/ai";
 import { FaUserDoctor, FaHospitalUser, FaMoneyBillWave, FaBed } from 'react-icons/fa';
 import { GiHypodermicTest, GiMedicines } from 'react-icons/gi';
-import sidebar_option from '../Data/Sidebar_option.json';
 import { Link } from 'react-router-dom';
 
 function Sidebar({ userRole }) {

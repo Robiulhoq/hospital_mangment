@@ -33,6 +33,11 @@ function LabTest({userRole}) {
     const hendleSaveLabTest = async () => {
 
         try {
+            const values = Object.values(lab);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                return;
+            }
             setLoading(true);
             const response = await fetch('https://hospital-mangment.onrender.com/lab', {
                 method: 'POST',

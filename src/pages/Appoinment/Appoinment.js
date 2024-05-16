@@ -9,6 +9,7 @@ import axios from "axios";
 import Message from "../../components/Message";
 import { getCookie } from '../../Utils/getCookie';
 import { Link } from "react-router-dom";
+import { Loading } from "../../components/Loading";
 function Appoinment({userRole}) {
     const { departmentList, doctorList, hendlePatientUI } = useContext(DataContext);
     const [appoinment, setAppoinment] = useState({
@@ -30,6 +31,11 @@ function Appoinment({userRole}) {
     const [loading, setLoading] = useState(false);
     const handleSaveAppointment = async () => {
         try {
+            const values = Object.values(appoinment);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                return;
+            }
             setLoading(true);
             const response = await axios.post(`https://hospital-mangment.onrender.com/patient/appoinment/${patientId}`,
                 appoinment, {
@@ -68,6 +74,9 @@ function Appoinment({userRole}) {
             <Content >
                 <TopBar title='Add Appoinment' />
                 <Message message={message} />
+                {
+                    loading? <Loading />:
+               
                 <Activity>
                 <Link to='/appoinment/1' ><GreenButton>List Appoinment</GreenButton></Link>
                     <TextInput type='text' onChange={(e) => setPatientId(e.target.value)} title='Patient ID' placeholder='Patient ID' />
@@ -96,7 +105,7 @@ function Appoinment({userRole}) {
                     <TextInput type='radio' name='status' onChange={hendleChange} title='Status' placeholder='Status'
                         options={[{ label: 'Active', value: 'active' }, { label: 'Deactive', value: 'Deactive' }]} />
                     <GreenButton onClick={handleSaveAppointment}>Save</GreenButton>
-                </Activity>
+                </Activity> }
             </Content>
         </Wrapper>
     )

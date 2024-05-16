@@ -32,6 +32,11 @@ function AddPayment({ userRole }) {
     const token = getCookie('access_token');
     const hendleSavePayment = async () => {
         try {
+            const values = Object.values(payment);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                return;
+            }
             setLoading(true);
             const response = await fetch('https://hospital-mangment.onrender.com/payment', {
                 method: 'POST',

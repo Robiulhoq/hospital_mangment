@@ -31,6 +31,11 @@ function AddMedicine({userRole}) {
     const [loading, setLoading] = useState(false);
     const hendleSaveMedicine = async () => {
         try {
+            const values = Object.values(medicine);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                return;
+            }
             setLoading(true);
             const response = await axios.post('https://hospital-mangment.onrender.com/medicine', medicine, {
                 headers: { 'Content-Type': 'application/json',

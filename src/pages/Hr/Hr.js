@@ -40,6 +40,17 @@ function Hr({ userRole }) {
     const hendleImageUpload = async () => {
 
         try {
+            if(image == null){
+                setMessage('Please upload img file');
+                return;
+            }
+            const values = Object.values(hr);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                setLoading(false);
+                return;
+            }
+            setLoading(true);
             const formData = new FormData();
             formData.append('my_file', image);
             const response = await axios.post('https://hospital-mangment.onrender.com/upload', formData);

@@ -46,6 +46,11 @@ function Prescription({userRole}) {
     const [loading, setLoading] = useState(false);
     const hendleSaveCaseStudy = async () => {
         try {
+            const values = Object.values(caseStudy);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                return;
+            }
             setLoading(true);
             const response = await axios.post(`https://hospital-mangment.onrender.com/casestudy/${caseStudy.patientId}`, caseStudy, {
                 headers: { 'Content-Type': 'application/json',
@@ -97,7 +102,7 @@ function Prescription({userRole}) {
                    loading? <Loading /> :
                
                 <Activity>
-                <Link to='/prescripton/1' ><GreenButton>List Case Study</GreenButton></Link>
+                <Link to='/prescription/1' ><GreenButton>List Case Study</GreenButton></Link>
                     <TextInput onChange={hendleChange} type='text' name='patientId' title='Patient ID' placeholder='Patient ID' />
                     <TextInput onChange={hendleChange} type='text' name='footAllergies' title='Food Allergies' placeholder='Food Allergies' />
                     <TextInput onChange={hendleChange} type='text' name='tendencyBleed' title='Tendency Bleed' placeholder='Tendency Bleed' />

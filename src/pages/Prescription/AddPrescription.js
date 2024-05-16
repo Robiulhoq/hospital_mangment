@@ -112,7 +112,7 @@ function AddPrescription({userRole}) {
             </SidebarContainer>
             <Content >
                 <TopBar title='Add Prescription' />
-                <Link to='/prescripton/2' ><GreenButton>Print Prescription</GreenButton></Link> 
+                <Link to='/prescription/3' ><GreenButton>Print Prescription</GreenButton></Link> 
                 {
                     loading? <Loading />:
                 

@@ -29,6 +29,11 @@ function AddService({userRole}) {
     const token = getCookie('access_token');
     const hendleSaveAccount = async () => {
         try {
+            const values = Object.values(account);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                return;
+            }
             setLoading(true);
             const response = await fetch('https://hospital-mangment.onrender.com/account', {
                 method: 'POST',

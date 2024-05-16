@@ -7,6 +7,7 @@ function Message({ message }) {
                 message ?
                     <div style={{
                         height: '3rem',
+                        marginTop: '3rem',
                         width: '100%',
                         display: 'flex',
                         justifyContent: 'center',

@@ -32,6 +32,11 @@ function AssignBed({userRole}) {
     const [loading, setLoading] = useState(false);
     const hendeAssainBed = async () => {
         try {
+            const values = Object.values(assainBed);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                return;
+            }
             setLoading(true);
             const response = await fetch('https://hospital-mangment.onrender.com/assainbed', {
                 method: 'POST',

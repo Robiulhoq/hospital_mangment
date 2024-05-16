@@ -26,7 +26,7 @@ function ListPrescription({userRole}) {
                 <TopBar title='List Prescription' />
                 <Activity>
                     <DataFiltter>
-                    <Link to='/prescripton/0' ><GreenButton>+ Add Case Study</GreenButton></Link> 
+                    <Link to='/prescription/0' ><GreenButton>+ Add Case Study</GreenButton></Link> 
                         <div>
                             <TextInput type='radio' title='Show' options={['10', '20']} />
                         </div>

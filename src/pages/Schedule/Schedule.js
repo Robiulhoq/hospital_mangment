@@ -32,6 +32,11 @@ function Schedule({userRole}) {
     const hendleAddDoctorSchedule = async () => {
 
         try {
+            const values = Object.values(schedule);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                return;
+            }
             setLoading(true);
             const response = await fetch(`https://hospital-mangment.onrender.com/doctor/schedule/${editDoctorid}`, {
                 method: 'POST',

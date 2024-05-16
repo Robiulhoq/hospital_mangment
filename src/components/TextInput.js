@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import React from 'react';
 
-function Input({ title, placeholder, name, onChange, type, options, className, defaultValue, value}) {
+function Input({ title, placeholder, name, onChange, type, options, className, defaultValue, required, value}) {
   return (
     <StyledInput className={className}>
       <p>{title}</p>
       {type === 'text' ? (
-        <input name={name} defaultValue={defaultValue} value={value}  onChange={onChange} type="text" placeholder={placeholder} />
+        <input name={name} defaultValue={defaultValue} value={value}  onChange={onChange} type="text" required={required} placeholder={placeholder} />
       ) : type === 'textarea' ? (
-        <textarea defaultValue={defaultValue} name={name} onChange={onChange} />
+        <textarea required={required} defaultValue={defaultValue} name={name} onChange={onChange} />
       ) : type === 'file'?(
         <input  name={name}  onChange={(e)=>onChange(e.target.files[0])} accept="image/*" type="file" placeholder={placeholder} />
       ) 

@@ -62,8 +62,19 @@ console.log(patient);
     const [loading, setLoading] = useState(false);
 
     const handleImageUpload = async () => {
-        setLoading(true);
+        
         try {
+            if(image == null){
+                setMessage('Please upload img file');
+                return;
+            }
+            const values = Object.values(patient);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                setLoading(false);
+                return;
+            }
+            setLoading(true);
             const formData = new FormData();
             formData.append('my_file', image);
             const response = await axios.post('https://hospital-mangment.onrender.com/upload', formData);
@@ -78,6 +89,12 @@ console.log(patient);
     const token = getCookie('access_token');
     const hendleSavePatient = async () => {
         try {
+            const values = Object.values(patient);
+            console.log(values);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                return;
+            }
             setLoading(true);
             const response = await fetch('https://hospital-mangment.onrender.com/patient', {
                 method: 'POST',

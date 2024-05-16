@@ -44,6 +44,11 @@ const Department = ({userRole}) => {
     const [loading, setLoading] = useState(false);
     const hendleSaveDepartment = async () => {
         try {
+            const values = Object.values(department);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                return;
+            }
             setLoading(true);
             let apiUrl = 'https://hospital-mangment.onrender.com/department';
             let method = 'POST';

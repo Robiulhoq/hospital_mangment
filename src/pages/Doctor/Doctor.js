@@ -97,11 +97,20 @@ function Doctor({userRole}) {
     // data save and edit function
 
 
-
-
     const hendleImageUpload = async () => {
-        setLoading(true);
+
         try {
+            if(image == null){
+                setMessage('Please upload img file');
+                return;
+            }
+            const values = Object.values(doctor);
+            if (values.some(value => !value.trim())) {
+                setMessage("Please fill out all fields");
+                setLoading(false);
+                return;
+            }
+            setLoading(true);
             const formData = new FormData();
             formData.append('my_file', image);
             const response = await axios.post('https://hospital-mangment.onrender.com/upload', formData);
@@ -116,6 +125,7 @@ function Doctor({userRole}) {
 
     }
     const token = getCookie('access_token');
+    
     const hendleSaveDoctor = async () => {
 
         try {
