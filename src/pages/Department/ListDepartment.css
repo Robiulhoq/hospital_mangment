@@ -1,0 +1,16 @@
+.department_table {
+    font-family: 'Alegreya Sans', sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.department_table td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.department_table tr:nth-child(even) {
+    background-color: #dddddd;
+}

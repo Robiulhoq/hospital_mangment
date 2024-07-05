@@ -1,0 +1,94 @@
+#invoice_container{
+    padding: 1rem;
+}
+#patientAndHospital{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.patient_info_container{
+    width: 60%;
+}
+.hospital_info_container{
+    width: auto;
+    margin-top: 1.2rem;
+}
+.custom_input{
+    width: 100%;
+}
+.invoice_headline> tr> th{
+    background-color: #337AB7;
+}
+.diagnosis_headline> tr> th{
+    background-color: #d9bbbb;
+    color: black !important;
+}
+.invoice_table {
+    font-family: 'Alegreya Sans', sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.invoice_table td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+}
+.invoice_table>tr>th{
+    color: white;
+}
+.invoice_table tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.invoice_input{
+    height: 2.5rem;
+    width: auto;
+    border: 1px solid lightgray;
+    padding: 0px 5px;
+    background-color: white;
+}
+#calculation{
+    height: 3.5rem;
+    margin: 1rem 1rem;
+    
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+}
+#calculation h4{
+    padding-right: 1rem;
+}
+#calculation input{
+    border: 1px solid lightgray;
+    height: 2.5rem;
+}
+#calculation b{
+    padding: 0rem 5rem;
+}
+.invoice_cal{
+    height: 2.2rem !important;
+}
+.total{
+    background-color: #D9EDF7;
+}
+.vat{
+    border-bottom: 1px solid lightgray;
+}
+.grand{
+    background-color: #DFF0D8;
+}
+.due{
+    background-color: #F2DEDE;
+}
+#save_and_activity{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* List invoice css */
+.tr >td{
+    padding: 15px 5px;
+    color: black;
+}

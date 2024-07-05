@@ -1,0 +1,14 @@
+.patient{
+    display: flex;
+}
+.add_patient_container{
+    display: flex;
+   justify-content: space-between;
+    margin: 2rem;
+    border: 1px solid lightgray;
+    background-color: white;
+    padding: 20px;
+}
+.add_patient{
+    width: 80%;
+}

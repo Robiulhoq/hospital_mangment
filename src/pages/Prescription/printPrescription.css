@@ -1,0 +1,48 @@
+#prescription_container{
+    padding: 1rem;
+}
+#patintId{
+    display: flex;
+    justify-content: space-between;
+    background-color: #337AB7;
+    height: 2.5rem;
+    padding: 0px 10px;
+    align-items: center;
+    color: white;
+}
+#hospitalInfo{
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0rem;
+}
+#basicInfo{
+    display: flex;
+    align-items: center;
+    background-color: #337AB7;
+    height: 2.5rem;
+    padding: 0px 10px;
+    align-items: center;
+    color: white;
+}
+#prescriptionInfoContainer{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 2rem;
+}
+.doctorComment{
+    width: 30%;
+    padding: 20px 20px 0px 0px;
+}
+.medicine_table{
+    width: 70%;
+}
+.diagonosis{
+    margin-top: 2rem;
+}
+.diagonosis> tr> th{
+    background-color: #D9EDF7;
+}
+.medicine_headline> tr> th{
+    background-color: #D9EDF7;
+}

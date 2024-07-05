@@ -1,0 +1,41 @@
+.top_bar {
+    width: 100%;
+    height: 4rem;
+    padding: 1rem 3rem;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile {
+    /* width: 50px; */
+    position: relative;
+    cursor: pointer;
+}
+
+.profile_setting {
+    height: 2rem;
+    
+}
+
+.profile_option {
+    list-style: none;
+    position: absolute;
+    top: 65px;
+    right: 0px;
+    background-color: white;
+    margin-right: 10px;
+}
+.profile_option li{
+    list-style: none;
+    padding: 4px 12px;
+    cursor: pointer;
+}
+.profile_option li> a{
+    text-decoration: none;
+    color: black;
+}
+.profile_option li:hover{
+    background-color: rgb(212, 212, 212);
+}
