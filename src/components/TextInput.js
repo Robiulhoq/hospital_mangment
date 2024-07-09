@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import React from 'react';
+import styled from 'styled-components';
 
 function Input({ title, placeholder, name, onChange, type, options, className, defaultValue, required, value}) {
   return (
@@ -12,7 +12,7 @@ function Input({ title, placeholder, name, onChange, type, options, className, d
       ) : type === 'file'?(
         <input  name={name}  onChange={(e)=>onChange(e.target.files[0])} accept="image/*" type="file" placeholder={placeholder} />
       ) 
-      : type === 'radio' ?  <select name={name} onChange={onChange} value={defaultValue}>
+      : type === 'radio' ?  <select name={name} required={required} onChange={onChange} value={defaultValue}>
         <option>Select</option>
       {options.map((item, index) => (
         
@@ -23,6 +23,7 @@ function Input({ title, placeholder, name, onChange, type, options, className, d
         
       ))}
     </select> : <input name={name} defaultValue={defaultValue}  onChange={onChange} type={type} placeholder={placeholder} />}
+  
     </StyledInput>
   );
 }

@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
@@ -8,35 +7,22 @@ import { getCookie } from '../../Utils/getCookie';
 import { GreenButton } from '../../components/Buttons';
 import { Activity, Content, SidebarContainer, Wrapper } from '../../components/Common';
 import DataFiltter from '../../components/DataFiltter';
+import { Loading } from '../../components/Loading';
 import Message from '../../components/Message';
 import Sidebar from '../../components/Sidebar';
-import TextInput from '../../components/TextInput';
 import TopBar from '../../components/TopBar';
+import useDelete from '../../hooks/useDelete';
 
 function DoctorList({userRole}) {
-    const { hendleDoctorUI, doctorList, handleEditDoctor } = useContext(DataContext);
-    console.log('this is doctor data',doctorList);
-    const [deleteMessage, setDeleteMessage] = useState('');
+    const { doctorList, handleEditDoctor, setTigger, tigger } = useContext(DataContext);
     const token = getCookie('access_token');
-    const hendleDeleteDoctor = async (id) => {
-        try {
-
-            const response = await axios.delete(`https://hospital-mangment.onrender.com/doctor/${id}`,{
-                headers: {'Authorization': `Bearer ${token}`}
-            });
-            setDeleteMessage(response.data);
-            hendleDoctorUI(true);
-
-        } catch (error) {
-            setDeleteMessage('Error deleting department');
-        }
-    }
-    if (deleteMessage) {
-        setInterval(() => {
-            setDeleteMessage('');
-            hendleDoctorUI(false);
-
-        }, 5000);
+    const deleteApi = `https://hospital-mangment.onrender.com/doctor/`;
+    const {deleteloading, deleteMessage, hendleDelete} = useDelete(deleteApi, setTigger)
+   
+    if(tigger){
+        setInterval(()=>{
+            setTigger(false);
+        }, 100);
     }
     return (
         <Wrapper>
@@ -46,15 +32,11 @@ function DoctorList({userRole}) {
             <Content>
                 <TopBar title='Doctor List' />
                 <Message message={deleteMessage} />
+                {
+                    deleteloading ? <Loading/> :
                 <Activity>
                     <DataFiltter>
                     <Link to='/doctor/0' ><GreenButton>+ Add Doctor</GreenButton></Link> 
-                        <div>
-                            <TextInput type='radio' title='Show' options={['10', '20']} />
-                        </div>
-                        <div>
-                            <TextInput type='text' title='Search' />
-                        </div>
                     </DataFiltter>
                     <table className='department_table'>
                         <tr>
@@ -78,13 +60,13 @@ function DoctorList({userRole}) {
                                     <td>{item.phoneNo}</td>
                                     <td>{item.status}</td>
                                     <td><Link to='/doctor/0'> <BiEdit onClick={()=>handleEditDoctor(item._id)} size='1.5rem' color='darkblue' /> </Link>
-                                    <AiFillDelete onClick={()=>hendleDeleteDoctor(item._id)} color='red' size='1.5rem' /></td>
+                                    <AiFillDelete onClick={()=>hendleDelete(item._id)} color='red' size='1.5rem' /></td>
                                 </tr>
                             )) : <p>Loading......</p>
                         }
 
                     </table>
-                </Activity>
+                </Activity>}
 
             </Content>
         </Wrapper>

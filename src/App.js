@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 
@@ -46,7 +46,27 @@ function App() {
   // const {userRole} = useContext(DataContext);
   // console.log(userRole);
   const [userRole, setUserRole] = useState('');
+  useEffect(() => {
+    const checkToken = async () => {
+        try {
+            const response = await fetch('https://hospital-mangment.onrender.com/auth/token', {
+                method: 'GET',
+                credentials: 'include'
+            });
 
+            if (response.status === 200) {
+                const data = await response.json();
+                setUserRole(data.userRole);
+              console.log('api require ok');
+            
+            }
+        } catch (error) {
+            console.error('Error checking token:', error);
+        }
+    };
+
+    checkToken();
+});
   return (
     <Router>
       <div className="App">

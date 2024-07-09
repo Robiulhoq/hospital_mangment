@@ -48,4 +48,21 @@ const login = async (req, res, next) => {
         next(error)
     }
 }
-module.exports = { rigister, login, User }
+
+const authenticateToken = async (req, res, next) => {
+    const token = req.cookies.access_token;
+    if (!token) return res.status(401).send('Access Denied');
+
+    try {
+        const verified = jwt.verify(token, process.env.JWT);
+        req.user = verified;
+        const user = await User.findById(req.user.id);
+        if (!user) return res.status(404).send('User not found');
+        req.user = user;
+        next();
+    } catch (err) {
+        res.status(400).send('Invalid Token');
+    }
+};
+
+module.exports = { rigister, login, authenticateToken, User }

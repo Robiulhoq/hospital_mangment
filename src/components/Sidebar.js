@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
-import './Sidebar.css';
+import React, { useState } from 'react';
 import {
-  AiFillAccountBook, AiFillCodepenCircle, AiFillMedicineBox, AiFillFrown,
-  AiOutlineCalendar, AiOutlineCheckSquare, AiOutlineBook, AiFillIdcard, AiOutlineMail, AiOutlineLeft, AiOutlineDown
+  AiFillAccountBook, AiFillCodepenCircle,
+  AiFillFrown,
+  AiFillIdcard,
+  AiFillMedicineBox,
+  AiOutlineBook,
+  AiOutlineCalendar, AiOutlineCheckSquare,
+  AiOutlineDown,
+  AiOutlineLeft
 } from "react-icons/ai";
-import { FaUserDoctor, FaHospitalUser, FaMoneyBillWave, FaBed } from 'react-icons/fa';
+import { FaBed, FaMoneyBillWave } from 'react-icons/fa';
 import { GiHypodermicTest, GiMedicines } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
+import './Sidebar.css';
 
 function Sidebar({ userRole }) {
 
@@ -260,9 +266,9 @@ function Sidebar({ userRole }) {
         return <div className='button_group' key={index}>
           {
             item.access.includes(userRole) ?
-              <div className='dashboard_button' onClick={() => isToggleDropdown(index)}>
+              <div key={index} className='dashboard_button' onClick={() => isToggleDropdown(index)}>
 
-               <span>{item.icon} <span className='icon_align'></span> {item.name}</span><span>{isDropdownOpen && elementId == index ?<AiOutlineDown></AiOutlineDown>:<AiOutlineLeft/>}</span>
+               <span >{item.icon} <span className='icon_align'></span> {item.name}</span><span>{isDropdownOpen && elementId == index ?<AiOutlineDown></AiOutlineDown>:<AiOutlineLeft/>}</span>
                 
                 </div> : null
           }

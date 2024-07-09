@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { DataContext } from '../../ContextApi/DataContext';
-import { getCookie } from '../../Utils/getCookie';
 import { BlueButton, GreenButton } from '../../components/Buttons';
 import { Activity, Content, SidebarContainer, Wrapper } from '../../components/Common';
 import { Loading } from '../../components/Loading';
@@ -9,22 +8,16 @@ import Message from '../../components/Message';
 import Sidebar from '../../components/Sidebar';
 import TextInput from '../../components/TextInput';
 import TopBar from '../../components/TopBar';
-import useImgupload from '../../hooks/useImgupload';
+import { DataContext } from '../../ContextApi/DataContext';
 import usePostrequiest from '../../hooks/usePostrequiest';
-
+import usePutrequiest from '../../hooks/usePutrequiest';
+import { getCookie } from '../../Utils/getCookie';
 function Doctor({userRole}) {
-    const [doctorLoading, setDoctorLoading] = useState(false);
-    // load doctor api data form server and store it context api. use context api data
-    const [doctorMessage, setDoctorMessage] = useState('');
-    const { doctorList, editDoctorId, departmentList, tigger, setTigger } = useContext(DataContext);
-    // useRef for text editor referance
+    // context api && all custom hooks
 
-    const editorRef = useRef();
+    const { doctorList, editDoctorId, departmentList, tigger, setTigger } = useContext(DataContext);
     const [image, setImage] = useState(null);
-    const hendleSetImage = (img) => {
-        setImage(img)
-    }
-    // input field state
+    const doctorApi = 'https://hospital-mangment.onrender.com/doctor';
     const [doctor, setDoctor] = useState({
         fastName: '',
         lastName: '',
@@ -34,192 +27,84 @@ function Doctor({userRole}) {
         designation: '',
         address: '',
         phoneNo: '',
-        shortBiography: '',
         picture: '',
         specialist: '',
         dathOfBirth: '',
         sex: 'Male',
         bloudGroup: 'A+',
-        education: '',
         schedule: [],
         status: 'active'
     });
-    // store input change data in state
+    const {loading, message, setMessage, hendleSaveData} = usePostrequiest(doctorApi, doctor, setTigger);
+    
+    // state manupulation
+
+ 
     const hendleChange = (e) => {
-        const updateDoctor = { ...doctor }
-        updateDoctor[e.target.name] = e.target.value;
-        setDoctor(updateDoctor);
+        const prevDoctor = {...doctor}
+        prevDoctor[e.target.name] = e.target.value
+        setDoctor(prevDoctor)
+    };
+    
+    const hendleSetImage = (img) => {
+        setImage(img)
     }
-    // store tiny mac change data in state
-    const hendletinychange = (content) => {
-        setDoctor(prevDoctor => ({
-            ...prevDoctor,
-            shortBiography: content,
-            education: content, // You can adjust this as needed
-        }));
+    // POST requiest for save docoter!
+
+    const [imgmessage, setImgMessage] = useState('');
+    const [imgloading, setImgLoading] = useState(false);
+
+    const hendleImageUpload = async () =>{
+        try {
+            if(!image){
+                setImgMessage('Please upload img file');
+                return;
+            }
+           
+            setImgLoading(true);
+            const formData = new FormData();
+            formData.append('my_file', image);
+            const response = await axios.post('https://hospital-mangment.onrender.com/upload', formData);
+            const updateDoctor = {...doctor}
+            updateDoctor.picture = response.data.secure_url;
+            setDoctor(updateDoctor)
+            setImgLoading(false);
+
+        } catch (error) {
+            console.error(error);
+        }
     }
-    // data edit state. if true data will be edit
-    const [editMode, setEditMode] = useState(false);
-    //  edit avabile data show in input field
+
+    useEffect(() => {
+        const handleSave = async () => {
+            if (doctor.picture && !editDoctorId) {
+                await hendleSaveData();
+            }
+        };
+    
+        handleSave();
+    }, [doctor.picture, editDoctorId]);
+    
     useEffect(() => {
         if (editDoctorId && doctorList) {
             const editDoctor = doctorList.find(item => item._id === editDoctorId);
-            // Find the doctor in doctorList based on editDoctorId
-
-            // Set the component state to the values of the found department
             setDoctor({
-                fastName: editDoctor.fastName,
-                lastName: editDoctor.lastName,
-                emailAddress: editDoctor.emailAddress,
-                password: editDoctor.password,
-                designation: editDoctor.designation,
-                address: editDoctor.address,
-                phoneNo: editDoctor.phoneNo,
-                shortBiography: editDoctor.ortBiography,
-                picture: editDoctor.picture,
-                specialist: editDoctor.specialist,
-                dathOfBirth: editDoctor.dathOfBirth,
-                sex: editDoctor.sex,
-                bloudGroup: editDoctor.bloudGroup,
-                education: editDoctor.education,
-                status: editDoctor.status
+                ...editDoctor
             });
-            setEditMode(true);
+            
         }
     }, [editDoctorId, doctorList]);
-    // data save and edit function
 
-    const {imgmessage, imgloading, hendleImageUpload} = useImgupload(image);
-    const { hendleSaveDepartment} = usePostrequiest('https://hospital-mangment.onrender.com/doctor', doctor, setTigger)
-    const hendleSave = async () =>{
-            setDoctorLoading(true);
-        const url = await hendleImageUpload(image);
-        console.log(url);
-        if(url){
-            setDoctor(prevDoctor => ({
-                ...prevDoctor,
-                picture: url
-            }));
-           await hendleSaveDepartment();
-           setDoctorLoading(false)
-        } else{
-            console.log('url not found!!');
-            setDoctorLoading(false)
-        }
-    }
-    
-
-    // const hendleImageUpload = async () => {
-
-    //     try {
-    //         if(image == null){
-    //             setMessage('Please upload img file');
-    //             return;
-    //         }
-    //         const values = Object.values(doctor);
-    //         if (values.some(value => !value.trim())) {
-    //             setMessage("Please fill out all fields");
-    //             setLoading(false);
-    //             return;
-    //         }
-    //         setLoading(true);
-    //         const formData = new FormData();
-    //         formData.append('my_file', image);
-    //         const response = await axios.post('https://hospital-mangment.onrender.com/upload', formData);
-    //         const updateDoctor = { ...doctor }
-    //         updateDoctor.picture = response.data.secure_url;
-    //         setDoctor(updateDoctor);
-
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-
-
-    // }
     const token = getCookie('access_token');
-    // const hendleSaveDoctor = async () => {
+    const putApi = `https://hospital-mangment.onrender.com/doctor/${editDoctorId}`;
+    const {putLoading, putMessage, hendleEdit} = usePutrequiest(putApi, doctor, setTigger);
 
-    //     try {
-    //         setLoading(true);
-    //         const response = await fetch('https://hospital-mangment.onrender.com/doctor', {
-    //             method: 'POST',
-    //             body: JSON.stringify(doctor),
-    //             headers: { 'Content-Type': 'application/json',
-    //             'Authorization': `Bearer ${token}` }
-    //         });
-    //         hendleDoctorUI(true);
-    //         if (response.status === 200) {
-    //             response.message = "Doctor Save successfull"
-    //             setMessage(response.message);
-    //             setLoading(false)
-    //             setDoctor(prevDoctor => ({
-    //                 ...prevDoctor,
-    //                 fastName: '',
-    //                 lastName: '',
-    //                 emailAddress: '',
-    //                 password: '',
-    //                 department: '',
-    //                 designation: '',
-    //                 address: '',
-    //                 phoneNo: '',
-    //                 shortBiography: '',
-    //                 picture: '',
-    //                 specialist: '',
-    //                 dathOfBirth: '',
-    //                 sex: 'Male',
-    //                 bloudGroup: 'A+',
-    //                 education: '',
-    //                 schedule: [],
-    //                 status: 'active'
-    //             }));
-                
-    //         } else {
-    //             console.log(response.statusText);
-    //         }
-    //         setLoading(false);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-
-    // }
-    // useEffect(() => {
-    //     if (doctor.picture && !editDoctorId) {
-    //         hendleSaveDoctor();
-    //     }
-
-    // }, [doctor.picture])
     
-    // const hendleEditDoctor = async () => {
-        
-    //     try {
-    //         setLoading(true)
-    //         const response = await fetch(`https://hospital-mangment.onrender.com/doctor/${editDoctorId}`, {
-    //             method: 'PUT',
-    //             body: JSON.stringify(doctor),
-    //             headers: { 'Content-Type': 'application/json',
-    //             'Authorization': `Bearer ${token}`
-    //         }
-    //         });
-    //         hendleDoctorUI(true);
-    //         response.message = 'Doctor edit successfull';
-    //         setMessage(response.message);
-    //         setLoading(false)
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    //     setLoading(false);
-    // }
-    // Show event message in user
-    // if (message) {
-    //     setInterval(() => {
-    //         setMessage('');
-    //         hendleDoctorUI(false)
-    //     }, 5000);
-    // }
+  
     if(tigger){
         setInterval(()=>{
             setTigger(false);
-        }, 1000);
+        }, 100);
     }
     return (
         <Wrapper>
@@ -228,33 +113,35 @@ function Doctor({userRole}) {
             </SidebarContainer>
             <Content >
                 <TopBar title='Doctor' />
-                <Message message={doctorMessage} />
+                <Message message={message || imgmessage || putMessage} />
                 {
-                    doctorLoading ? <Loading /> :
+                    loading || imgloading || putLoading? <Loading /> :
                         <Activity>
                             <Link to='/doctor/1' ><BlueButton>Doctor List</BlueButton></Link>
-                            <TextInput name='fastName' onChange={hendleChange} defaultValue={doctor.fastName} type='text' title='Fast Name' placeholder='Fast name' required={true} />
-                            <TextInput name='lastName' onChange={hendleChange} defaultValue={doctor.lastName} type='text' title='Last Name' placeholder='Last name' />
-                            <TextInput name='emailAddress' onChange={hendleChange} defaultValue={doctor.emailAddress} type='text' title='Email Name' placeholder='Email name' />
-                            <TextInput name='password' onChange={hendleChange} defaultValue={doctor.password} type='text' title='Password' placeholder='Password' />
-                            <TextInput name='designation' onChange={hendleChange} defaultValue={doctor.designation} type='text' title='Designation' placeholder='Designation' />
-                            <TextInput name='department' onChange={hendleChange} value={doctor.department} type='radio' title='Department' options={departmentList.map(item => ({ label: item.departmentName, value: item.departmentName }))} />
-                            <TextInput name='address' onChange={hendleChange} defaultValue={doctor.address} type='textarea' title='Address' placeholder='Address' />
-                            <TextInput name='phoneNo' onChange={hendleChange} defaultValue={doctor.phoneNo} type='text' title='Phone No' placeholder='Phone No' />               
-                            <TextInput onChange={hendleSetImage} name='picture' type='file' title='Picture' />
-                            <TextInput name='specialist' onChange={hendleChange} defaultValue={doctor.specialist} type='text' title='Specialist' placeholder='Specialist' />
-                            <TextInput name='dathOfBirth' onChange={hendleChange} defaultValue={doctor.dathOfBirth} type='text' title='Dath of Birth' placeholder='Dath of Birth' />
-                            <TextInput name='sex' onChange={hendleChange} value={doctor.sex} type='radio' title='Sex' options={[{ label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }]} />
-                            <TextInput name='bloudGroup' onChange={hendleChange} value={doctor.bloudGroup} type='radio' title='Bloud Group' options={[{ label: 'A+', value: 'A+' },
-                            { label: 'A-', value: 'A-' },
-                            { label: 'B+', value: 'B+' },
-                            { label: 'B-', value: 'B-' },
-                            { label: 'o+', value: 'o+' }
+                           <form action="">
+                            <TextInput required={true}  name='fastName' onChange={hendleChange} defaultValue={doctor.fastName} type='text' title='Fast Name' placeholder='Fast name' required={true} />
+                            <TextInput required={true} name='lastName' onChange={hendleChange} defaultValue={doctor.lastName} type='text' title='Last Name' placeholder='Last name' />
+                            <TextInput required={true} name='emailAddress' onChange={hendleChange} defaultValue={doctor.emailAddress} type='text' title='Email Name' placeholder='Email name' />
+                            <TextInput required={true} name='password' onChange={hendleChange} defaultValue={doctor.password} type='text' title='Password' placeholder='Password' />
+                            <TextInput required={true} name='designation' onChange={hendleChange} defaultValue={doctor.designation} type='text' title='Designation' placeholder='Designation' />
+                            <TextInput required={true} name='department' onChange={hendleChange} defaultValue={doctor.department} type='radio' title='Department' options={departmentList.map(item => ({ label: item.departmentName, defaultValue: item.departmentName }))} />
+                            <TextInput required={true} name='address' onChange={hendleChange} defaultValue={doctor.address} type='textarea' title='Address' placeholder='Address' />
+                            <TextInput required={true} name='phoneNo' onChange={hendleChange} defaultValue={doctor.phoneNo} type='text' title='Phone No' placeholder='Phone No' />               
+                            <TextInput required={true} onChange={hendleSetImage} name='picture' type='file' title='Picture' />
+                            <TextInput required={true} name='specialist' onChange={hendleChange} defaultValue={doctor.specialist} type='text' title='Specialist' placeholder='Specialist' />
+                            <TextInput required={true} name='dathOfBirth' onChange={hendleChange} defaultValue={doctor.dathOfBirth} type='text' title='Dath of Birth' placeholder='Dath of Birth' />
+                            <TextInput required={true} name='sex' onChange={hendleChange} defaultValue={doctor.sex} type='radio' title='Sex' options={[{ label: 'Male', defaultValue: 'Male' }, { label: 'Female', defaultValue: 'Female' }]} />
+                            <TextInput required={true} name='bloudGroup' onChange={hendleChange} defaultValue={doctor.bloudGroup} type='radio' title='Bloud Group' options={[{ label: 'A+', defaultValue: 'A+' },
+                            { label: 'A-', defaultValue: 'A-' },
+                            { label: 'B+', defaultValue: 'B+' },
+                            { label: 'B-', defaultValue: 'B-' },
+                            { label: 'o+', defaultValue: 'o+' }
                             ]} />
                             
-                            <TextInput name='status' onChange={hendleChange} value={doctor.status} type='radio' title='Status' 
-                            options={[{label: 'Active', value: 'Active'},{label: 'Deactive', value: 'Deactive'}]} />
-                            <GreenButton onClick={hendleSave}>Save</GreenButton>
+                            <TextInput required={true} name='status' onChange={hendleChange} defaultValue={doctor.status} type='radio' title='Status' 
+                            options={[{label: 'Active', defaultValue: 'Active'},{label: 'Deactive', defaultValue: 'Deactive'}]} />
+                            <GreenButton onClick={ editDoctorId? hendleEdit: hendleImageUpload}>Save</GreenButton>
+                            </form>
                         </Activity>
 
                 }

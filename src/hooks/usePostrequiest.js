@@ -5,15 +5,15 @@ const usePostrequiest = (api, oj, setTigger) => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const token = getCookie('access_token');
-
-    const hendleSaveDepartment = async () => {
+    
+    if (message) {
+        setInterval(() => {
+            setMessage('')
+        }, 5000);
+    }
+    const hendleSaveData = async () => {
         console.log('clicked');
         try {
-            const values = Object.values(oj);
-            if (values.some(value => !value.trim())) {
-                setMessage("Please fill out all fields");
-                return;
-            }
             setLoading(true);
             let apiUrl = api;
             let method = 'POST';
@@ -39,7 +39,8 @@ const usePostrequiest = (api, oj, setTigger) => {
         }
     };
 
-    return { loading, message, setMessage, hendleSaveDepartment };
+    return { loading, message, setMessage, hendleSaveData };
+   
 };
 
 export default usePostrequiest;

@@ -42,14 +42,8 @@ const Department = ({userRole}) => {
 
     // hendle save department post requiest using costom hooks
    
-    const {loading, message,setMessage, hendleSaveDepartment} = usePostrequiest('https://hospital-mangment.onrender.com/department', department, setTigger)
-    //    showing post requiest success message
-    if (message) {
-        setInterval(() => {
-            setMessage('')
-        }, 5000);
-    }
-    console.log(message);
+    const {loading, message, setMessage, hendleSaveData} = usePostrequiest('https://hospital-mangment.onrender.com/department', department, setTigger)
+    
     if(tigger){
         setInterval(()=>{
             setTigger(false);
@@ -73,7 +67,7 @@ const Department = ({userRole}) => {
                     <TextInput defaultValue={department.description} onChange={hendleChange} name='description' title="Description" placeholder='Description' type='textarea' />
                     <TextInput defaultValue={department.status} onChange={hendleChange} name='status' title="status" type='radio' 
                     options={[{label: 'Active', value: 'Active'},{label: 'Deactive', value: 'Deactive'}]} />
-                    <GreenButton onClick={hendleSaveDepartment}>Save</GreenButton>
+                    <GreenButton onClick={hendleSaveData}>Save</GreenButton>
 
                 </Activity>}
             </Content>
