@@ -42,7 +42,10 @@ mongoose.connection.on('disconnected', () => {
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Replace with your frontend URL
+  credentials: true
+}));
 dotenv.config()
 
 // Configure Cloudinary
@@ -104,6 +107,9 @@ app.post("/upload", upload.single("my_file"), async (req, res) => {
     });
   }
 });
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
 
 app.listen(5000, () => {

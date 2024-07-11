@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post('/rigister', rigister);
 router.post('/login', login);
-router.post('/token', authenticateToken);
+router.get('/token', authenticateToken);
 
 
 

@@ -51,6 +51,7 @@ const login = async (req, res, next) => {
 
 const authenticateToken = async (req, res, next) => {
     const token = req.cookies.access_token;
+    // console.log(token);
     if (!token) return res.status(401).send('Access Denied');
 
     try {
@@ -58,7 +59,8 @@ const authenticateToken = async (req, res, next) => {
         req.user = verified;
         const user = await User.findById(req.user.id);
         if (!user) return res.status(404).send('User not found');
-        req.user = user;
+        // const {password, isAdmin, ...otherDetails} = user._doc;
+        res.status(200).send({userRole: user.userRole})
         next();
     } catch (err) {
         res.status(400).send('Invalid Token');

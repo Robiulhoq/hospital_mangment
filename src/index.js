@@ -1,51 +1,51 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
-import {
-  createBrowserRouter,
-  Route,
-  RouterProvider,
-  Routes,
-} from "react-router-dom";
+import './index.css';
+// import {
+//   createBrowserRouter,
+//   Route,
+//   RouterProvider,
+//   Routes,
+// } from "react-router-dom";
 
-import Dashboard from './pages/Dashboard/Dashboard';
-import Department from './pages/Department/Department';
-import ListDepartment from './pages/Department/ListDepartment';
-import Doctor from './pages/Doctor/Doctor';
-import DoctorList from './pages/Doctor/DoctorList';
-import Patient from './pages/Patient/Patient';
-import ListPatient from './pages/Patient/ListPatient';
-import AddPatientDoc from './pages/Patient/AddPatientDoc';
-import ListPatientDoc from './pages/Patient/ListPatientDoc';
-import Schedule from './pages/Schedule/Schedule';
-import ListSchedule from './pages/Schedule/ListSchedule';
-import Prescription from './pages/Prescription/Prescription';
-import ListPrescription from './pages/Prescription/LIstPrescription';
-import PrintPrescription from './pages/Prescription/PrintPrescription';
-import Finance from './pages/Finance/Finance';
-import ListInvoice from './pages/Finance/ListInvoice';
-import AddPayment from './pages/Finance/AddPayment';
-import ListPayment from './pages/Finance/ListPayment';
-import AddAccount from './pages/Finance/AddAccount';
-import ListAccount from './pages/Finance/ListAccount';
-import LabTest from './pages/Labtest/Labtest';
-import TestReport from './pages/Labtest/TestReport';
-import Hr from './pages/Hr/Hr';
-import EmployList from './pages/Hr/EmployList';
-import AddMedicine from './pages/Medicine/Medicine';
-import MedicineList from './pages/Medicine/MedicineList';
-import AssignBed from './pages/Bed_manager/AssignBed';
-import AssignBedList from './pages/Bed_manager/AssignBedList';
-import BedManager from './pages/Bed_manager/Bed_manager';
-import BedList from './pages/Bed_manager/BedList';
-import Appoinment from './pages/Appoinment/Appoinment';
-import AppoinmentList from './pages/Appoinment/AppoinmentList';
-import AddPrescription from './pages/Prescription/AddPrescription';
-import DataProvider from './ContextApi/DataProvider';
-import PrintExample from './pages/Prescription/PrintExample';
-import PrintInvoice from './pages/Finance/PrintInvoice';
-import PrivateRoute from './components/PrivateRoute';
+// import Dashboard from './pages/Dashboard/Dashboard';
+// import Department from './pages/Department/Department';
+// import ListDepartment from './pages/Department/ListDepartment';
+// import Doctor from './pages/Doctor/Doctor';
+// import DoctorList from './pages/Doctor/DoctorList';
+// import Patient from './pages/Patient/Patient';
+// import ListPatient from './pages/Patient/ListPatient';
+// import AddPatientDoc from './pages/Patient/AddPatientDoc';
+// import ListPatientDoc from './pages/Patient/ListPatientDoc';
+// import Schedule from './pages/Schedule/Schedule';
+// import ListSchedule from './pages/Schedule/ListSchedule';
+// import Prescription from './pages/Prescription/Prescription';
+// import ListPrescription from './pages/Prescription/LIstPrescription';
+// import PrintPrescription from './pages/Prescription/PrintPrescription';
+// import Finance from './pages/Finance/Finance';
+// import ListInvoice from './pages/Finance/ListInvoice';
+// import AddPayment from './pages/Finance/AddPayment';
+// import ListPayment from './pages/Finance/ListPayment';
+// import AddAccount from './pages/Finance/AddAccount';
+// import ListAccount from './pages/Finance/ListAccount';
+// import LabTest from './pages/Labtest/Labtest';
+// import TestReport from './pages/Labtest/TestReport';
+// import Hr from './pages/Hr/Hr';
+// import EmployList from './pages/Hr/EmployList';
+// import AddMedicine from './pages/Medicine/Medicine';
+// import MedicineList from './pages/Medicine/MedicineList';
+// import AssignBed from './pages/Bed_manager/AssignBed';
+// import AssignBedList from './pages/Bed_manager/AssignBedList';
+// import BedManager from './pages/Bed_manager/Bed_manager';
+// import BedList from './pages/Bed_manager/BedList';
+// import Appoinment from './pages/Appoinment/Appoinment';
+// import AppoinmentList from './pages/Appoinment/AppoinmentList';
+// import AddPrescription from './pages/Prescription/AddPrescription';
+// import DataProvider from './ContextApi/DataProvider';
+// import PrintExample from './pages/Prescription/PrintExample';
+// import PrintInvoice from './pages/Finance/PrintInvoice';
+// import PrivateRoute from './components/PrivateRoute';
 
 // const router = createBrowserRouter([
 //   {

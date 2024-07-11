@@ -8,33 +8,44 @@ import {
     AiOutlineCalendar, AiOutlineCheckSquare
 } from "react-icons/ai";
 import { FaBed, FaHospitalUser, FaMoneyBillWave } from 'react-icons/fa';
-import { DataContext } from '../../ContextApi/DataContext';
 import { Content, SidebarContainer, Wrapper } from '../../components/Common';
 import Sidebar from '../../components/Sidebar';
 import TopBar from '../../components/TopBar';
+import { DataContext } from '../../ContextApi/DataContext';
 import './Dashboard.css';
-
 Chart.register(ArcElement, CategoryScale, LinearScale, BarController, BarElement);
 export default function Dashboard({ userRole }) {
+   
     const { doctorList, patientList, caseStudyList,
-        labList, invoiceList, hrList, bedList, paymentList} = useContext(DataContext);
+        labList, invoiceList, hrList, bedList, paymentList, setTigger} = useContext(DataContext);
+        setTigger(false)
+    //     if(userRole){
         
-    const appoinmentList = patientList.map(item => item.appoinment.length);
-    const apLength = appoinmentList.reduce((current, next) => current + next, 0);
+    //         setInterval(()=>{
+    //             setTigger(true);
+    //         }, 100);
+        
+    // }
+    // const token = getCookie('access_token');
+    // if(token){
+    //     setTigger(false)
+    // }
+    const appoinmentList = patientList && patientList.map(item => item.appoinment.length);
+    const apLength = appoinmentList && appoinmentList.reduce((current, next) => current + next, 0);
     
     const getMohthInvome = monthNo =>{
-       const grandTotal = invoiceList.map(item => (new Date(item.createdAt).getMonth()+1 === monthNo) ? item.paid : 0);
-       const total = grandTotal.reduce((current, nxt) => current + nxt, 0);
+       const grandTotal = invoiceList && invoiceList.map(item => (new Date(item.createdAt).getMonth()+1 === monthNo) ? item.paid : 0);
+       const total = grandTotal && grandTotal.reduce((current, nxt) => current + nxt, 0);
        return total;
         
     }
     const getMohthExpance = monthNo =>{
-        const grandTotal = paymentList.map(item => (new Date(item.date).getMonth()+1 === monthNo)? parseInt(item.amount): 0);
+        const grandTotal = paymentList && paymentList.map(item => (new Date(item.date).getMonth()+1 === monthNo)? parseInt(item.amount): 0);
         
-        const total = grandTotal.reduce((current, nxt) => current + nxt, 0);
+        const total = grandTotal && grandTotal.reduce((current, nxt) => current + nxt, 0);
         return total;
     }
-    console.log(getMohthExpance(8));
+    
     
 
     const chartdata = {

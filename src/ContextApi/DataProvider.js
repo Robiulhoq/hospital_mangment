@@ -1,301 +1,183 @@
-import React, { useEffect, useState } from 'react';
-import { getCookie } from '../Utils/getCookie';
-import useFetch from '../hooks/useFetch';
-import { DataContext } from './DataContext';
+import React, { useState } from "react";
+import useFetch from "../hooks/useFetch";
+import { getCookie } from "../Utils/getCookie";
+import { DataContext } from "./DataContext";
 const DataProvider = ({ children }) => {
+  // Load  all department function start here
+  const [tigger, setTigger] = useState(false);
 
-    // Load  all department function start here
-    
-    const token = getCookie('access_token');
-    const [tigger, setTigger] = useState(false);
-    const [editDepartmentId, setEditDepartmentId] = useState(null);
-    const {data: departmentList} = useFetch('https://hospital-mangment.onrender.com/department', tigger);
+  const [editDepartmentId, setEditDepartmentId] = useState(null);
+  const { data: departmentList } = useFetch(
+    "https://hospital-mangment.onrender.com/department",
+    tigger
+  );
+  const handleEditDepartment = (id) => setEditDepartmentId(id);
 
-    const handleEditDepartment = (id) => {
-        setEditDepartmentId(id);
-    };
+  // Load alll doctor fuction start here
+  const [editDoctorId, setEditDoctorId] = useState(null);
+  const { data: doctorList } = useFetch(
+    "https://hospital-mangment.onrender.com/doctor",
+    tigger
+  );
+  const handleEditDoctor = (id) => setEditDoctorId(id);
 
+  // Load all patient function start here
+  const token = getCookie("access_token");
+  const [editPatientId, setEditPatientId] = useState(null);
 
-    // Load alll doctor fuction start here
-    const [editDoctorId, setEditDoctorId] = useState(null);
-    const {data: doctorList} = useFetch('https://hospital-mangment.onrender.com/doctor', tigger);
+  const { data: patientList = [] } = useFetch(
+    "https://hospital-mangment.onrender.com/patient",
+    tigger
+  );
+  const hendleEditPatient = (id) => setEditPatientId(id);
 
-    const handleEditDoctor = (id) => {
-        setEditDoctorId(id);
-    };
+  // Schedule
+  const [editSchedule, setEditSchedule] = useState({
+    id: "",
+    scheduleId: "",
+  });
+  const hendleEditSchedule = (id, scheduleId) => {
+    setEditSchedule((preveditSchedule) => ({
+      ...preveditSchedule,
+      id: id,
+      scheduleId: scheduleId,
+    }));
+  };
+  // case study api intregation start
+  const { data: caseStudyList } = useFetch(
+    "https://hospital-mangment.onrender.com/casestudy",
+    tigger
+  );
 
-    // Load all patient function start here
+  // medicine  API intregation start
+  const [editMedicineId, setEditMedicineId] = useState("");
+  const { data: medicineList } = useFetch(
+    "https://hospital-mangment.onrender.com/medicine",
+    tigger
+  );
+  const hendleEditMedicine = (id) => setEditMedicineId(id);
 
-    const [patientList, setPatientList] = useState([]);
-    const [editPatientId, setEditPatientId] = useState(null);
-    const [patientUI, setPatientUI] = useState(false);
-    useEffect(() => {
-        fetch('https://hospital-mangment.onrender.com/patient',{
-            headers: {
-              'Authorization': `Bearer ${token}`, // Include the access token
-            },
-          })
-            .then(res => res.json())
-            .then(data => setPatientList(data))
-    }, [patientUI]);
+  // Bed API intregation start
 
-    const hendleEditPatient = (id) => {
-        setEditPatientId(id);
-    }
+  const [editBedId, setEditBedId] = useState("");
+  const { data: bedList } = useFetch(
+    "https://hospital-mangment.onrender.com/bed",
+    tigger
+  );
+  const hendleEditBed = (id) => setEditBedId(id);
 
-    const hendlePatientUI = (state) => {
-        setPatientUI(state);
-    }
-    // Schedule
-    const [editSchedule, setEditSchedule] = useState({
-        id: '',
-        scheduleId: ''
-    });
-    const hendleEditSchedule = (id, scheduleId) => {
-        setEditSchedule(preveditSchedule => ({
-            ...preveditSchedule,
-            id: id,
-            scheduleId: scheduleId
-        }));
-    }
-    // case study api intregation start
-    const [caseStudyList, setCaseStudyList] = useState([]);
-    const [caseStudyUI, setCaseStudyUI] = useState(false)
-    useEffect(()=>{
-        fetch('https://hospital-mangment.onrender.com/casestudy',{
-            headers: {
-              'Authorization': `Bearer ${token}`, // Include the access token
-            },
-          })
-        .then(res => res.json())
-        .then(data => setCaseStudyList(data))
-    }, [caseStudyUI]);
-    const hendleCaseStudyUI = (state) =>{
-        setCaseStudyUI(state)
-    }
+  // HR API intregation start
 
-    // medicine  API intregation start
+  const [editHrId, setEditHrId] = useState("");
+  const { data: hrList } = useFetch(
+    "https://hospital-mangment.onrender.com/hr",
+    tigger
+  );
+  const hendleEditHr = (id) => setEditHrId(id);
 
-    const [medicineList, setMedicineList] = useState([]);
-    const [editMedicineId, setEditMedicineId] = useState('');
-    const [medicineUI, setMedicineUI] = useState(false);
-    useEffect(()=>{
-        fetch('https://hospital-mangment.onrender.com/medicine',{
-            headers: {
-              'Authorization': `Bearer ${token}`, // Include the access token
-            },
-          })
-        .then(res => res.json())
-        .then(data => setMedicineList(data));
-    },[medicineUI]);
-    const hendleMedicineUI = (state) =>{
-        setMedicineUI(state);
-    }
-    const hendleEditMedicine = id =>{
-        setEditMedicineId(id)
-    }
+  // Lab Test API intergation start
 
-    // Bed API intregation start
+  const [eidtLabId, setEditLabId] = useState("");
+  const { data: labList } = useFetch(
+    "https://hospital-mangment.onrender.com/lab",
+    tigger
+  );
+  const hendleEditLab = (id) => setEditLabId(id);
 
-    const [bedList, setBedList] = useState([]);
-    const [editBedId, setEditBedId] = useState('');
-    const [bedUI, setBedUI] = useState(false);
-    useEffect(()=>{
-        fetch('https://hospital-mangment.onrender.com/bed',{
-            headers: {
-              'Authorization': `Bearer ${token}`, // Include the access token
-            },
-          })
-        .then(res => res.json())
-        .then(data => setBedList(data));
-    },[bedUI]);
-    const hendleBedUI = (state) =>{
-        setBedUI(state);
-    }
-    const hendleEditBed = id =>{
-        setEditBedId(id)
-    }
-    // HR API intregation start
-    const [hrList, setHrList] = useState([]);
-    const [editHrId, setEditHrId] = useState('');
-    const [hrUI, setHrUI] = useState(false);
-    useEffect(()=>{
-        fetch('https://hospital-mangment.onrender.com/hr', {
-            headers: {
-              'Authorization': `Bearer ${token}`, // Include the access token
-            },
-          })
-        .then(res => res.json())
-        .then(data => setHrList(data));
-    },[hrUI]);
-    const hendleHrUI = (state) =>{
-        setHrUI(state);
-    };
-    const hendleEditHr = (id) =>{
-        setEditHrId(id);
-    }
+  // Account API intergation start
 
-    // Lab Test API intergation start
-    const [labList, setLabList] = useState([]);
-    const [eidtLabId, setEditLabId] = useState('');
-    const [labUI, setLabUI] = useState(false);
+  const [editAccoutId, setEditAccoutId] = useState("");
+  const { data: accountList } = useFetch(
+    "https://hospital-mangment.onrender.com/account",
+    tigger
+  );
+  const hendleEditAccount = (id) => setEditAccoutId(id);
+  // pataient
 
-    useEffect(()=>{
-        fetch('https://hospital-mangment.onrender.com/lab',{
-            headers: {
-              'Authorization': `Bearer ${token}`, // Include the access token
-            },
-          })
-        .then(res => res.json())
-        .then(data => setLabList(data))
-    },[labUI]);
-    const hendleLabUI = (state) =>{
-        setLabUI(state);
-    }
-    const hendleEditLab = id =>{
-        setEditLabId(id);
-    }
+  // Assain Bed API intergation start
 
-    // Account API intergation start
-    const [accountList, setAccountList] = useState([]);
-    const [editAccoutId, setEditAccoutId] = useState('');
-    const [accoutUI, setAccoutUI] = useState(true);
-    
-    useEffect(()=>{
-        fetch('https://hospital-mangment.onrender.com/account', {
-            headers: {
-              'Authorization': `Bearer ${token}`, // Include the access token
-            },
-          })
-        .then(res => res.json())
-        .then(data => setAccountList(data))
-    }, [accoutUI]);
-    const hendleAccoutUI = state =>{
-        setAccoutUI(state);
-    }
-    const hendleEditAccount = id =>{
-        setEditAccoutId(id);
-    }
+  const [editAssainBedId, setEditAssainBedId] = useState("");
+  const { data: assainBedList } = useFetch(
+    "https://hospital-mangment.onrender.com/assainbed",
+    tigger
+  );
+  const hendleEditAssainBed = (id) => setEditAssainBedId(id);
 
-    
-    // Assain Bed API intergation start
-    const [assainBedList, setAssainBedList] = useState([]);
-    const [editAssainBedId, setEditAssainBedId] = useState('');
-    const [assainBedUI, setAssainBedUI] = useState(false);
+  // Payment API intergation start
 
-    useEffect(()=>{
-        fetch('https://hospital-mangment.onrender.com/assainbed',{
-            headers: {
-              'Authorization': `Bearer ${token}`, // Include the access token
-            },
-          })
-        .then(res => res.json())
-        .then(data => setAssainBedList(data))
-    },[assainBedUI])
-    
-    const hendleAssainBedUI = state =>{
-        setAssainBedUI(state);
-    }
-    const hendleEditAssainBed = id =>{
-        setEditAssainBedId(id);
-    }
+  const [editPaymentId, setEditPaymentId] = useState("");
+  const { data: paymentList } = useFetch(
+    "https://hospital-mangment.onrender.com/payment",
+    tigger
+  );
+  const hendleEditPayment = (id) => setEditPaymentId(id);
 
-    // Payment API intergation start
-    const [paymentList, setPaymentList] = useState([]);
-    const [editPaymentId, setEditPaymentId] = useState('');
-    const [paymentUI, setPaymentUI] = useState(false);
+  // Invoice API intergation start
 
-    useEffect(()=>{
-        fetch('https://hospital-mangment.onrender.com/payment',{
-            headers: {
-              'Authorization': `Bearer ${token}`, // Include the access token
-            },
-          })
-        .then(res => res.json())
-        .then(data => setPaymentList(data))
-    }, [paymentUI]);
-    const hendlePaymentUI = state =>{
-        setPaymentUI(state);
-    }
-    const hendleEditPayment = id =>{
-        setEditPaymentId(id);
-    }
+  const { data: invoiceList } = useFetch(
+    "https://hospital-mangment.onrender.com/invoice",
+    tigger
+  );
 
-    // Invoice API intergation start
-    const [invoiceList, setInvoiceList] = useState([]);
-    useEffect(()=>{
-      fetch('https://hospital-mangment.onrender.com/invoice', {
-        headers: {'Authorization': `Bearer ${token}`}
-      })
-      .then(res => res.json())
-      .then(data => setInvoiceList(data));
-    },[]);
-    
-    return (
-        <div>
-            <DataContext.Provider value={{
-                tigger,
-                setTigger,
-                departmentList,
-                editDepartmentId,
-                handleEditDepartment,
+  return (
+    <div>
+      <DataContext.Provider
+        value={{
+          tigger,
+          setTigger,
 
-                doctorList,
-                editDoctorId,
-                handleEditDoctor,
+          departmentList,
+          editDepartmentId,
+          handleEditDepartment,
 
-                patientList,
-                editPatientId,
-                hendleEditPatient,
-                hendlePatientUI,
+          doctorList,
+          editDoctorId,
+          handleEditDoctor,
 
-                editSchedule,
-                hendleEditSchedule,
+          patientList,
+          editPatientId,
+          hendleEditPatient,
 
-                caseStudyList,
-                hendleCaseStudyUI,
+          editSchedule,
+          hendleEditSchedule,
 
-                medicineList,
-                hendleMedicineUI,
-                hendleEditMedicine,
-                editMedicineId,
+          caseStudyList,
 
-                bedList,
-                hendleBedUI,
-                hendleEditBed,
-                editBedId,
+          medicineList,
+          hendleEditMedicine,
+          editMedicineId,
 
-                hrList,
-                hendleHrUI,
-                hendleEditHr,
-                editHrId,
+          bedList,
+          hendleEditBed,
+          editBedId,
 
-                labList,
-                hendleLabUI,
-                hendleEditLab,
-                eidtLabId,
+          hrList,
+          hendleEditHr,
+          editHrId,
 
-                accountList,
-                hendleAccoutUI,
-                hendleEditAccount,
-                editAccoutId,
+          labList,
+          hendleEditLab,
+          eidtLabId,
 
-                assainBedList,
-                hendleAssainBedUI,
-                hendleEditAssainBed,
-                editAssainBedId,
+          accountList,
+          hendleEditAccount,
+          editAccoutId,
 
-                paymentList,
-                hendlePaymentUI,
-                hendleEditPayment,
-                editPaymentId,
+          assainBedList,
+          hendleEditAssainBed,
+          editAssainBedId,
 
-               invoiceList
-            }}>
-                {children}
-            </DataContext.Provider>
-        </div>
-    )
-}
+          paymentList,
+          hendleEditPayment,
+          editPaymentId,
+
+          invoiceList,
+        }}
+      >
+        {children}
+      </DataContext.Provider>
+    </div>
+  );
+};
 
 export default DataProvider;
